@@ -8,12 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDao {
+public class UserDAO {
 
     private static final long serialVersionUID = 1L;
     private Connection connection;
 
-    public UserDao(Connection connection) {
+    public UserDAO(Connection connection) {
         this.connection = connection;
     }
 
@@ -109,4 +109,70 @@ public class UserDao {
         }
         return result;
     }
+
+    public int updateUsername(int userId, String username) throws SQLException {
+
+        String query = "UPDATE user SET username = ?  WHERE id = ?";
+        int result = 0;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, username);
+            preparedStatement.setInt(2, userId);
+            result = preparedStatement.executeUpdate();
+        }
+        return result;
+    }
+
+    public int updatePassword(int userId, String password) throws SQLException {
+
+        String query = "UPDATE user SET password = ?  WHERE id = ?";
+        int result = 0;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, password);
+            preparedStatement.setInt(2, userId);
+            result = preparedStatement.executeUpdate();
+        }
+        return result;
+    }
+
+    public int updateEmail(int userId, String email) throws SQLException {
+
+        String query = "UPDATE user SET email = ?  WHERE id = ?";
+        int result = 0;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, email);
+            preparedStatement.setInt(2, userId);
+            result = preparedStatement.executeUpdate();
+        }
+        return result;
+    }
+
+    public int updateExperience(int userId, ExperienceLevel experience) throws SQLException {
+
+        String query = "UPDATE user SET experience = ?  WHERE id = ?";
+        int result = 0;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, experience.getValue());
+            preparedStatement.setInt(2, userId);
+            result = preparedStatement.executeUpdate();
+        }
+        return result;
+    }
+
+    public int updatePicture(int userId, String picture) throws SQLException {
+
+        String query = "UPDATE user SET picture = ?  WHERE id = ?";
+        int result = 0;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, picture);
+            preparedStatement.setInt(2, userId);
+            result = preparedStatement.executeUpdate();
+        }
+        return result;
+    }
+
 }
