@@ -38,8 +38,8 @@ public class Campaign {
         return status;
     }
 
-    public void setStatus(CampaignStatus status) {
-        this.status = status;
+    public void setStatus(int value) {
+        this.status = CampaignStatus.getCampaignStatusFromInt(value);
     }
 
     public int getManagerId() {

@@ -86,8 +86,8 @@ public class Image {
         return resolution;
     }
 
-    public void setResolution(Resolution resolution) {
-        this.resolution = resolution;
+    public void setResolution(int value) {
+        this.resolution = Resolution.getResolutionFromInt(value);
     }
 
     public int getCampaignId() {

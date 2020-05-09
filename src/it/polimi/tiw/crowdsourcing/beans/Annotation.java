@@ -47,8 +47,8 @@ public class Annotation {
         return confidence;
     }
 
-    public void setConfidence(Confidence confidence) {
-        this.confidence = confidence;
+    public void setConfidence(int value) {
+        this.confidence = Confidence.getConfidenceFromInt(value);
     }
 
     public String getNote() {
