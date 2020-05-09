@@ -72,8 +72,7 @@ public class ImageDAO {
             preparedStatement.setInt(1, campaignId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()){
-                    Image
-                    image = new Image();
+                    Image image = new Image();
                     image.setId(resultSet.getInt("id"));
                     image.setSource(resultSet.getString("source"));
                     image.setThumbnail(resultSet.getString("thumbnail"));
