@@ -2,7 +2,7 @@ package it.polimi.tiw.crowdsourcing.utils;
 
 public enum ExperienceLevel {
 
-    ALTO(0), MEDIO(1), BASSO(2);
+    HIGH(0), MEDIUM(1), LOW(2);
 
     private final int value;
 
@@ -12,9 +12,9 @@ public enum ExperienceLevel {
 
     public static ExperienceLevel getExperienceLevelFromInt(int value) {
         return switch (value) {
-            case 0 -> ExperienceLevel.ALTO;
-            case 1 -> ExperienceLevel.MEDIO;
-            case 2 -> ExperienceLevel.BASSO;
+            case 0 -> ExperienceLevel.HIGH;
+            case 1 -> ExperienceLevel.MEDIUM;
+            case 2 -> ExperienceLevel.LOW;
             default -> null;
         };
     }
