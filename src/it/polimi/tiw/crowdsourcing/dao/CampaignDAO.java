@@ -53,4 +53,94 @@ public class CampaignDAO {
         }
         return result;
     }
+
+    public int changeStatus(int campaignId, CampaignStatus status) throws SQLException {
+
+        String query = "UPDATE campaign SET status = ? WHERE id = ?";
+        int result = 0;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, status.getValue());
+            preparedStatement.setInt(2, campaignId);
+            result = preparedStatement.executeUpdate();
+        }
+        return result;
+    }
+
+    public List<Campaign> findCampaignByWorkerAssigned(int workerId) throws SQLException {
+
+        String query = "SELECT * FROM campaign C WHERE C.status = 1 AND C.id IN (SELECT campaignid FROM assignment WHERE workerid = ?)";
+        List<Campaign> campaigns = new ArrayList<Campaign>();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, workerId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                Campaign campaign = new Campaign();
+                campaign.setId(resultSet.getInt("id"));
+                campaign.setName(resultSet.getString("name"));
+                campaign.setCustomer(resultSet.getString("customer"));
+                campaign.setStatus(resultSet.getInt("status"));
+                campaign.setManagerId(resultSet.getInt("managerid"));
+                campaigns.add(campaign);
+            }
+        }
+        return campaigns;
+    }
+
+    public List<Campaign> findCampaignByWorkerNotAssigned(int workerId) throws SQLException {
+
+        String query = "SELECT * FROM campaign C WHERE C.status = 1 AND C.id NOT IN (SELECT campaignid FROM assignment WHERE workerid = ?)";
+        List<Campaign> campaigns = new ArrayList<Campaign>();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, workerId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                Campaign campaign = new Campaign();
+                campaign.setId(resultSet.getInt("id"));
+                campaign.setName(resultSet.getString("name"));
+                campaign.setCustomer(resultSet.getString("customer"));
+                campaign.setStatus(resultSet.getInt("status"));
+                campaign.setManagerId(resultSet.getInt("managerid"));
+                campaigns.add(campaign);
+            }
+        }
+        return campaigns;
+    }
+
+    public int createAssignment(int workerId, int campaignId) throws SQLException {
+
+        String query = "INSERT into assignment (workerid, campaignid) VALUES(?, ?)";
+        int result = 0;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, workerId);
+            preparedStatement.setInt(2, campaignId);
+            result = preparedStatement.executeUpdate();
+        }
+        return result;
+    }
+
+    public Campaign findCampaignById(int campaignId) throws SQLException {
+
+        String query = "SELECT * FROM campaign WHERE campaignid = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, campaignId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (!resultSet.isBeforeFirst()) {
+                    return null;
+                } else {
+                    resultSet.next();
+                    Campaign campaign = new Campaign();
+                    campaign.setId(resultSet.getInt("id"));
+                    campaign.setName(resultSet.getString("name"));
+                    campaign.setCustomer(resultSet.getString("customer"));
+                    campaign.setStatus(resultSet.getInt("status"));
+                    campaign.setManagerId(resultSet.getInt("managerid"));
+                    return campaign;
+                }
+            }
+        }
+
+    }
+
 }
