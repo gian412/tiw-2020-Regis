@@ -1,6 +1,5 @@
 package it.polimi.tiw.crowdsourcing.beans;
 
-import it.polimi.tiw.crowdsourcing.utils.Point;
 import it.polimi.tiw.crowdsourcing.utils.Resolution;
 
 import java.util.Date;
@@ -10,7 +9,8 @@ public class Image {
     private int id;
     private String source;
     private String thumbnail;
-    private Point point;
+    private double latitude;
+    private double longitude;
     private String city;
     private String region;
     private String provenance;
@@ -42,12 +42,20 @@ public class Image {
         this.thumbnail = thumbnail;
     }
 
-    public Point getPoint() {
-        return point;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setPoint(Point point) {
-        this.point = point;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public String getCity() {
@@ -97,4 +105,5 @@ public class Image {
     public void setCampaignId(int campaignId) {
         this.campaignId = campaignId;
     }
+
 }
