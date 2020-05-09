@@ -175,4 +175,16 @@ public class UserDAO {
         return result;
     }
 
+    public int deleteUser(int userId) throws SQLException {
+
+        String query = "DELETE FROM user WHERE id = ?";
+        int result = 0;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, userId);
+            result = preparedStatement.executeUpdate();
+        }
+        return result;
+    }
+
 }
