@@ -56,8 +56,8 @@ public class User {
         return experienceLevel;
     }
 
-    public void setExperienceLevel(ExperienceLevel experienceLevel) {
-        this.experienceLevel = experienceLevel;
+    public void setExperienceLevel(int value) {
+        this.experienceLevel = ExperienceLevel.getExperienceLevelFromInt(value);
     }
 
     public String getPicture() {
