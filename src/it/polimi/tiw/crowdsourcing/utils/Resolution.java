@@ -11,12 +11,16 @@ public enum  Resolution {
     }
 
     public static Resolution getResolutionFromInt(int value) {
-        return switch (value) {
-            case 0 -> Resolution.HIGH;
-            case 1 -> Resolution.MEDIUM;
-            case 2 -> Resolution.LOW;
-            default -> null;
-        };
+        switch (value) {
+            case 0:
+                return Resolution.HIGH;
+            case 1:
+                return Resolution.MEDIUM;
+            case 3:
+                return Resolution.LOW;
+            default:
+                return null;
+        }
     }
 
     public int getValue() {

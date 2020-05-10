@@ -12,7 +12,6 @@ import java.util.List;
 
 public class CampaignDAO {
 
-    private static final long serialVersionUID = 1L;
     private Connection connection;
 
     public CampaignDAO(Connection connection) {

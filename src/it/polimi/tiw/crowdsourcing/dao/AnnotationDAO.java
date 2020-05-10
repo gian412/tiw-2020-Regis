@@ -12,7 +12,6 @@ import java.util.List;
 
 public class AnnotationDAO {
 
-    private static final long serialVersionUID = 1L;
     private Connection connection;
 
     public AnnotationDAO(Connection connection) {

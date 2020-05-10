@@ -3,7 +3,6 @@ package it.polimi.tiw.crowdsourcing.controllers;
 import it.polimi.tiw.crowdsourcing.beans.User;
 import it.polimi.tiw.crowdsourcing.dao.UserDAO;
 import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
-import it.polimi.tiw.crowdsourcing.utils.MultiPathMessageResolver;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -18,11 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.regex.Pattern;
+//import java.util.regex.Pattern;
 
 @WebServlet("/CheckLogin")
 public class CheckLogin extends HttpServlet {
 
+    private static final long serialVersionUID = 1L;
     private Connection connection;
     private TemplateEngine templateEngine;
 
@@ -39,7 +39,6 @@ public class CheckLogin extends HttpServlet {
         templateResolver.setTemplateMode(TemplateMode.HTML);
         this.templateEngine = new TemplateEngine();
         this.templateEngine.setTemplateResolver(templateResolver);
-        //this.templateEngine.setMessageResolver(new MultiPathMessageResolver(servletContext, "templates"));
         templateResolver.setSuffix(".html");
 
     }
@@ -102,7 +101,7 @@ public class CheckLogin extends HttpServlet {
         }
     }
 
-    public static boolean isValid(String email) {
+    /*public static boolean isValid(String email) {
 
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
                             "[a-zA-Z0-9_+&*-]+)*@" +
@@ -113,5 +112,5 @@ public class CheckLogin extends HttpServlet {
             return false;
         }
         return pattern.matcher(email).matches();
-    }
+    }*/
 }

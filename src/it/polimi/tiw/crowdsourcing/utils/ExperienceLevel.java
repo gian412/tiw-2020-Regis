@@ -11,12 +11,16 @@ public enum ExperienceLevel {
     }
 
     public static ExperienceLevel getExperienceLevelFromInt(int value) {
-        return switch (value) {
-            case 0 -> ExperienceLevel.HIGH;
-            case 1 -> ExperienceLevel.MEDIUM;
-            case 2 -> ExperienceLevel.LOW;
-            default -> null;
-        };
+        switch (value) {
+            case 0:
+                return ExperienceLevel.HIGH;
+            case 1:
+                return ExperienceLevel.MEDIUM;
+            case 3:
+                return ExperienceLevel.LOW;
+            default:
+                return null;
+        }
     }
 
     public int getValue() {

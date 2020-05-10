@@ -13,7 +13,6 @@ import java.util.List;
 
 public class ImageDAO {
 
-    private static final long serialVersionUID = 1L;
     private Connection connection;
 
     public ImageDAO(Connection connection) {

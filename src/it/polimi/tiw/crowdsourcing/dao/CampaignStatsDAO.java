@@ -10,7 +10,6 @@ import java.sql.SQLException;
 
 public class CampaignStatsDAO {
 
-    private static final long serialVersionUID = 1L;
     private Connection connection;
 
     public CampaignStatsDAO(Connection connection) {

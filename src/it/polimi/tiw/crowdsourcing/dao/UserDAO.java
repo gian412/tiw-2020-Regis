@@ -10,7 +10,6 @@ import java.sql.SQLException;
 
 public class UserDAO {
 
-    private static final long serialVersionUID = 1L;
     private Connection connection;
 
     public UserDAO(Connection connection) {
