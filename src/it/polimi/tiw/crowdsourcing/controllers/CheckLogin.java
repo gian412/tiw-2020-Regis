@@ -7,7 +7,6 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-//import java.util.regex.Pattern;
 
 @WebServlet("/CheckLogin")
 public class CheckLogin extends HttpServlet {
@@ -44,7 +42,7 @@ public class CheckLogin extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         String username;
         String password;
@@ -57,7 +55,7 @@ public class CheckLogin extends HttpServlet {
             return;
         }
         UserDAO userDAO = new UserDAO(connection);
-        User user = null;
+        User user;
         try {
             /*if ( isValid(username) ) { // check if username is a email
                 user = userDAO.checkCredentialEmail(username, password); // Check credential with email
@@ -76,7 +74,7 @@ public class CheckLogin extends HttpServlet {
         String path;
         if (user!=null) { // If the user exists ...
             req.getSession().setAttribute("user", user); // ...save it in the session, ...
-            String target = user.getRole().equals("manager") ? "/GoToManagerHome" : "/GoToWorkerHome"; // ...check the role ...
+            String target = user.getRole().equals("manager") ? "/ManagerHome" : "/WorkerHome"; // ...check the role ...
             path = getServletContext().getContextPath() + target; // ...and go to the relative homepage, ...
             resp.sendRedirect(path);
         } else { // ...otherwise ...
@@ -101,16 +99,4 @@ public class CheckLogin extends HttpServlet {
         }
     }
 
-    /*public static boolean isValid(String email) {
-
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
-                            "[a-zA-Z0-9_+&*-]+)*@" +
-                            "(?:[a-zA-Z0-9-]+\\.)+[a-z"+
-                            "A-Z]{2,7}$";
-        Pattern pattern = Pattern.compile(emailRegex);
-        if (email == null) {
-            return false;
-        }
-        return pattern.matcher(email).matches();
-    }*/
 }
