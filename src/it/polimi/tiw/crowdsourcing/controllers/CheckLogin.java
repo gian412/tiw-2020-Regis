@@ -34,11 +34,12 @@ public class CheckLogin extends HttpServlet {
     public void init() throws ServletException {
 
         connection = ClientHandler.getConnection(getServletContext());
-        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver( getServletContext() );
+        ServletContext servletContext = getServletContext();
+        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver( servletContext );
         templateResolver.setTemplateMode(TemplateMode.HTML);
         this.templateEngine = new TemplateEngine();
         this.templateEngine.setTemplateResolver(templateResolver);
-        this.templateEngine.setMessageResolver(new MultiPathMessageResolver(getServletContext(), "templates"));
+        //this.templateEngine.setMessageResolver(new MultiPathMessageResolver(servletContext, "templates"));
         templateResolver.setSuffix(".html");
 
     }

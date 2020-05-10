@@ -5,6 +5,13 @@
     <title>Login</title>
 </head>
 <body>
-    <h1 th:text="#{title}">Welcome to the Crowdsourcing site</h1>
+    <h1>Welcome to the Crowdsourcing site</h1>
+    <p>Please login to your account</p>
+    <form method="post" action="CheckLogin">
+        Username: <input type="text" placeholder="Enter username" name="username"><br>
+        Password: <input type="password" placeholder="Enter password" name="password"><br>
+        <input type="submit" value="Login">
+        <p th:text="${errorMessage}"></p>
+    </form>
 </body>
 </html>
