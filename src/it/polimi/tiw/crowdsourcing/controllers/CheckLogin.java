@@ -3,6 +3,7 @@ package it.polimi.tiw.crowdsourcing.controllers;
 import it.polimi.tiw.crowdsourcing.beans.User;
 import it.polimi.tiw.crowdsourcing.dao.UserDAO;
 import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
+import it.polimi.tiw.crowdsourcing.utils.MultiPathMessageResolver;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -37,6 +38,7 @@ public class CheckLogin extends HttpServlet {
         templateResolver.setTemplateMode(TemplateMode.HTML);
         this.templateEngine = new TemplateEngine();
         this.templateEngine.setTemplateResolver(templateResolver);
+        this.templateEngine.setMessageResolver(new MultiPathMessageResolver(getServletContext(), "templates"));
         templateResolver.setSuffix(".html");
 
     }
