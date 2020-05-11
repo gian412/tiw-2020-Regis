@@ -41,6 +41,35 @@ public class ManagerDAO {
         return campaigns;
     }
 
+    public Campaign findCampaignsByName(String campaignName) throws SQLException{
+
+        String query =
+                "SELECT * " +
+                "FROM campaign " +
+                "WHERE name = ? AND managerid = ?";
+        Campaign campaign = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, campaignName);
+            preparedStatement.setInt(2, this.id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (!resultSet.isBeforeFirst()) {
+                    return null;
+                } else {
+                    resultSet.next();
+                    campaign = new Campaign();
+                    campaign.setId(resultSet.getInt("id"));
+                    campaign.setName(resultSet.getString("name"));
+                    campaign.setCustomer(resultSet.getString("customer"));
+                    campaign.setStatus(resultSet.getInt("status"));
+                    campaign.setManagerId(resultSet.getInt("managerid"));
+                    return campaign;
+                }
+            }
+        }
+
+    }
+
     public int createCampaign(String name, String customer) throws SQLException {
         String query = "INSERT into campaign (name, customer, status, managerid) VALUES(?, ?, ?, ?)";
         int result = 0;

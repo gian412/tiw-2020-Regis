@@ -27,13 +27,15 @@ public class WorkerDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, this.id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                Campaign campaign = new Campaign();
-                campaign.setId(resultSet.getInt("id"));
-                campaign.setName(resultSet.getString("name"));
-                campaign.setCustomer(resultSet.getString("customer"));
-                campaign.setStatus(resultSet.getInt("status"));
-                campaign.setManagerId(resultSet.getInt("managerid"));
-                campaigns.add(campaign);
+                while (resultSet.next()) {
+                    Campaign campaign = new Campaign();
+                    campaign.setId(resultSet.getInt("id"));
+                    campaign.setName(resultSet.getString("name"));
+                    campaign.setCustomer(resultSet.getString("customer"));
+                    campaign.setStatus(resultSet.getInt("status"));
+                    campaign.setManagerId(resultSet.getInt("managerid"));
+                    campaigns.add(campaign);
+                }
             }
         }
         return campaigns;
@@ -47,13 +49,15 @@ public class WorkerDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, this.id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                Campaign campaign = new Campaign();
-                campaign.setId(resultSet.getInt("id"));
-                campaign.setName(resultSet.getString("name"));
-                campaign.setCustomer(resultSet.getString("customer"));
-                campaign.setStatus(resultSet.getInt("status"));
-                campaign.setManagerId(resultSet.getInt("managerid"));
-                campaigns.add(campaign);
+                while (resultSet.next()) {
+                    Campaign campaign = new Campaign();
+                    campaign.setId(resultSet.getInt("id"));
+                    campaign.setName(resultSet.getString("name"));
+                    campaign.setCustomer(resultSet.getString("customer"));
+                    campaign.setStatus(resultSet.getInt("status"));
+                    campaign.setManagerId(resultSet.getInt("managerid"));
+                    campaigns.add(campaign);
+                }
             }
         }
         return campaigns;

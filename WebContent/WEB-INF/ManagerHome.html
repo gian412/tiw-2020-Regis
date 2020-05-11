@@ -5,7 +5,7 @@
     <title>Manager Home</title>
 </head>
 <body>
-    <h1>Worker Homepage</h1>
+    <h1>Manager Homepage</h1>
     <table>
         <thead>
             <td><b>Name</b></td>
@@ -18,5 +18,10 @@
             <td th:text="${campaign.status.toString()}">Status</td>
         </tr>
     </table>
+    <form method="post" action="CreateCampaign">
+        Campaign name: <input type="text" placeholder="Enter Campaign name" name="name"><br>
+        Campaign customer: <input type="text" placeholder="Enter Campaign customer" name="customer"><br>
+        <input type="submit" value="Create Campaign">
+    </form>
 </body>
 </html>
