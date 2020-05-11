@@ -16,7 +16,7 @@ public enum Confidence {
                 return Confidence.HIGH;
             case 1:
                 return Confidence.MEDIUM;
-            case 3:
+            case 2:
                 return Confidence.LOW;
             default:
                 return null;

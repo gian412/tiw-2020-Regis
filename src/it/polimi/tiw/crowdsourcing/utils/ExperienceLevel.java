@@ -16,7 +16,7 @@ public enum ExperienceLevel {
                 return ExperienceLevel.HIGH;
             case 1:
                 return ExperienceLevel.MEDIUM;
-            case 3:
+            case 2:
                 return ExperienceLevel.LOW;
             default:
                 return null;

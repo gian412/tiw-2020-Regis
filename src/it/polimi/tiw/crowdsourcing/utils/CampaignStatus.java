@@ -16,7 +16,7 @@ public enum CampaignStatus {
                 return CampaignStatus.CREATED;
             case 1:
                 return CampaignStatus.STARTED;
-            case 3:
+            case 2:
                 return CampaignStatus.CLOSED;
             default:
                 return null;
@@ -27,4 +27,18 @@ public enum CampaignStatus {
         return this.value;
     }
 
+
+    @Override
+    public String toString() {
+        switch (this.value) {
+            case 0:
+                return "CREATED";
+            case 1:
+                return "STARTED";
+            case 2:
+                return "CLOSED";
+            default:
+                return null;
+        }
+    }
 }
