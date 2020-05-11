@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-@WebServlet("CreateCampaign")
+@WebServlet("/CreateCampaign")
 public class CreateCampaign extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
