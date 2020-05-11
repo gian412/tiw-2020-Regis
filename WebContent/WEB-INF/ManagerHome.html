@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1>Manager Homepage</h1>
-    <table>
+    <table> <!-- TODO: If ( campaigns.isEmpty() ) then showEmptyMessage -->
         <thead>
             <td><b>Name</b></td>
             <td><b>Customer</b></td>
@@ -19,8 +19,8 @@
         </tr>
     </table>
     <form method="post" action="CreateCampaign">
-        Campaign name: <input type="text" placeholder="Enter Campaign name" name="name"><br>
-        Campaign customer: <input type="text" placeholder="Enter Campaign customer" name="customer"><br>
+        Campaign name: <input type="text" placeholder="Enter Campaign name" name="name" required><br>
+        Campaign customer: <input type="text" placeholder="Enter Campaign customer" name="customer" required><br>
         <input type="submit" value="Create Campaign">
     </form>
 </body>

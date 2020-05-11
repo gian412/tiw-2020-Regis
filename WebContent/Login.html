@@ -8,8 +8,8 @@
     <h1>Welcome to the Crowdsourcing site</h1>
     <p>Please login to your account</p>
     <form method="post" action="CheckLogin">
-        Username: <input type="text" placeholder="Enter username" name="username"><br>
-        Password: <input type="password" placeholder="Enter password" name="password"><br>
+        Username: <input type="text" placeholder="Enter username" name="username" required><br>
+        Password: <input type="password" placeholder="Enter password" name="password" required><br>
         <input type="submit" value="Login">
         <p th:text="${errorMessage}"></p>
     </form>
