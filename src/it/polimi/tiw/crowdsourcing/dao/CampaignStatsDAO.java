@@ -11,12 +11,14 @@ import java.sql.SQLException;
 public class CampaignStatsDAO {
 
     private Connection connection;
+    private int id;
 
-    public CampaignStatsDAO(Connection connection) {
+    public CampaignStatsDAO(Connection connection, int id) {
         this.connection = connection;
+        this.id = id;
     }
 
-    private int findTotalNumberOfImage(int campaignId) throws SQLException {
+    private int findTotalNumberOfImage() throws SQLException {
 
         String query =
                 "SELECT COUNT(*) " +
@@ -24,7 +26,7 @@ public class CampaignStatsDAO {
                 "WHERE campaignid = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, campaignId);
+            preparedStatement.setInt(1, this.id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()){
                     return resultSet.getInt(1);
@@ -35,7 +37,7 @@ public class CampaignStatsDAO {
         throw new SQLException();
     }
 
-    private int findTotalNumberOfAnnotation(int campaignId) throws SQLException {
+    private int findTotalNumberOfAnnotation() throws SQLException {
 
         String query =
                 "SELECT COUNT(*) " +
@@ -47,7 +49,7 @@ public class CampaignStatsDAO {
                 ")";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, campaignId);
+            preparedStatement.setInt(1, this.id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()){
                     return resultSet.getInt(1);
@@ -58,7 +60,7 @@ public class CampaignStatsDAO {
         throw new SQLException();
     }
 
-    private int findNumberOfImageWithConflict(int campaignId) throws SQLException {
+    private int findNumberOfImageWithConflict() throws SQLException {
 
         String query =
                 "SELECT COUNT(id) " +
@@ -74,7 +76,7 @@ public class CampaignStatsDAO {
                 ") AND I.campaignid = ? " +
                 "GROUP BY id";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, campaignId);
+            preparedStatement.setInt(1, this.id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     return resultSet.getInt(1);
@@ -84,16 +86,16 @@ public class CampaignStatsDAO {
         throw new SQLException();
     }
 
-    public CampaignStats findStatsByCampaign(int campaignId) throws SQLException {
+    public CampaignStats findStatsByCampaign() throws SQLException {
 
         int totalNumberOfImage, totalNumberOfAnnotation, numberOfImageWithConflict;
         double averageNumberOfAnnotationPerImage;
         CampaignStats campaignStats = new CampaignStats();
         try {
-            campaignStats.setTotalImage(findTotalNumberOfImage(campaignId));
-            campaignStats.setTotalAnnotation(findTotalNumberOfAnnotation(campaignId));
+            campaignStats.setTotalImage( findTotalNumberOfImage() );
+            campaignStats.setTotalAnnotation( findTotalNumberOfAnnotation() );
             campaignStats.setAverageAnnotationPerImage(((double)campaignStats.getTotalAnnotation()) / ((double)campaignStats.getTotalImage()));
-            campaignStats.setAnnotatedImageWithConflict(findNumberOfImageWithConflict(campaignId));
+            campaignStats.setAnnotatedImageWithConflict( findNumberOfImageWithConflict() );
         } catch (SQLException e) {
             throw new SQLException(e.getMessage());
         }

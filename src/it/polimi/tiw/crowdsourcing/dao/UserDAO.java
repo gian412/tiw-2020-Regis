@@ -43,58 +43,6 @@ public class UserDAO {
 
     }
 
-    /*public User checkCredentialUsername(String username, String password) throws SQLException {
-
-        String query = "SELECT * FROM user WHERE username = ? AND password = ?";
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (!resultSet.isBeforeFirst()) { // No result, credential check failed
-                    return null;
-                } else {
-                    resultSet.next();
-                    User user = new User();
-                    user.setId(resultSet.getInt("id"));
-                    user.setRole(resultSet.getString("role"));
-                    user.setUsername(resultSet.getString("username"));
-                    user.setEmail(resultSet.getString("email"));
-                    user.setExperienceLevel(resultSet.getInt("experience"));
-                    user.setPicture(resultSet.getString("picture"));
-                    return user;
-                }
-            }
-        }
-
-    }*/
-
-    /*public User checkCredentialEmail(String email, String password) throws SQLException {
-
-        String query = "SELECT * FROM user WHERE email = ? AND password = ?";
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, email);
-            preparedStatement.setString(2, password);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (!resultSet.isBeforeFirst()) { // No result, credential check failed
-                    return null;
-                } else {
-                    resultSet.next();
-                    User user = new User();
-                    user.setId(resultSet.getInt("id"));
-                    user.setRole(resultSet.getString("role"));
-                    user.setUsername(resultSet.getString("username"));
-                    user.setEmail(resultSet.getString("email"));
-                    user.setExperienceLevel(resultSet.getInt("experience"));
-                    user.setPicture(resultSet.getString("picture"));
-                    return user;
-                }
-            }
-        }
-
-    }*/
-
     public User findUserById(int userId) throws SQLException {
 
         String query = "SELECT * FROM user WHERE id = ?";
