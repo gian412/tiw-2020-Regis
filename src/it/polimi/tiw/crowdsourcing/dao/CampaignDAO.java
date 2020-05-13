@@ -53,46 +53,25 @@ public class CampaignDAO {
         return result;
     }
 
-    public int createImage(String source, String thumbnail, double latitude, double longitude, String city, String region,
+    public int createImage(String source, double latitude, double longitude, String city, String region,
                            String provenance, Date date, Resolution resolution) throws SQLException {
 
-        String query = "INSERT into image (source, thumbnail, latitude, longitude, city, region, provenance, date, resolution, campaignid) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT into image (source, latitude, longitude, city, region, provenance, date, resolution, campaignid) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         int result = 0;
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, source);
-            preparedStatement.setString(2, thumbnail);
-            preparedStatement.setDouble(3, latitude);
-            preparedStatement.setDouble(4, longitude);
-            preparedStatement.setString(5, city);
-            preparedStatement.setString(6, region);
-            preparedStatement.setString(7, provenance);
-            preparedStatement.setDate(8, new java.sql.Date(date.getTime()));
-            preparedStatement.setInt(9, resolution.getValue());
-            preparedStatement.setInt(10, this.id);
+            preparedStatement.setDouble(2, latitude);
+            preparedStatement.setDouble(3, longitude);
+            preparedStatement.setString(4, city);
+            preparedStatement.setString(5, region);
+            preparedStatement.setString(6, provenance);
+            preparedStatement.setDate(7, new java.sql.Date(date.getTime()));
+            preparedStatement.setInt(8, resolution.getValue());
+            preparedStatement.setInt(9, this.id);
             result = preparedStatement.executeUpdate();
         }
         return result;
-    }
-
-    public List<Image> findThumbnailByCampaign() throws SQLException {
-
-        String query = "SELECT id, thumbnail FROM image WHERE campaignid = ?";
-        List<Image> images = new ArrayList<Image>();
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, this.id);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()){
-                    Image image = new Image();
-                    image = new Image();
-                    image.setId(resultSet.getInt("id"));
-                    image.setThumbnail(resultSet.getString("thumbnail"));
-                    images.add(image);
-                }
-            }
-        }
-        return images;
     }
 
     public List<Image> findImagesByCampaign() throws SQLException {
@@ -107,7 +86,6 @@ public class CampaignDAO {
                     Image image = new Image();
                     image.setId(resultSet.getInt("id"));
                     image.setSource(resultSet.getString("source"));
-                    image.setThumbnail(resultSet.getString("thumbnail"));
                     image.setLatitude(resultSet.getDouble("latitude"));
                     image.setLongitude(resultSet.getDouble("longitude"));
                     image.setCity(resultSet.getString("city"));
