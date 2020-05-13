@@ -8,7 +8,6 @@ public class Image {
 
     private int id;
     private String source;
-    private String thumbnail;
     private double latitude;
     private double longitude;
     private String city;
@@ -32,14 +31,6 @@ public class Image {
 
     public void setSource(String source) {
         this.source = source;
-    }
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
     }
 
     public double getLatitude() {

@@ -5,12 +5,14 @@ import it.polimi.tiw.crowdsourcing.utils.ExperienceLevel;
 public class User {
 
     private int id;
+    private String firstName;
+    private String lastName;
     private String role;
     private String username;
     private String password;
     private String email;
     private ExperienceLevel experienceLevel;
-    private String picture;
+    private String avatar;
 
     public int getId() {
         return id;
@@ -18,6 +20,22 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getRole() {
@@ -60,11 +78,11 @@ public class User {
         this.experienceLevel = ExperienceLevel.getExperienceLevelFromInt(value);
     }
 
-    public String getPicture() {
-        return picture;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

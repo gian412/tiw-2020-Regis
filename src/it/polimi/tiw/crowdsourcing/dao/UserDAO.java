@@ -31,11 +31,13 @@ public class UserDAO {
                     resultSet.next();
                     User user = new User();
                     user.setId(resultSet.getInt("id"));
+                    user.setFirstName(resultSet.getString("firstname"));
+                    user.setLastName(resultSet.getString("lastname"));
                     user.setRole(resultSet.getString("role"));
                     user.setUsername(resultSet.getString("username"));
                     user.setEmail(resultSet.getString("email"));
                     user.setExperienceLevel(resultSet.getInt("experience"));
-                    user.setPicture(resultSet.getString("picture"));
+                    user.setAvatar(resultSet.getString("avatar"));
                     return user;
                 }
             }
@@ -56,29 +58,33 @@ public class UserDAO {
                     resultSet.next();
                     User user = new User();
                     user.setId(resultSet.getInt("id"));
+                    user.setFirstName(resultSet.getString("firstname"));
+                    user.setLastName(resultSet.getString("lastname"));
                     user.setRole(resultSet.getString("role"));
                     user.setUsername(resultSet.getString("username"));
                     user.setEmail(resultSet.getString("email"));
                     user.setExperienceLevel(resultSet.getInt("experience"));
-                    user.setPicture(resultSet.getString("picture"));
+                    user.setAvatar(resultSet.getString("avatar"));
                     return user;
                 }
             }
         }
     }
 
-    public int createUser(String role, String username, String password, String  email, ExperienceLevel experience, String picture) throws SQLException {
+    public int createUser(String role, String firstName, String lastName, String username, String password, String  email, ExperienceLevel experience, String avatar) throws SQLException {
 
-        String query = "INSERT into user (role, username, password, email, experience, picture) VALUES(?, ?, ?, ?, ?, ?)";
+        String query = "INSERT into user (role, firstname, lastname, username, password, email, experience, avatar) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         int result = 0;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
             preparedStatement.setString(1, role);
-            preparedStatement.setString(2, username);
-            preparedStatement.setString(3, password);
-            preparedStatement.setString(4, email);
-            preparedStatement.setInt(5, experience.getValue());
-            preparedStatement.setString(6, picture);
+            preparedStatement.setString(2, firstName);
+            preparedStatement.setString(3, lastName);
+            preparedStatement.setString(4, username);
+            preparedStatement.setString(5, password);
+            preparedStatement.setString(6, email);
+            preparedStatement.setInt(7, experience.getValue());
+            preparedStatement.setString(8, avatar);
             result = preparedStatement.executeUpdate();
         }
         return result;
@@ -136,13 +142,13 @@ public class UserDAO {
         return result;
     }
 
-    public int updatePicture(int userId, String picture) throws SQLException {
+    public int updateAvatar(int userId, String avatar) throws SQLException {
 
-        String query = "UPDATE user SET picture = ?  WHERE id = ?";
+        String query = "UPDATE user SET avatar = ?  WHERE id = ?";
         int result = 0;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, picture);
+            preparedStatement.setString(1, avatar);
             preparedStatement.setInt(2, userId);
             result = preparedStatement.executeUpdate();
         }

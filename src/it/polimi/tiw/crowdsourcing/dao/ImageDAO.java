@@ -34,7 +34,6 @@ public class ImageDAO {
                     image = new Image();
                     image.setId(resultSet.getInt("id"));
                     image.setSource(resultSet.getString("source"));
-                    image.setThumbnail(resultSet.getString("thumbnail"));
                     image.setLatitude(resultSet.getDouble("latitude"));
                     image.setLongitude(resultSet.getDouble("longitude"));
                     image.setCity(resultSet.getString("city"));
