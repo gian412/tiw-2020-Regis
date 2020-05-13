@@ -44,9 +44,10 @@ public class CreateUser extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String role, firstName, lastName, username, password, email, exp = null, avatar;
+        String role, firstName, lastName, username, password, email, exp, avatar, path;
         try {
             role = req.getParameter("role"); // Get role from request's parameter
+            role = role.toLowerCase();
             firstName = req.getParameter("firstname"); // Get first name from request's parameter
             lastName = req.getParameter("lastname"); // Get last name from request's parameter
             username = req.getParameter("username"); // Get username from request's parameter
@@ -68,7 +69,7 @@ public class CreateUser extends HttpServlet {
         if (user!=null) { // If the email already exist
             // TODO: forward to login with email field initialized
         }
-        String path;
+
         if (role.equals("manager")) {
             try {
                 userDAO.createManager(role, firstName, lastName, username, password, email);
@@ -77,6 +78,7 @@ public class CreateUser extends HttpServlet {
                 resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not able to create user");
                 return;
             }
+            path = getServletContext().getContextPath() + "/ManagerHome";
         } else if (role.equals("worker")){
             Part avatarPart = null;
             try {
@@ -110,8 +112,12 @@ public class CreateUser extends HttpServlet {
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid image parameter value"); // ...send error
                 return;
             }
-
+            path = getServletContext().getContextPath() + "/WorkerHome";
+        } else {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid role parameter values"); // ...send error
+            return;
         }
+        resp.sendRedirect(path);
     }
 
     @Override

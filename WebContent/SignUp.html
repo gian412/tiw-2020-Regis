@@ -11,44 +11,47 @@
 		<!-- Role selector request -->
 	  <p>Are you a:</p>
 		<!-- Role -->
-		<div class="role-select" style="width:200px;">
+		<!--<div class="role-select" style="width:200px;">
 			<select name="role">
 				<option value="0">Select role:</option>
 				<option value="manager">Manager</option>
 				<option value="worker">Worker</option>
 			</select>
-		</div>
+		</div>-->
+		Role:<input type="text" name="role" placeholder="Manager/Worker"><br>
 		<!-- Information input request -->
 		<p>Please, give us some information about you:</p>
 		<!-- Name -->
-		<label for="firstname">Name:</label>
+		<label>Name:</label>
 		<input type="text" name="firstname" placeholder="Enter your first name"><br>
 		<!-- Surname -->
-		<label for="lastname">Surname:</label>
+		<label>Surname:</label>
 		<input type="text" name="lastname" placeholder="Enter your last name"><br>
 		<!-- Username -->
-		<label for="username">Username:</label>
+		<label>Username:</label>
 		<input type="text" name="username" placeholder="Enter your username"><br>
 		<!-- Email -->
-		<label for="email">Email:</label>
+		<label>Email:</label>
 		<input type="email" name="email" placeholder="Enter your email"><br>
-		<label for="password">Password:</label>
+		<label>Password:</label>
 		<input type="password" name="password" placeholder="Enter your password"><br>
 		<!-- Experience selector request -->
 		<p>What about your experience level?</p>
-		<div class="experience-select" style="width:200px;">
+		<!--<div class="experience-select" style="width:200px;">
 			<select name="experience">
 				<option value="-1">Select experience level:</option>
 				<option value="0">High</option>
 				<option value="1">Medium</option>
 				<option value="2">Low</option>
 			</select>
-		</div>
+		</div>-->
+		<label>Experience level:</label>
+		<input type="text" name="experience" placeholder="High/medium/low"><br>
 		<!-- Image insertion request -->
 		<p>Do you want to give us a picture about you?</p>
-		<label for="avatar">Picture about you:</label>
+		<label>Picture about you:</label>
 		<input type="file" name="avatar"><br>
 		<input type="submit" value="Sign up">
-</form>
+	</form>
 </body>
 </html>
