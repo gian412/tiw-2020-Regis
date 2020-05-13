@@ -57,14 +57,6 @@ public class CheckLogin extends HttpServlet {
         UserDAO userDAO = new UserDAO(connection);
         User user;
         try {
-            /*if ( isValid(username) ) { // check if username is a email
-                user = userDAO.checkCredentialEmail(username, password); // Check credential with email
-                if (user==null) {
-                    user = userDAO.checkCredentialUsername(username, password);
-                }
-            } else {
-                user = userDAO.checkCredentialUsername(username, password);
-            }*/
             user = userDAO.checkCredential(username, password);
         } catch (SQLException e) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not able to check credential");

@@ -71,7 +71,76 @@ public class UserDAO {
         }
     }
 
-    public int createUser(String role, String firstName, String lastName, String username, String password, String  email, ExperienceLevel experience, String avatar) throws SQLException {
+    public User findUserByUsername(String username) throws SQLException {
+
+        String query = "SELECT * FROM user WHERE username = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, username);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (!resultSet.isBeforeFirst()) { // No result, credential check failed
+                    return null;
+                } else {
+                    resultSet.next();
+                    User user = new User();
+                    user.setId(resultSet.getInt("id"));
+                    user.setFirstName(resultSet.getString("firstname"));
+                    user.setLastName(resultSet.getString("lastname"));
+                    user.setRole(resultSet.getString("role"));
+                    user.setUsername(resultSet.getString("username"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setExperienceLevel(resultSet.getInt("experience"));
+                    user.setAvatar(resultSet.getString("avatar"));
+                    return user;
+                }
+            }
+        }
+    }
+
+    public User findUserByEmail(String email) throws SQLException {
+
+        String query = "SELECT * FROM user WHERE email = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, email);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (!resultSet.isBeforeFirst()) { // No result, credential check failed
+                    return null;
+                } else {
+                    resultSet.next();
+                    User user = new User();
+                    user.setId(resultSet.getInt("id"));
+                    user.setFirstName(resultSet.getString("firstname"));
+                    user.setLastName(resultSet.getString("lastname"));
+                    user.setRole(resultSet.getString("role"));
+                    user.setUsername(resultSet.getString("username"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setExperienceLevel(resultSet.getInt("experience"));
+                    user.setAvatar(resultSet.getString("avatar"));
+                    return user;
+                }
+            }
+        }
+    }
+
+    public int createManager(String role, String firstName, String lastName, String username, String password, String  email) throws SQLException {
+
+        String query = "INSERT into user (role, firstname, lastname, username, password, email) VALUES(?, ?, ?, ?, ?, ?)";
+        int result = 0;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
+            preparedStatement.setString(1, role);
+            preparedStatement.setString(2, firstName);
+            preparedStatement.setString(3, lastName);
+            preparedStatement.setString(4, username);
+            preparedStatement.setString(5, password);
+            preparedStatement.setString(6, email);
+            result = preparedStatement.executeUpdate();
+        }
+        return result;
+    }
+
+    public int createWorker(String role, String firstName, String lastName, String username, String password, String  email, int experience, String avatar) throws SQLException {
 
         String query = "INSERT into user (role, firstname, lastname, username, password, email, experience, avatar) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         int result = 0;
@@ -83,7 +152,7 @@ public class UserDAO {
             preparedStatement.setString(4, username);
             preparedStatement.setString(5, password);
             preparedStatement.setString(6, email);
-            preparedStatement.setInt(7, experience.getValue());
+            preparedStatement.setInt(7, experience);
             preparedStatement.setString(8, avatar);
             result = preparedStatement.executeUpdate();
         }
