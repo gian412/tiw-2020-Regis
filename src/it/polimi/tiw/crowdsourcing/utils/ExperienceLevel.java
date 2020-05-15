@@ -23,6 +23,18 @@ public enum ExperienceLevel {
         }
     }
 
+    public static ExperienceLevel getExperienceLevelFromString(String string) {
+        switch (string.toLowerCase()) {
+            case "high":
+                return ExperienceLevel.HIGH;
+            case "medium":
+                return ExperienceLevel.MEDIUM;
+            case "low":
+                return ExperienceLevel.LOW;
+            default:
+                return null;
+        }
+    }
     public int getValue() {
         return this.value;
     }

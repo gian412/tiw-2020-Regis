@@ -5,6 +5,7 @@ import it.polimi.tiw.crowdsourcing.dao.UserDAO;
 import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
 import it.polimi.tiw.crowdsourcing.utils.ExperienceLevel;
 import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
@@ -44,7 +45,7 @@ public class CreateUser extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String role, firstName, lastName, username, password, email, exp, avatar, path;
+        String role, firstName, lastName, username, password, email, exp, path;
         try {
             role = req.getParameter("role"); // Get role from request's parameter
             role = role.toLowerCase();
@@ -67,6 +68,11 @@ public class CreateUser extends HttpServlet {
             return;
         }
         if (user!=null) { // If the email already exist
+            ServletContext servletContext = getServletContext();
+            final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
+            ctx.setVariable("errorMessage", "email already associated to an account");
+            path = "/Login.html"; // Write path ...
+            templateEngine.process(path, ctx, resp.getWriter()); // ...and process it
             // TODO: forward to login with email field initialized
         }
 
@@ -78,40 +84,44 @@ public class CreateUser extends HttpServlet {
                 resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not able to create user");
                 return;
             }
+            try {
+                user = userDAO.findUserByUsername(username);
+            } catch (SQLException e) {
+                e.printStackTrace(); // TODO: remove after test
+                resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not able to get user");
+                return;
+            }
+            req.getSession().setAttribute("user", user);
             path = getServletContext().getContextPath() + "/ManagerHome";
         } else if (role.equals("worker")){
-            Part avatarPart = null;
+            ExperienceLevel experience;
             try {
                 exp = req.getParameter("experience");
-                avatarPart = req.getPart("avatar");
             } catch (NullPointerException e) {
                 e.printStackTrace(); // TODO: remove after test
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameter values"); // ...send error
                 return;
             }
+            experience = ExperienceLevel.getExperienceLevelFromString(exp);
+            if (experience==null) {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid parameter values");
+                return;
+            }
             try {
-                int experience = Integer.parseInt(exp);
-            } catch (NumberFormatException e) {
+                userDAO.createWorker(role, firstName, lastName, username, password, email, experience.getValue());
+            } catch (SQLException e) {
                 e.printStackTrace(); // TODO: remove after test
-                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Experience must be an integer"); // ...send error
+                resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not able to create user");
                 return;
             }
-            if (avatarPart!=null) {
-                InputStream imageStream = avatarPart.getInputStream();
-                BufferedImage avatarBuff = ImageIO.read(avatarPart.getInputStream());
-                try {
-                    File outputFile = new File("/WEB-INF/images/avatar/" + username + ".jpg");
-                    ImageIO.write(avatarBuff, "jpg", outputFile);
-                    avatar = "/WEB-INF/images/avatar/" + username + ".jpg";
-                } catch (IOException e) {
-                    e.printStackTrace(); // TODO: remove after test
-                    resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not able to save the avatar image");
-                    return;
-                }
-            } else {
-                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid image parameter value"); // ...send error
+            try {
+                user = userDAO.findUserByUsername(username);
+            } catch (SQLException e) {
+                e.printStackTrace(); // TODO: remove after test
+                resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not able to get user");
                 return;
             }
+            req.getSession().setAttribute("user", user);
             path = getServletContext().getContextPath() + "/WorkerHome";
         } else {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid role parameter values"); // ...send error

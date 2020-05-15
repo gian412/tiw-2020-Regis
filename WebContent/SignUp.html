@@ -7,7 +7,7 @@
 <body>
 	<h1>Welcome to the sign up page</h1>
 	<p>Please, enter the required information to sign up to our awesome crowdsourcing website!</p>
-	<form method="post" action="CreateUser" enctype="multipart/form-data">
+	<form method="post" action="CreateUser">
 		<!-- Role selector request -->
 	  <p>Are you a:</p>
 		<!-- Role -->
@@ -47,10 +47,6 @@
 		</div>-->
 		<label>Experience level:</label>
 		<input type="text" name="experience" placeholder="High/medium/low"><br>
-		<!-- Image insertion request -->
-		<p>Do you want to give us a picture about you?</p>
-		<label>Picture about you:</label>
-		<input type="file" name="avatar"><br>
 		<input type="submit" value="Sign up">
 	</form>
 </body>
