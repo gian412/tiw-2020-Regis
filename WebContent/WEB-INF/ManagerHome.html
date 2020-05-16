@@ -13,7 +13,7 @@
             <td><b>Status</b></td>
         </thead>
         <tr th:each="campaign : ${campaigns}">
-            <td th:text="${campaign.name}">Name</td>
+            <td th:text="${campaign.name}"><a th:href="@{CampaignDetails(${campaign.id})}">Name</a></td>
             <td th:text="${campaign.customer}">Customer</td>
             <td th:text="${campaign.status.toString()}">Status</td>
         </tr>
