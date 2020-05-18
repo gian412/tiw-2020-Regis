@@ -63,7 +63,7 @@ public class AddImageToCampaign extends HttpServlet {
         Part imagePart = null;
         double latitude, longitude;
         Date date = null;
-        int resValue, campaignId;
+        int resValue, campaignId, numberOfImages;
 
         try {
             lat = req.getParameter("latitude");
@@ -105,11 +105,20 @@ public class AddImageToCampaign extends HttpServlet {
             return;
         }
 
+        CampaignDAO campaignDAO = new CampaignDAO(connection, campaignId);
+
+        try {
+            numberOfImages = campaignDAO.findNumberOfImageByCampaign();
+        } catch (SQLException e) {
+            e.printStackTrace(); // TODO: remove after test
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to access database");
+            return;
+        }
         try {
             InputStream imageStream = imagePart.getInputStream();
             Image image = ImageIO.read(imageStream);
             // TODO: Count number of image and insert number in path
-            path = "/images/" + campaignId+".jpg";
+            path = "/images/" + campaignId + "-" + numberOfImages + ".jpg";
             BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
             ImageIO.write(bufferedImage, "jpg", new File(path)); // TODO: iterator
         }catch (IOException e) {
@@ -117,7 +126,7 @@ public class AddImageToCampaign extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to save image");
             return;
         }
-        CampaignDAO campaignDAO = new CampaignDAO(connection, campaignId);
+
         try {
             campaignDAO.addImage(path, latitude, longitude, city, region, provenance, date, Resolution.getResolutionFromInt(resValue));
         } catch (SQLException e) {
