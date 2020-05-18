@@ -67,7 +67,7 @@ public class CreateCampaign extends HttpServlet {
         }
         Campaign campaign;
         try {
-            campaign = managerDAO.findCampaignsByName(campaignName);
+            campaign = managerDAO.findCampaignByName(campaignName);
         } catch (SQLException e) {
             e.printStackTrace(); // TODO: remove after test
             resp.sendError(HttpServletResponse.SC_BAD_GATEWAY, "Unable to find the created campaign");

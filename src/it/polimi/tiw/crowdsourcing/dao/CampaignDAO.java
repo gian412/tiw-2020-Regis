@@ -53,7 +53,7 @@ public class CampaignDAO {
         return result;
     }
 
-    public int createImage(String source, double latitude, double longitude, String city, String region,
+    public int addImage(String source, double latitude, double longitude, String city, String region,
                            String provenance, Date date, Resolution resolution) throws SQLException {
 
         String query = "INSERT into image (source, latitude, longitude, city, region, provenance, date, resolution, campaignid) " +
