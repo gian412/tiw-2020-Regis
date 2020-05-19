@@ -29,12 +29,18 @@
     <div class="insert-image">
         <p>Insert a new image</p>
         <form method="post" action="AddImageToCampaign" enctype="multipart/form-data">
-            Latitude: <input type="number" name="latitude" step="0.00000001" required>
-            Longitude: <input type="number" name="longitude" step="0.00000001" required><br>
-            City: <input type="text" placeholder="Enter city" name="city" required><br>
-            Region: <input type="text" placeholder="Enter region" name="region" required><br>
-            Provenance: <input type="text" placeholder="Enter image's provenance" name="provenance" required><br>
-            Date: <input type="date" name="date"><br>
+            <label for="latitude">Latitude: </label>
+            <input type="number" id="latitude" name="latitude" step="0.00000001" required>
+            <label for="longitude">Longitude: </label>
+            <input type="number" id="longitude" name="longitude" step="0.00000001" required><br>
+            <label for="city">City: </label>
+            <input type="text" placeholder="Enter city" id="city" name="city" required><br>
+            <label for="region">Region: </label>
+            <input type="text" placeholder="Enter region" id="region" name="region" required><br>
+            <label for="provenance">Provenance: </label>
+            <input type="text" placeholder="Enter image's provenance" id="provenance" name="provenance" required><br>
+            <label for="date">Date: </label>
+            <input type="date" id="date" name="date"><br>
             Resolution:<br>
             <input type="radio" id="high" name="resolution" value="0">
             <label for="high">High</label><br>
