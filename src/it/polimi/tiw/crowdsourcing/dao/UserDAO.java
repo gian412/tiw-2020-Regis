@@ -140,9 +140,9 @@ public class UserDAO {
         return result;
     }
 
-    public int createWorker(String role, String firstName, String lastName, String username, String password, String  email, int experience, String avatar) throws SQLException {
+    public int createWorker(String role, String firstName, String lastName, String username, String password, String  email, int experience) throws SQLException {
 
-        String query = "INSERT into user (role, firstname, lastname, username, password, email, experience, avatar) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT into user (role, firstname, lastname, username, password, email, experience) VALUES(?, ?, ?, ?, ?, ?, ?)";
         int result = 0;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
@@ -153,7 +153,6 @@ public class UserDAO {
             preparedStatement.setString(5, password);
             preparedStatement.setString(6, email);
             preparedStatement.setInt(7, experience);
-            preparedStatement.setString(8, avatar);
             result = preparedStatement.executeUpdate();
         }
         return result;

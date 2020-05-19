@@ -12,11 +12,13 @@
             <td><b>Customer</b></td>
             <td><b>Status</b></td>
         </thead>
+        <tbody>
         <tr th:each="campaign : ${campaigns}">
-            <td th:text="${campaign.name}">Name</td>
+            <td><a th:href="@{CampaignDetails(id=${campaign.id})}" th:text="${campaign.name}">Name</a></td>
             <td th:text="${campaign.customer}">Customer</td>
             <td th:text="${campaign.status.toString()}">Status</td>
         </tr>
+        </tbody>
     </table>
     <form method="post" action="CreateCampaign">
         Campaign name: <input type="text" placeholder="Enter Campaign name" name="name" required><br>

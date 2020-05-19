@@ -1,7 +1,9 @@
 package it.polimi.tiw.crowdsourcing.controllers;
 
 import it.polimi.tiw.crowdsourcing.beans.Campaign;
+import it.polimi.tiw.crowdsourcing.beans.Image;
 import it.polimi.tiw.crowdsourcing.beans.User;
+import it.polimi.tiw.crowdsourcing.dao.CampaignDAO;
 import it.polimi.tiw.crowdsourcing.dao.ManagerDAO;
 import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
 import org.thymeleaf.TemplateEngine;
@@ -19,17 +21,14 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
-@WebServlet("/CreateCampaign")
-public class CreateCampaign extends HttpServlet {
+@WebServlet("/CampaignDetails")
+public class GoToCampaignDetails extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private Connection connection;
     private TemplateEngine templateEngine;
-
-    public CreateCampaign() {
-        super();
-    }
 
     @Override
     public void init() throws ServletException {
@@ -43,41 +42,50 @@ public class CreateCampaign extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        String cmpId = null;
+        try {
+            cmpId = req.getParameter("id"); // Get campaign id from the request
+        } catch (NullPointerException e) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameter value");
+            return;
+        }
+        int campaignId;
+        try {
+            campaignId = Integer.parseInt(cmpId); // Parse campiagn id
+        } catch (NumberFormatException e) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid parameter value");
+            return;
+        }
         User manager = null;
-        HttpSession httpSession = req.getSession(); // Get session from the request
-        manager = (User) httpSession.getAttribute("user"); // Get admin from the session attribute
-        String campaignName, campaignCustomer;
-        try {
-            campaignName = req.getParameter("name"); // Get Campaign's name from request's parameter
-            campaignCustomer = req.getParameter("customer"); // Get Campaign's customer from request's parameter
-        } catch (NullPointerException e) { // If one of the parameters is null ...
-            e.printStackTrace(); // TODO: remove after test
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameter values"); // ...send error
-            return;
-        }
+        HttpSession httpSession = req.getSession(); // Get session
+        manager = (User) httpSession.getAttribute("user"); // Get user from the session
         ManagerDAO managerDAO = new ManagerDAO(connection, manager.getId());
+        Campaign campaign = null;
         try {
-            managerDAO.createCampaign(campaignName, campaignCustomer);
+            campaign = managerDAO.findCampaignById(campaignId);
         } catch (SQLException e) {
             e.printStackTrace(); // TODO: remove after test
-            resp.sendError(HttpServletResponse.SC_BAD_GATEWAY, "Campaign creation in the database failed");
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to access database");
             return;
         }
-        Campaign campaign;
+        CampaignDAO campaignDAO = new CampaignDAO(connection, campaignId);
+        List<Image> images = null;
         try {
-            campaign = managerDAO.findCampaignByName(campaignName);
+            images = campaignDAO.findImagesByCampaign();
         } catch (SQLException e) {
             e.printStackTrace(); // TODO: remove after test
-            resp.sendError(HttpServletResponse.SC_BAD_GATEWAY, "Unable to find the created campaign");
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to access database");
             return;
         }
         String path = "/WEB-INF/CampaignDetails.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
         ctx.setVariable("campaign", campaign);
+        ctx.setVariable("images", images);
         templateEngine.process(path, ctx, resp.getWriter());
+
 
     }
 
@@ -89,5 +97,4 @@ public class CreateCampaign extends HttpServlet {
             e.printStackTrace(); // TODO: remove after test
         }
     }
-
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Campaign Details</title>
@@ -8,9 +8,44 @@
     <h1>Campaign details</h1>
     <table>
         <thead>
-
+            <td><b>Name</b></td>
+            <td><b>Customer</b></td>
+            <td><b>Status</b></td>
         </thead>
-        <tr></tr>
+        <tbody>
+            <tr>
+                <td th:text="${campaign.name}">Name</td>
+                <td th:text="${campaign.customer}">Customer</td>
+                <td th:text="${campaign.status.toString()}">Status</td>
+            </tr>
+        </tbody>
     </table>
+    <table th:if="${not #lists.isEmpty(images)}">
+        <tr th:each="image : ${images}">
+            <td><img width="150" th:src="${image.source}"/></td> <!--TODO: Slideshow gallery-->
+        </tr>
+    </table>
+    <p th:if="${#lists.isEmpty(images)}">No image yet</p>
+    <div class="insert-image">
+        <p>Insert a new image</p>
+        <form method="post" action="AddImageToCampaign" enctype="multipart/form-data">
+            Latitude: <input type="number" name="latitude" step="0.00000001" required>
+            Longitude: <input type="number" name="longitude" step="0.00000001" required><br>
+            City: <input type="text" placeholder="Enter city" name="city" required><br>
+            Region: <input type="text" placeholder="Enter region" name="region" required><br>
+            Provenance: <input type="text" placeholder="Enter image's provenance" name="provenance" required><br>
+            Date: <input type="date" name="date"><br>
+            Resolution:<br>
+            <input type="radio" id="high" name="resolution" value="0">
+            <label for="high">High</label><br>
+            <input type="radio" id="medium" name="resolution" value="1">
+            <label for="medium">Medium</label><br>
+            <input type="radio" id="low" name="resolution" value="2">
+            <label for="low">Low</label><br>
+            <input type="file" name="image" required><br><br>
+            <input type="hidden" name="campaign" th:value="${campaign.id}">
+            <input type="submit" value="Upload image">
+        </form>
+    </div>
 </body>
 </html>

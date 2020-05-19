@@ -23,6 +23,25 @@ public class CampaignDAO {
         this.id = id;
     }
 
+    public int findNumberOfImageByCampaign() throws SQLException {
+
+        String query =
+                "SELECT COUNT(*) " +
+                "FROM image " +
+                "WHERE campaignid = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, this.id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()){
+                    return resultSet.getInt(1);
+                }
+
+            }
+        }
+        throw new SQLException();
+    }
+
     public int changeStatus(CampaignStatus status) throws SQLException {
 
         String query =
@@ -53,7 +72,7 @@ public class CampaignDAO {
         return result;
     }
 
-    public int createImage(String source, double latitude, double longitude, String city, String region,
+    public int addImage(String source, double latitude, double longitude, String city, String region,
                            String provenance, Date date, Resolution resolution) throws SQLException {
 
         String query = "INSERT into image (source, latitude, longitude, city, region, provenance, date, resolution, campaignid) " +

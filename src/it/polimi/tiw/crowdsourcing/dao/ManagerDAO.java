@@ -41,7 +41,7 @@ public class ManagerDAO {
         return campaigns;
     }
 
-    public Campaign findCampaignsByName(String campaignName) throws SQLException{
+    public Campaign findCampaignByName(String campaignName) throws SQLException {
 
         String query =
                 "SELECT * " +
@@ -51,6 +51,35 @@ public class ManagerDAO {
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, campaignName);
+            preparedStatement.setInt(2, this.id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (!resultSet.isBeforeFirst()) {
+                    return null;
+                } else {
+                    resultSet.next();
+                    campaign = new Campaign();
+                    campaign.setId(resultSet.getInt("id"));
+                    campaign.setName(resultSet.getString("name"));
+                    campaign.setCustomer(resultSet.getString("customer"));
+                    campaign.setStatus(resultSet.getInt("status"));
+                    campaign.setManagerId(resultSet.getInt("managerid"));
+                    return campaign;
+                }
+            }
+        }
+
+    }
+
+    public Campaign findCampaignById(int campaignId) throws SQLException {
+
+        String query =
+                "SELECT * " +
+                "FROM campaign " +
+                "WHERE id = ? AND managerid = ?";
+        Campaign campaign = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, campaignId);
             preparedStatement.setInt(2, this.id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (!resultSet.isBeforeFirst()) {
