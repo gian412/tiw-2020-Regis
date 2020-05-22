@@ -14,6 +14,7 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.awt.*;
@@ -29,6 +30,7 @@ import java.util.Date;
 import java.util.List;
 
 @WebServlet("/AddImageToCampaign")
+@MultipartConfig
 public class AddImageToCampaign extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -115,10 +117,9 @@ public class AddImageToCampaign extends HttpServlet {
         try {
             InputStream imageStream = imagePart.getInputStream();
             Image image = ImageIO.read(imageStream);
-            // TODO: Count number of image and insert number in path
-            path = "/images/" + campaignId + "-" + numberOfImages + ".jpg";
+            path = "~/../images/img" + campaignId + "-" + numberOfImages + ".jpg";
             BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-            ImageIO.write(bufferedImage, "jpg", new File(path)); // TODO: iterator
+            ImageIO.write(bufferedImage, "jpg", new File(path));
         }catch (IOException e) {
             e.printStackTrace(); // TODO: remove after test
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to save image");
