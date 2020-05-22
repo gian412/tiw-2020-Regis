@@ -117,7 +117,7 @@ public class AddImageToCampaign extends HttpServlet {
         try {
             InputStream imageStream = imagePart.getInputStream();
             Image image = ImageIO.read(imageStream);
-            path = "~/../images/img" + campaignId + "-" + numberOfImages + ".jpg";
+            path = campaignId + "-" + numberOfImages + ".jpg";
             BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
             ImageIO.write(bufferedImage, "jpg", new File(path));
         }catch (IOException e) {

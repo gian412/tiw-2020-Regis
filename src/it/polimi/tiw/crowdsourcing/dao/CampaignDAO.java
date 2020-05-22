@@ -104,7 +104,7 @@ public class CampaignDAO {
                 while (resultSet.next()){
                     Image image = new Image();
                     image.setId(resultSet.getInt("id"));
-                    image.setSource(resultSet.getString("source"));
+                    image.setSource("images/" + resultSet.getString("source"));
                     image.setLatitude(resultSet.getDouble("latitude"));
                     image.setLongitude(resultSet.getDouble("longitude"));
                     image.setCity(resultSet.getString("city"));
