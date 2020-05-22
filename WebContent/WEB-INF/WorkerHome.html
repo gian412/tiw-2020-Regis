@@ -7,7 +7,7 @@
 <body>
     <h1>Worker Homepage</h1>
     <table>
-        <thead> <!-- TODO: If ( campaignsAssigned.isEmpty() ) then showEmptyMessage -->
+        <thead th:if="${not #lists.isEmpty(campaignsAssigned)}">
             <td><b>Name</b></td>
             <td><b>Customer</b></td>
             <td><b>Status</b></td>
@@ -18,7 +18,8 @@
             <td th:text="${campaign.status.toString()}">Status</td>s
         </tr>
     </table>
-    <table> <!-- TODO: If ( campaignsNotAssigned.isEmpty() ) then showEmptyMessage -->
+    <p th:if="${#lists.isEmpty(campaignsAssigned)}">You aren't involved in any campaign</p>
+    <table th:if="${not #lists.isEmpty(campaignsNotAssigned)}">
         <thead>
             <td><b>Name</b></td>
             <td><b>Customer</b></td>
@@ -30,5 +31,6 @@
             <td th:text="${campaign.status.toString()}">Status</td>s
         </tr>
     </table>
+    <p th:if="${#lists.isEmpty(campaignsNotAssigned)}">There aren't campaigns in which you are not involved</p>
 </body>
 </html>
