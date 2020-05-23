@@ -46,7 +46,7 @@ public class GoToCampaignDetails extends HttpServlet {
 
         String cmpId = null;
         try {
-            cmpId = req.getParameter("id"); // Get campaign id from the request
+            cmpId = req.getParameter("campaign"); // Get campaign id from the request
         } catch (NullPointerException e) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameter value");
             return;
@@ -87,6 +87,11 @@ public class GoToCampaignDetails extends HttpServlet {
         templateEngine.process(path, ctx, resp.getWriter());
 
 
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        this.doGet(req, resp);
     }
 
     @Override

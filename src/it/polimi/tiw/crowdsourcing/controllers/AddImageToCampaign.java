@@ -12,6 +12,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.imageio.ImageIO;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -22,6 +23,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -115,11 +117,8 @@ public class AddImageToCampaign extends HttpServlet {
             return;
         }
         try {
-            InputStream imageStream = imagePart.getInputStream();
-            Image image = ImageIO.read(imageStream);
             path = campaignId + "-" + numberOfImages + ".jpg";
-            BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-            ImageIO.write(bufferedImage, "jpg", new File(path));
+            saveImage(imagePart, path);
         }catch (IOException e) {
             e.printStackTrace(); // TODO: remove after test
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to save image");
@@ -134,24 +133,8 @@ public class AddImageToCampaign extends HttpServlet {
             return;
         }
 
-        ManagerDAO managerDAO = new ManagerDAO(connection, manager.getId());
-        Campaign campaign = null;
-        List<it.polimi.tiw.crowdsourcing.beans.Image> images;
-        try {
-            campaign = managerDAO.findCampaignById(campaignId);
-            images = campaignDAO.findImagesByCampaign();
-        } catch (SQLException e) {
-            e.printStackTrace(); // TODO: remove after test
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to access database");
-            return;
-        }
-
-        path = "/WEB-INF/CampaignDetails.html";
-        ServletContext servletContext = getServletContext();
-        final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
-        ctx.setVariable("campaign", campaign);
-        ctx.setVariable("images", images);
-        templateEngine.process(path, ctx, resp.getWriter());
+        path = "/tiw_2020_Regis/CampaignDetails?campaign="+campaignId;
+        resp.sendRedirect(path);
 
     }
 
@@ -163,4 +146,22 @@ public class AddImageToCampaign extends HttpServlet {
             e.printStackTrace(); // TODO: remove after test
         }
     }
+
+    private void saveImage(Part part, String path) throws IOException{
+        /*InputStream imageStream = part.getInputStream();
+        Image image = ImageIO.read(imageStream);
+        File upload = new File(getServletContext().getInitParameter("upload.location"));
+        BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        ImageIO.write(bufferedImage, "jpg", new File(upload, path));*/
+
+        File upload = new File(getServletContext().getInitParameter("upload.location"));
+        String string = upload.getAbsolutePath(); // TODO: remove after test
+
+        File image = new File(upload, path);
+        try (InputStream input = part.getInputStream()) {
+            Files.copy(input, image.toPath());
+        }
+
+    }
+
 }
