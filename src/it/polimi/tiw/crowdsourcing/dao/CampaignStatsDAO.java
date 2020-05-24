@@ -1,6 +1,5 @@
 package it.polimi.tiw.crowdsourcing.dao;
 
-import it.polimi.tiw.crowdsourcing.beans.Campaign;
 import it.polimi.tiw.crowdsourcing.beans.CampaignStats;
 
 import java.sql.Connection;
@@ -88,8 +87,6 @@ public class CampaignStatsDAO {
 
     public CampaignStats findStatsByCampaign() throws SQLException {
 
-        int totalNumberOfImage, totalNumberOfAnnotation, numberOfImageWithConflict;
-        double averageNumberOfAnnotationPerImage;
         CampaignStats campaignStats = new CampaignStats();
         try {
             campaignStats.setTotalImage( findTotalNumberOfImage() );

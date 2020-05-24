@@ -1,25 +1,13 @@
 package it.polimi.tiw.crowdsourcing.controllers;
 
-import it.polimi.tiw.crowdsourcing.beans.Campaign;
 import it.polimi.tiw.crowdsourcing.beans.User;
 import it.polimi.tiw.crowdsourcing.dao.CampaignDAO;
-import it.polimi.tiw.crowdsourcing.dao.ManagerDAO;
 import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
 import it.polimi.tiw.crowdsourcing.utils.Resolution;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
-
-import javax.imageio.ImageIO;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +17,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 @WebServlet("/AddImageToCampaign")
 @MultipartConfig

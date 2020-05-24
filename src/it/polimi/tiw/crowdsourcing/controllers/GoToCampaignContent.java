@@ -5,7 +5,6 @@ import it.polimi.tiw.crowdsourcing.beans.Image;
 import it.polimi.tiw.crowdsourcing.beans.User;
 import it.polimi.tiw.crowdsourcing.dao.ManagerDAO;
 import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
-import it.polimi.tiw.crowdsourcing.utils.Confidence;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
@@ -25,7 +24,8 @@ import java.util.List;
 @WebServlet("/CampaignContent")
 public class GoToCampaignContent extends HttpServlet {
 
-    private Connection connection;
+    private static final long serialVersionUID = 1L;
+	private Connection connection;
     TemplateEngine templateEngine;
 
     public GoToCampaignContent() {

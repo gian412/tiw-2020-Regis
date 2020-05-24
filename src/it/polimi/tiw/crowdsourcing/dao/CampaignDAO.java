@@ -1,6 +1,5 @@
 package it.polimi.tiw.crowdsourcing.dao;
 
-import it.polimi.tiw.crowdsourcing.beans.Campaign;
 import it.polimi.tiw.crowdsourcing.beans.Image;
 import it.polimi.tiw.crowdsourcing.utils.CampaignStatus;
 import it.polimi.tiw.crowdsourcing.utils.Resolution;
@@ -123,7 +122,7 @@ public class CampaignDAO {
                 while (resultSet.next()){
                     Image image = new Image();
                     image.setId(resultSet.getInt("id"));
-                    image.setSource("/var/webapps/uploads/images/" + resultSet.getString("source"));// http://localhost:8080/images/
+                    image.setSource("/images/" + resultSet.getString("source"));// http://localhost:8080/images/
                     image.setLatitude(resultSet.getDouble("latitude"));
                     image.setLongitude(resultSet.getDouble("longitude"));
                     image.setCity(resultSet.getString("city"));
