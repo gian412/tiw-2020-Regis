@@ -21,7 +21,7 @@
     </context-param>
     <context-param>
         <param-name>upload.location</param-name>
-        <param-value>/Users/gianlucaregis/uploads/images</param-value><!--/var/webapps/uploads/images-->
+        <param-value>/var/webapps/uploads/images</param-value>
     </context-param>
     <welcome-file-list>
         <welcome-file>Welcome.html</welcome-file>

@@ -37,7 +37,7 @@ public class AddImageToCampaign extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private Connection connection;
-    private TemplateEngine templateEngine;
+    //private TemplateEngine templateEngine;
 
     public AddImageToCampaign() {
         super();
@@ -46,12 +46,12 @@ public class AddImageToCampaign extends HttpServlet {
     @Override
     public void init() throws ServletException {
         connection = ClientHandler.getConnection(getServletContext());
-        ServletContext servletContext = getServletContext();
+        /*ServletContext servletContext = getServletContext();
         ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver( servletContext );
         templateResolver.setTemplateMode(TemplateMode.HTML);
         this.templateEngine = new TemplateEngine();
         this.templateEngine.setTemplateResolver(templateResolver);
-        templateResolver.setSuffix(".html");
+        templateResolver.setSuffix(".html");*/
     }
 
     @Override

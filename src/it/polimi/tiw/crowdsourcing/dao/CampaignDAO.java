@@ -42,6 +42,25 @@ public class CampaignDAO {
         throw new SQLException();
     }
 
+    public int editCampaign(String name, String costumer) throws SQLException {
+
+        String query =
+                "UPDATE campaign " +
+                "SET name = ?, customer = ? " +
+                "WHERE id = ?";
+
+        int result = 0;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, costumer);
+            preparedStatement.setInt(3, this.id);
+            result = preparedStatement.executeUpdate();
+        }
+        return result;
+
+    }
+
     public int changeStatus(CampaignStatus status) throws SQLException {
 
         String query =
@@ -104,7 +123,7 @@ public class CampaignDAO {
                 while (resultSet.next()){
                     Image image = new Image();
                     image.setId(resultSet.getInt("id"));
-                    image.setSource("http://localhost:8080/images/" + resultSet.getString("source"));
+                    image.setSource("/var/webapps/uploads/images/" + resultSet.getString("source"));// http://localhost:8080/images/
                     image.setLatitude(resultSet.getDouble("latitude"));
                     image.setLongitude(resultSet.getDouble("longitude"));
                     image.setCity(resultSet.getString("city"));

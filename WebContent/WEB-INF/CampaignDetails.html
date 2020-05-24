@@ -6,20 +6,28 @@
 </head>
 <body>
     <h1>Campaign details</h1>
-    <table>
-        <thead>
+    <form method="post" action="EditCampaign">
+        <table>
+            <thead>
             <td><b>Name</b></td>
             <td><b>Customer</b></td>
             <td><b>Status</b></td>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             <tr>
-                <td th:text="${campaign.name}">Name</td>
-                <td th:text="${campaign.customer}">Customer</td>
-                <td th:text="${campaign.status.toString()}">Status</td>
+                <td><input type="text" name="name" value="Campaign name" th:value="${campaign.name}" required></td>
+                <td><input type="text" name="customer" value="Campaign customer" th:value="${campaign.customer}" required></td>
+                <td th:text="${campaign.status.toString()}">Status></td>
+                <input type="hidden" name="id" th:value="${campaign.id}">
+                <td><input type="submit" value="Edit Campaign"></td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </form>
+    <form method="get" action="StartCampaign" th:if="${campaign.status.getValue()==0}">
+        <input type="hidden" name="id" th:value="${campaign.id}">
+        <input type="submit" value="Start campaign">
+    </form>
     <table th:if="${not #lists.isEmpty(images)}">
         <tr th:each="image : ${images}">
             <td><img width="150" th:src="${image.source}"/></td> <!--TODO: Slideshow gallery-->
