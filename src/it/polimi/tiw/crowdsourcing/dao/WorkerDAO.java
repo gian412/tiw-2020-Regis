@@ -43,7 +43,10 @@ public class WorkerDAO {
 
     public List<Campaign> findCampaignByWorkerNotAssigned() throws SQLException {
 
-        String query = "SELECT * FROM campaign C WHERE C.status = 1 AND C.id NOT IN (SELECT campaignid FROM assignment WHERE workerid = ?)";
+        String query =
+                "SELECT * " +
+                "FROM campaign C " +
+                "WHERE C.status = 1 AND C.id NOT IN (SELECT campaignid FROM assignment WHERE workerid = ?)";
         List<Campaign> campaigns = new ArrayList<Campaign>();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
