@@ -3,6 +3,7 @@ package it.polimi.tiw.crowdsourcing.controllers;
 import it.polimi.tiw.crowdsourcing.beans.Campaign;
 import it.polimi.tiw.crowdsourcing.beans.Image;
 import it.polimi.tiw.crowdsourcing.beans.User;
+import it.polimi.tiw.crowdsourcing.dao.AnonymousCampaignDAO;
 import it.polimi.tiw.crowdsourcing.dao.CampaignDAO;
 import it.polimi.tiw.crowdsourcing.dao.ManagerDAO;
 import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
@@ -23,8 +24,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/CampaignDetails")
-public class GoToCampaignDetails extends HttpServlet {
+@WebServlet("/Campaign")
+public class GoToCampaign extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private Connection connection;
@@ -44,6 +45,10 @@ public class GoToCampaignDetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        User user = null;
+        HttpSession httpSession = req.getSession(); // Get session from the request
+        user = (User) httpSession.getAttribute("user"); // Get user from the session attribute
+
         String cmpId = null;
         try {
             cmpId = req.getParameter("campaign"); // Get campaign id from the request
@@ -53,18 +58,16 @@ public class GoToCampaignDetails extends HttpServlet {
         }
         int campaignId;
         try {
-            campaignId = Integer.parseInt(cmpId); // Parse campiagn id
+            campaignId = Integer.parseInt(cmpId); // Parse campaign id
         } catch (NumberFormatException e) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid parameter value");
             return;
         }
-        User manager = null;
-        HttpSession httpSession = req.getSession(); // Get session
-        manager = (User) httpSession.getAttribute("user"); // Get user from the session
-        ManagerDAO managerDAO = new ManagerDAO(connection, manager.getId());
+
+        AnonymousCampaignDAO anonymousCampaignDAO = new AnonymousCampaignDAO(connection);
         Campaign campaign = null;
-        try {
-            campaign = managerDAO.findCampaignById(campaignId);
+        try { // Get the campaign from DB
+            campaign = anonymousCampaignDAO.findCampaignById(campaignId);
         } catch (SQLException e) {
             e.printStackTrace(); // TODO: remove after test
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to access database");
@@ -80,7 +83,12 @@ public class GoToCampaignDetails extends HttpServlet {
             return;
         }
 
-        String path = "/WEB-INF/CampaignDetails.html";
+        String path = null;
+        if (user.getRole().equals("manager")) {
+            path = "/WEB-INF/CampaignDetails.html"; // If the user is a Manager, go to Campaign Details
+        } else {
+            path = "/WEB-INF/CampaignOverview.html"; // If the user is a Worker, go to Campaign Overview
+        }
 
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Overview</title>
+</head>
+<body>
+
+    <h1>Campaign Overview</h1>
+
+    <!-- Show Campaign Overview -->
+    <table>
+        <thead>
+            <td><b>Name</b></td>
+            <td><b>Customer</b></td>
+            <td><b>Status</b></td>
+        </thead>
+        <tbody>
+            <tr>
+                <td th:text="${campaign.name}">Name</td>
+                <td th:text="${campaign.customer}">Customer</td>
+                <td th:text="${campaign.status.toString()}">Status</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- If there is any image, show thumbnail --><!--TODO: Slideshow gallery--><!-- TODO: Modal form for Annotation -->
+    <table th:if="${not #lists.isEmpty(images)}">
+        <tr th:each="image : ${images}">
+            <td><img width="150" alt="Waste Dump" th:src="${image.source}"/></td>
+        </tr>
+    </table>
+
+    <!-- If there isn't any image, show a message -->
+    <p th:if="${#lists.isEmpty(images)}">No image yet</p>
+
+</body>
+</html>

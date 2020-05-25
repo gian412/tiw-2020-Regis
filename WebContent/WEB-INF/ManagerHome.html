@@ -6,18 +6,18 @@
 </head>
 <body>
     <h1>Manager Homepage</h1>
-    <table> <!-- TODO: If ( campaigns.isEmpty() ) then showEmptyMessage -->
+    <table th:if="${not #lists.isEmpty(campaigns)}"> <!-- TODO: If ( campaigns.isEmpty() ) then showEmptyMessage -->
         <thead>
             <td><b>Name</b></td>
             <td><b>Customer</b></td>
             <td><b>Status</b></td>
         </thead>
         <tbody>
-        <tr th:each="campaign : ${campaigns}">
-            <td><a th:href="@{CampaignDetails(campaign=${campaign.id})}" th:text="${campaign.name}">Name</a></td>
-            <td th:text="${campaign.customer}">Customer</td>
-            <td th:text="${campaign.status.toString()}">Status</td>
-        </tr>
+            <tr th:each="campaign : ${campaigns}">
+                <td><a th:href="@{Campaign(campaign=${campaign.id})}" th:text="${campaign.name}">Name</a></td>
+                <td th:text="${campaign.customer}">Customer</td>
+                <td th:text="${campaign.status.toString()}">Status</td>
+            </tr>
         </tbody>
     </table>
     <form method="post" action="CreateCampaign">

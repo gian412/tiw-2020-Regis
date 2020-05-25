@@ -2,6 +2,7 @@ package it.polimi.tiw.crowdsourcing.controllers;
 
 import it.polimi.tiw.crowdsourcing.beans.Campaign;
 import it.polimi.tiw.crowdsourcing.beans.User;
+import it.polimi.tiw.crowdsourcing.dao.AnonymousCampaignDAO;
 import it.polimi.tiw.crowdsourcing.dao.CampaignDAO;
 import it.polimi.tiw.crowdsourcing.dao.ManagerDAO;
 import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
@@ -64,11 +65,11 @@ public class EditCampaign extends HttpServlet {
             return;
         }
 
-        ManagerDAO managerDAO = new ManagerDAO(connection, manager.getId());
+        AnonymousCampaignDAO anonymousCampaignDAO = new AnonymousCampaignDAO(connection);
         Campaign campaign = null;
 
         try {
-            campaign = managerDAO.findCampaignById(campaignId);
+            campaign = anonymousCampaignDAO.findCampaignById(campaignId);
         } catch (SQLException e) {
             e.printStackTrace(); // TODO: remove after test
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to access database");
@@ -85,7 +86,7 @@ public class EditCampaign extends HttpServlet {
             return;
         }
 
-        String path = "/tiw_2020_Regis/CampaignDetails?campaign="+campaign.getId();
+        String path = "/tiw_2020_Regis/Campaign?campaign="+campaign.getId();
         resp.sendRedirect(path);
 
     }

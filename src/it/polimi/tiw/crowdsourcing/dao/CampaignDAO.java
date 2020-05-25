@@ -76,7 +76,7 @@ public class CampaignDAO {
         return result;
     }
 
-    public int createAssignment(int workerId) throws SQLException {
+    public int SubscribeWorkerToCampaign(int workerId) throws SQLException {
 
         String query =
                 "INSERT into assignment (workerid, campaignid) " +

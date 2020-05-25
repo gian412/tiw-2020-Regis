@@ -79,7 +79,7 @@ public class ChangeCampaignStatus extends HttpServlet {
             return;
         }
 
-        resp.sendRedirect("/tiw_2020_Regis/CampaignDetails?campaign=" + campaignId);
+        resp.sendRedirect("/tiw_2020_Regis/Campaign?campaign=" + campaignId);
 
     }
 
