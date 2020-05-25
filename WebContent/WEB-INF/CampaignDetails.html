@@ -6,35 +6,73 @@
 </head>
 <body>
     <h1>Campaign details</h1>
-    <form method="post" action="EditCampaign">
+
+    <!-- Show form if campaign is CREATED -->
+    <form method="post" action="EditCampaign" th:if="${campaign.status.getValue()==0}">
         <table>
             <thead>
-            <td><b>Name</b></td>
-            <td><b>Customer</b></td>
-            <td><b>Status</b></td>
+                <td><label for="name"><b>Name</b></label></td>
+                <td><label for="customer"><b>Customer</b></label></td>
+                <td><b>Status</b></td>
             </thead>
             <tbody>
-            <tr>
-                <td><input type="text" name="name" value="Campaign name" th:value="${campaign.name}" required></td>
-                <td><input type="text" name="customer" value="Campaign customer" th:value="${campaign.customer}" required></td>
-                <td th:text="${campaign.status.toString()}">Status></td>
-                <input type="hidden" name="id" th:value="${campaign.id}">
-                <td><input type="submit" value="Edit Campaign"></td>
-            </tr>
+                <tr>
+                    <td><input type="text" name="name" value="Campaign name" id="name" th:value="${campaign.name}" required></td>
+                    <td><input type="text" name="customer" value="Campaign customer" id="customer" th:value="${campaign.customer}" required></td>
+                    <td th:text="${campaign.status.toString()}">Status</td>
+                    <input type="hidden" name="id" th:value="${campaign.id}">
+                    <td><input type="submit" value="Edit Campaign"></td>
+                </tr>
             </tbody>
         </table>
     </form>
-    <form method="get" action="StartCampaign" th:if="${campaign.status.getValue()==0}">
+
+    <!-- Show campaign's infos if it's STARTED || CLOSED -->
+    <table th:if="${campaign.status.getValue()!=0}">
+        <thead>
+            <td><b>Name</b></td>
+            <td><b>Customer</b></td>
+            <td><b>Status</b></td>
+        </thead>
+        <tbody>
+            <td th:text="${campaign.name}">Name</td>
+            <td th:text="${campaign.customer}">Customer</td>
+            <td th:text="${campaign.status.toString()}">Status</td>
+        </tbody>
+    </table>
+
+    <!-- If campaign is CREATED, then START -->
+    <form method="get" action="ChangeCampaignStatus" th:if="${campaign.status.getValue()==0}">
         <input type="hidden" name="id" th:value="${campaign.id}">
+        <input type="hidden" name="status" value="1">
         <input type="submit" value="Start campaign">
     </form>
+
+    <!-- If campaign is STARTED, then CLOSE -->
+    <form method="get" action="ChangeCampaignStatus" th:if="${campaign.status.getValue()==1}">
+        <input type="hidden" name="id" th:value="${campaign.id}">
+        <input type="hidden" name="status" value="2">
+        <input type="submit" value="Close campaign">
+    </form>
+
+    <!-- If campaign is STARTED || CLOSED, show campaign stats -->
+    <form method="get" action="CampaignStats" th:if="${campaign.status.getValue()!=0}">
+        <input type="hidden" name="campaign" th:value="${campaign.id}">
+        <input type="submit" value="Campaign stats">
+    </form>
+
+    <!-- If there is any image, show thumbnail --><!--TODO: Slideshow gallery-->
     <table th:if="${not #lists.isEmpty(images)}">
         <tr th:each="image : ${images}">
-            <td><img width="150" th:src="${image.source}"/></td> <!--TODO: Slideshow gallery-->
+            <td><img width="150" alt="Waste Dump" th:src="${image.source}"/></td>
         </tr>
     </table>
+
+    <!-- If there isn't any image, show a message -->
     <p th:if="${#lists.isEmpty(images)}">No image yet</p>
-    <div class="insert-image">
+
+    <!-- Form for image insertion -->
+    <div class="insert-image" th:if="${campaign.status.getValue()==0}">
         <p>Insert a new image</p>
         <form method="post" action="AddImageToCampaign" enctype="multipart/form-data">
             <label for="latitude">Latitude: </label>

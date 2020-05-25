@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign stats</title>
+</head>
+<body>
+    <h1>Campaign's statistics page</h1>
+
+    <!-- Show campaign's infos -->
+    <h3>Campaign's Informations</h3>
+    <table>
+        <thead>
+            <td><b>Name</b></td>
+            <td><b>Customer</b></td>
+            <td><b>Status</b></td>
+        </thead>
+        </tbody>
+        <tbody>
+            <td th:text="${campaign.name}">Name</td>
+            <td th:text="${campaign.customer}">Customer</td>
+            <td th:text="${campaign.status.toString()}">Status</td>
+        </tbody>
+    </table>
+
+    <!-- Show campaign's stats -->
+    <h3>Campaign's Statistics</h3>
+    <table>
+        <tr>
+            <td>Total number of image: </td>
+            <td th:text="${stats.getTotalImage()}">Images</td>
+        </tr>
+        <tr>
+            <td>Total number of annotations: </td>
+            <td th:text="${stats.getTotalAnnotation()}">Annotation</td>
+        </tr>
+        <tr>
+            <td>Average number of annotation per image: </td>
+            <td th:text="${stats.getAverageAnnotationPerImage()}">Average annotation per image</td>
+        </tr>
+        <tr>
+            <td>Total number of annotated image with conflict: </td>
+            <td th:text="${stats.getAnnotatedImageWithConflict()}">Images with conflict</td>
+        </tr>
+
+    </table>
+
+    <!-- Return to home page --><-- TODO: move to header -->
+    <form method="get" action="ManagerHome">
+        <input type="submit" value="Return to home page">
+    </form>
+
+</body>
+</html>

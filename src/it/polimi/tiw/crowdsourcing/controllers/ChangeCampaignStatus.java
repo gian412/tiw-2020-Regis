@@ -20,14 +20,14 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-@WebServlet("/StartCampaign")
-public class StartCampaign extends HttpServlet {
+@WebServlet("/ChangeCampaignStatus")
+public class ChangeCampaignStatus extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private Connection connection;
     TemplateEngine templateEngine;
 
-    public StartCampaign() {
+    public ChangeCampaignStatus() {
         super();
     }
 
@@ -39,44 +39,47 @@ public class StartCampaign extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String id;
-        int campaignId;
-
-        User manager = null;
-        HttpSession httpSession = req.getSession();
-        manager = (User) httpSession.getAttribute("user");
+        String id, newStat;
+        int campaignId, newStatus;
 
         try {
             id = req.getParameter("id");
+            newStat = req.getParameter("status");
         } catch (NullPointerException e) {
             e.printStackTrace(); // TODO: remove after test
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameter");
             return;
         }
 
-        if (id == null) {
+        if (id == null || newStat==null) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameters");
             return;
         }
 
         try {
             campaignId = Integer.parseInt(id);
+            newStatus = Integer.parseInt(newStat);
         } catch (NumberFormatException e) {
             e.printStackTrace(); // TODO: remove after test
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Bad number format");
             return;
         }
 
+        if (newStatus!=1 && newStatus!=2) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid CampaignStatus code");
+            return;
+        }
+
         CampaignDAO campaignDAO = new CampaignDAO(connection, campaignId);
         try {
-            campaignDAO.changeStatus(CampaignStatus.STARTED);
+            campaignDAO.changeStatus(CampaignStatus.getCampaignStatusFromInt(newStatus));
         } catch (SQLException e) {
             e.printStackTrace(); // TODO: remove after test
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to access database");
             return;
         }
 
-        resp.sendRedirect("/CampaignContent?id=" + campaignId);
+        resp.sendRedirect("/tiw_2020_Regis/CampaignDetails?campaign=" + campaignId);
 
     }
 

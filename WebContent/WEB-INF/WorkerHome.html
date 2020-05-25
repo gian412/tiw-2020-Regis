@@ -6,6 +6,8 @@
 </head>
 <body>
     <h1>Worker Homepage</h1>
+
+    <!-- If the worker is involved in any campaign -->
     <table>
         <thead th:if="${not #lists.isEmpty(campaignsAssigned)}">
             <td><b>Name</b></td>
@@ -18,7 +20,11 @@
             <td th:text="${campaign.status.toString()}">Status</td>s
         </tr>
     </table>
+
+    <!-- If the worker isn't involved in any campaign -->
     <p th:if="${#lists.isEmpty(campaignsAssigned)}">You aren't involved in any campaign</p>
+
+    <!-- If there is any available campaign for the worker -->
     <table th:if="${not #lists.isEmpty(campaignsNotAssigned)}">
         <thead>
             <td><b>Name</b></td>
@@ -31,6 +37,8 @@
             <td th:text="${campaign.status.toString()}">Status</td>s
         </tr>
     </table>
+
+    <!-- If there isn't any available campaign for the worker -->
     <p th:if="${#lists.isEmpty(campaignsNotAssigned)}">There aren't campaigns in which you are not involved</p>
 </body>
 </html>

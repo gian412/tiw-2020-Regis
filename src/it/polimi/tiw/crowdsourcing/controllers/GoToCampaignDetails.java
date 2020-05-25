@@ -79,7 +79,9 @@ public class GoToCampaignDetails extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to access database");
             return;
         }
+
         String path = "/WEB-INF/CampaignDetails.html";
+
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
         ctx.setVariable("campaign", campaign);

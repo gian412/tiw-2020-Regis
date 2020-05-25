@@ -40,11 +40,11 @@ public class CampaignStatsDAO {
 
         String query =
                 "SELECT COUNT(*) " +
-                "FROM annotatiom " +
+                "FROM annotation " +
                 "WHERE imageid IN (" +
                         "SELECT I.id " +
                         "FROM image AS I " +
-                        "WHERE I.campaign = ?" +
+                        "WHERE I.campaignid = ?" +
                 ")";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -63,17 +63,16 @@ public class CampaignStatsDAO {
 
         String query =
                 "SELECT COUNT(id) " +
-                "FROM crowdsourcing.image AS I " +
+                "FROM image AS I " +
                 "WHERE I.id IN (" +
                     "SELECT A1.imageid " +
-                    "FROM crowdsourcing.annotation AS A1 " +
+                    "FROM annotation AS A1 " +
                     "WHERE validity = 0" +
                 ") AND I.id IN (" +
                     "SELECT A2.imageid " +
-                    "FROM crowdsourcing.annotation AS A2 " +
+                    "FROM annotation AS A2 " +
                     "WHERE validity <> 0" +
-                ") AND I.campaignid = ? " +
-                "GROUP BY id";
+                ") AND I.campaignid = ? ";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, this.id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -85,13 +84,17 @@ public class CampaignStatsDAO {
         throw new SQLException();
     }
 
-    public CampaignStats findStatsByCampaign() throws SQLException {
+    public CampaignStats findStatsByCampaignId() throws SQLException {
 
         CampaignStats campaignStats = new CampaignStats();
         try {
             campaignStats.setTotalImage( findTotalNumberOfImage() );
             campaignStats.setTotalAnnotation( findTotalNumberOfAnnotation() );
-            campaignStats.setAverageAnnotationPerImage(((double)campaignStats.getTotalAnnotation()) / ((double)campaignStats.getTotalImage()));
+            if (campaignStats.getTotalImage() == 0) {
+                campaignStats.setAverageAnnotationPerImage(0.0);
+            } else {
+                campaignStats.setAverageAnnotationPerImage(((double)campaignStats.getTotalAnnotation()) / campaignStats.getTotalImage());
+            }
             campaignStats.setAnnotatedImageWithConflict( findNumberOfImageWithConflict() );
         } catch (SQLException e) {
             throw new SQLException(e.getMessage());
