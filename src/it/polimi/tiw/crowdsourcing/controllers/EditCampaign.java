@@ -86,7 +86,7 @@ public class EditCampaign extends HttpServlet {
             return;
         }
 
-        String path = "/tiw_2020_Regis/Campaign?campaign="+campaign.getId();
+        String path = "/tiw_2020_Regis/CampaignDetails?campaign="+campaign.getId();
         resp.sendRedirect(path);
 
     }

@@ -3,6 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+
+    <!-- Parameters for DB access -->
     <context-param>
         <param-name>dbUrl</param-name>
         <param-value>jdbc:mysql://localhost:3306/crowdsourcing?serverTimezone=UTC</param-value>
@@ -19,11 +21,60 @@
         <param-name>dbDriver</param-name>
         <param-value>com.mysql.cj.jdbc.Driver</param-value>
     </context-param>
+
+    <!-- Parameter for images -->
     <context-param>
         <param-name>upload.location</param-name>
         <param-value>/var/webapps/uploads/images</param-value>
     </context-param>
+
+    <!-- Welcome file -->
     <welcome-file-list>
         <welcome-file>Welcome.html</welcome-file>
     </welcome-file-list>
+
+    <!-- Filters declaration -->
+    <filter>
+        <filter-name>CheckLogin</filter-name>
+        <filter-class>it.polimi.tiw.crowdsourcing.filters.CheckLogin</filter-class>
+    </filter>
+    <filter>
+        <filter-name>CheckManager</filter-name>
+        <filter-class>it.polimi.tiw.crowdsourcing.filters.CheckManager</filter-class>
+    </filter>
+    <filter>
+        <filter-name>CheckWorker</filter-name>
+        <filter-class>it.polimi.tiw.crowdsourcing.filters.CheckWorker</filter-class>
+    </filter>
+
+    <!-- Filters mapping -->
+    <filter-mapping>
+        <filter-name>CheckLogin</filter-name>
+        <url-pattern>/AddImageToCampaign</url-pattern>
+        <url-pattern>/ChangeCampaignStatus</url-pattern>
+        <url-pattern>/CreateCampaign</url-pattern>
+        <url-pattern>/EditCampaign</url-pattern>
+        <url-pattern>/CampaignDetails</url-pattern>
+        <url-pattern>/CampaignOverview</url-pattern>
+        <url-pattern>/CampaignStats</url-pattern>
+        <url-pattern>/ManagerHome</url-pattern>
+        <url-pattern>/WorkerHome</url-pattern>
+        <url-pattern>/WorkerSubscription</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>CheckManager</filter-name>
+        <url-pattern>/AddImageToCampaign</url-pattern>
+        <url-pattern>/ChangeCampaignStatus</url-pattern>
+        <url-pattern>/CreateCampaign</url-pattern>
+        <url-pattern>/EditCampaign</url-pattern>
+        <url-pattern>/CampaignDetails</url-pattern>
+        <url-pattern>/CampaignStats</url-pattern>
+        <url-pattern>/ManagerHome</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>CheckWorker</filter-name>
+        <url-pattern>/CampaignOverview</url-pattern>
+        <url-pattern>/WorkerHome</url-pattern>
+        <url-pattern>/WorkerSubscription</url-pattern>
+    </filter-mapping>
 </web-app>

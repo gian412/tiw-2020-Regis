@@ -120,7 +120,7 @@ public class AddImageToCampaign extends HttpServlet {
             return;
         }
 
-        path = "/tiw_2020_Regis/Campaign?campaign="+campaignId;
+        path = "/tiw_2020_Regis/CampaignDetails?campaign="+campaignId;
         resp.sendRedirect(path);
 
     }

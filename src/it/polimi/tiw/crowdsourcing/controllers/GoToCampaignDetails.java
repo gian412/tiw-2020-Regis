@@ -5,7 +5,6 @@ import it.polimi.tiw.crowdsourcing.beans.Image;
 import it.polimi.tiw.crowdsourcing.beans.User;
 import it.polimi.tiw.crowdsourcing.dao.AnonymousCampaignDAO;
 import it.polimi.tiw.crowdsourcing.dao.CampaignDAO;
-import it.polimi.tiw.crowdsourcing.dao.ManagerDAO;
 import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -24,8 +23,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/Campaign")
-public class GoToCampaign extends HttpServlet {
+@WebServlet("/CampaignDetails")
+public class GoToCampaignDetails extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private Connection connection;
@@ -83,12 +82,7 @@ public class GoToCampaign extends HttpServlet {
             return;
         }
 
-        String path = null;
-        if (user.getRole().equals("manager")) {
-            path = "/WEB-INF/CampaignDetails.html"; // If the user is a Manager, go to Campaign Details
-        } else {
-            path = "/WEB-INF/CampaignOverview.html"; // If the user is a Worker, go to Campaign Overview
-        }
+        String path = "/WEB-INF/CampaignDetails.html"; // Go to Campaign Details
 
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
