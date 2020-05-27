@@ -16,13 +16,13 @@ public class UserDAO {
         this.connection = connection;
     }
 
-    public User checkCredential(String username, String password) throws SQLException {
+    public User checkCredential(String username, String email, String password) throws SQLException {
 
         String query = "SELECT * FROM user WHERE (username = ? OR email = ?) AND password = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, username);
-            preparedStatement.setString(2, username);
+            preparedStatement.setString(2, email);
             preparedStatement.setString(3, password);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (!resultSet.isBeforeFirst()) { // No result, credential check failed
@@ -71,12 +71,12 @@ public class UserDAO {
         }
     }
 
-    public User findUserByUsername(String username) throws SQLException {
+    public User findUserByEmail(String email) throws SQLException {
 
-        String query = "SELECT * FROM user WHERE username = ?";
+        String query = "SELECT * FROM user WHERE email = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, username);
+            preparedStatement.setString(1, email);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (!resultSet.isBeforeFirst()) { // No result, credential check failed
                     return null;
@@ -97,12 +97,12 @@ public class UserDAO {
         }
     }
 
-    public User findUserByEmail(String email) throws SQLException {
+    public User findUserByUsername(String username) throws SQLException {
 
-        String query = "SELECT * FROM user WHERE email = ?";
+        String query = "SELECT * FROM user WHERE username = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, email);
+            preparedStatement.setString(1, username);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (!resultSet.isBeforeFirst()) { // No result, credential check failed
                     return null;

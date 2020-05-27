@@ -3,6 +3,7 @@ package it.polimi.tiw.crowdsourcing.controllers;
 import it.polimi.tiw.crowdsourcing.beans.User;
 import it.polimi.tiw.crowdsourcing.dao.UserDAO;
 import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
+import it.polimi.tiw.crowdsourcing.utils.Encryption;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -44,12 +45,14 @@ public class CheckLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        String username;
-        String password;
+        String username, usernameToHash;
+        String password, passwordToHash;
 
         try {
-            username = req.getParameter("username"); // Get username from request's parameter
-            password = req.getParameter("password"); // Get the password from request's parameter
+            usernameToHash = req.getParameter("username"); // Get username from request's parameter
+            passwordToHash = req.getParameter("password"); // Get the password from request's parameter
+            username = Encryption.hashString(usernameToHash);
+            password = Encryption.hashString(passwordToHash);
         } catch (NullPointerException e) { // If one of the parameters is null...
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameter values"); // ...send error
             return;
@@ -57,7 +60,7 @@ public class CheckLogin extends HttpServlet {
         UserDAO userDAO = new UserDAO(connection);
         User user;
         try {
-            user = userDAO.checkCredential(username, password);
+            user = userDAO.checkCredential(username, usernameToHash, password);
         } catch (SQLException e) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not able to check credential");
             return;
