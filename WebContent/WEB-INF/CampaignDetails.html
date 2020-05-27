@@ -64,7 +64,7 @@
     <!-- If there is any image, show thumbnail --><!--TODO: Slideshow gallery-->
     <table th:if="${not #lists.isEmpty(images)}">
         <tr th:each="image : ${images}">
-            <td><img width="150" alt="Waste Dump" th:src="${image.source}"/></td>
+            <img width="150" alt="Waste Dump" th:src="${image.source}" /></td>
         </tr>
     </table>
 

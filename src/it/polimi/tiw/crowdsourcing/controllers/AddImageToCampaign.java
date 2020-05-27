@@ -104,7 +104,7 @@ public class AddImageToCampaign extends HttpServlet {
             return;
         }
         try {
-            path = campaignId + "-" + numberOfImages + ".jpg";
+            path = campaignId + "-" + numberOfImages + ".jpeg";
             saveImage(imagePart, path);
         }catch (IOException e) {
             e.printStackTrace(); // TODO: remove after test
