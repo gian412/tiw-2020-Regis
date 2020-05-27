@@ -83,6 +83,7 @@ public class GoToCampaignDetails extends HttpServlet {
             return;
         }
 
+
         /*for (Image image : images) {
             String imagePath = "/var/webapps/uploads/images/" + image.getSource(); // Create image path
             BufferedImage bufferedImage = null;
