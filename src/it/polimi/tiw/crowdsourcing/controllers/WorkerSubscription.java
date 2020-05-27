@@ -2,7 +2,6 @@ package it.polimi.tiw.crowdsourcing.controllers;
 
 import it.polimi.tiw.crowdsourcing.beans.Campaign;
 import it.polimi.tiw.crowdsourcing.beans.User;
-import it.polimi.tiw.crowdsourcing.dao.AnonymousCampaignDAO;
 import it.polimi.tiw.crowdsourcing.dao.CampaignDAO;
 import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
 
@@ -52,16 +51,15 @@ public class WorkerSubscription extends HttpServlet {
         }
 
         Campaign campaign = null;
-        AnonymousCampaignDAO anonymousCampaignDAO = new AnonymousCampaignDAO(connection);
+        CampaignDAO campaignDAO = new CampaignDAO(connection, campaignId);
         try { // Get the campaign from DB
-            campaign = anonymousCampaignDAO.findCampaignById(campaignId);
+            campaign = campaignDAO.findCampaignById();
         } catch (SQLException e) {
             e.printStackTrace(); // TODO: remove after test
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to access database, campaign not found");
             return;
         }
 
-        CampaignDAO campaignDAO = new CampaignDAO(connection, campaign.getId());
         try { // Subscribe the worker to the campaign
             campaignDAO.SubscribeWorkerToCampaign(worker.getId());
         } catch (SQLException e) {

@@ -3,7 +3,6 @@ package it.polimi.tiw.crowdsourcing.controllers;
 import it.polimi.tiw.crowdsourcing.beans.Campaign;
 import it.polimi.tiw.crowdsourcing.beans.Image;
 import it.polimi.tiw.crowdsourcing.beans.User;
-import it.polimi.tiw.crowdsourcing.dao.AnonymousCampaignDAO;
 import it.polimi.tiw.crowdsourcing.dao.CampaignDAO;
 import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
 import org.thymeleaf.TemplateEngine;
@@ -63,16 +62,16 @@ public class GoToCampaignOverview extends HttpServlet {
             return;
         }
 
-        AnonymousCampaignDAO anonymousCampaignDAO = new AnonymousCampaignDAO(connection);
+        CampaignDAO campaignDAO = new CampaignDAO(connection, campaignId);
         Campaign campaign = null;
         try { // Get the campaign from DB
-            campaign = anonymousCampaignDAO.findCampaignById(campaignId);
+            campaign = campaignDAO.findCampaignById();
         } catch (SQLException e) {
             e.printStackTrace(); // TODO: remove after test
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to access database");
             return;
         }
-        CampaignDAO campaignDAO = new CampaignDAO(connection, campaignId);
+
         List<Image> images = null;
         try {
             images = campaignDAO.findImagesByCampaign();

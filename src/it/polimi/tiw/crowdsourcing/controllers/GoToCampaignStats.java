@@ -2,11 +2,8 @@ package it.polimi.tiw.crowdsourcing.controllers;
 
 import it.polimi.tiw.crowdsourcing.beans.Campaign;
 import it.polimi.tiw.crowdsourcing.beans.CampaignStats;
-import it.polimi.tiw.crowdsourcing.beans.User;
-import it.polimi.tiw.crowdsourcing.dao.AnonymousCampaignDAO;
 import it.polimi.tiw.crowdsourcing.dao.CampaignDAO;
 import it.polimi.tiw.crowdsourcing.dao.CampaignStatsDAO;
-import it.polimi.tiw.crowdsourcing.dao.ManagerDAO;
 import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -19,7 +16,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -64,13 +60,13 @@ public class GoToCampaignStats extends HttpServlet {
 
         CampaignStatsDAO campaignStatsDAO = new CampaignStatsDAO(connection, campaignId);
         CampaignStats campaignStats = null;
-        AnonymousCampaignDAO anonymousCampaignDAO = new AnonymousCampaignDAO(connection);
+        CampaignDAO campaignDAO = new CampaignDAO(connection, campaignId);
         Campaign campaign;
 
 
         try {
             campaignStats = campaignStatsDAO.findStatsByCampaignId();
-            campaign = anonymousCampaignDAO.findCampaignById(campaignId);
+            campaign = campaignDAO.findCampaignById();
         } catch (SQLException e) {
             e.printStackTrace(); // TODO: remove after test
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "unable to access database");

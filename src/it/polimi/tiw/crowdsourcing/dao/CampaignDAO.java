@@ -1,5 +1,6 @@
 package it.polimi.tiw.crowdsourcing.dao;
 
+import it.polimi.tiw.crowdsourcing.beans.Campaign;
 import it.polimi.tiw.crowdsourcing.beans.Image;
 import it.polimi.tiw.crowdsourcing.utils.CampaignStatus;
 import it.polimi.tiw.crowdsourcing.utils.Resolution;
@@ -136,6 +137,34 @@ public class CampaignDAO {
             }
         }
         return images;
+    }
+
+    public Campaign findCampaignById() throws SQLException {
+
+        String query =
+                "SELECT * " +
+                        "FROM campaign " +
+                        "WHERE id = ?";
+        Campaign campaign = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (!resultSet.isBeforeFirst()) {
+                    return null;
+                } else {
+                    resultSet.next();
+                    campaign = new Campaign();
+                    campaign.setId(resultSet.getInt("id"));
+                    campaign.setName(resultSet.getString("name"));
+                    campaign.setCustomer(resultSet.getString("customer"));
+                    campaign.setStatus(resultSet.getInt("status"));
+                    campaign.setManagerId(resultSet.getInt("managerid"));
+                    return campaign;
+                }
+            }
+        }
+
     }
 
 }
