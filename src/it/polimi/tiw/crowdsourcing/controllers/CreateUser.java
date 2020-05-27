@@ -3,6 +3,7 @@ package it.polimi.tiw.crowdsourcing.controllers;
 import it.polimi.tiw.crowdsourcing.beans.User;
 import it.polimi.tiw.crowdsourcing.dao.UserDAO;
 import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
+import it.polimi.tiw.crowdsourcing.utils.Encryption;
 import it.polimi.tiw.crowdsourcing.utils.ExperienceLevel;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -39,15 +40,17 @@ public class CreateUser extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String role, firstName, lastName, username, password, email, exp, path;
+        String role, firstName, lastName, username, usernameToHash, password, passwordToHash, email, exp, path;
         try {
             role = req.getParameter("role"); // Get role from request's parameter
             role = role.toLowerCase();
             firstName = req.getParameter("firstname"); // Get first name from request's parameter
             lastName = req.getParameter("lastname"); // Get last name from request's parameter
-            username = req.getParameter("username"); // Get username from request's parameter
+            usernameToHash = req.getParameter("username"); // Get username from request's parameter
             email = req.getParameter("email"); // Get email from request's parameter
-            password = req.getParameter("password"); // Get password from request's parameter
+            passwordToHash = req.getParameter("password"); // Get password from request's parameter
+            username = Encryption.hashString(usernameToHash);
+            password = Encryption.hashString(passwordToHash);
         } catch (NullPointerException e) { // If one of the parameters is null...
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameter values"); // ...send error
             return;
@@ -70,7 +73,22 @@ public class CreateUser extends HttpServlet {
             // TODO: forward to login with email field initialized
         }
 
-        if (role.equals("manager")) {
+        try {
+            user = userDAO.findUserByUsername(username); // Check if the username already exists
+        } catch (SQLException e) {
+            e.printStackTrace(); // TODO: remove after test
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not able to check user");
+            return;
+        }
+        if (user!=null) { // If the username already exists
+            ServletContext servletContext = getServletContext();
+            final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
+            ctx.setVariable("errorMessage", "Username already in use");
+            path = "/Login.html"; // Write path ...
+            templateEngine.process(path, ctx, resp.getWriter()); // ...and process it
+        }
+
+        if (role.equals("manager")) { // If the user is a manager...
             try {
                 userDAO.createManager(role, firstName, lastName, username, password, email);
             } catch (SQLException e) {
@@ -132,7 +150,5 @@ public class CreateUser extends HttpServlet {
             e.printStackTrace(); // TODO: remove after test
         }
     }
-
-
 
 }
