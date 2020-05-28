@@ -90,7 +90,7 @@ public class CreateUser extends HttpServlet {
 
         if (role.equals("manager")) { // If the user is a manager...
             try {
-                userDAO.createManager(role, firstName, lastName, username, password, email);
+                userDAO.createManager(firstName, lastName, username, password, email);
             } catch (SQLException e) {
                 e.printStackTrace(); // TODO: remove after test
                 resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not able to create user");
@@ -120,7 +120,7 @@ public class CreateUser extends HttpServlet {
                 return;
             }
             try {
-                userDAO.createWorker(role, firstName, lastName, username, password, email, experience.getValue());
+                userDAO.createWorker(firstName, lastName, username, password, email, experience.getValue());
             } catch (SQLException e) {
                 e.printStackTrace(); // TODO: remove after test
                 resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not able to create user");

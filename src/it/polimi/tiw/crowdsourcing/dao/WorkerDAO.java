@@ -1,6 +1,7 @@
 package it.polimi.tiw.crowdsourcing.dao;
 
 import it.polimi.tiw.crowdsourcing.beans.Campaign;
+import it.polimi.tiw.crowdsourcing.utils.ExperienceLevel;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -65,5 +66,36 @@ public class WorkerDAO {
         }
         return campaigns;
     }
+
+    public void updateWorker(String firstName, String lastName, String username, String email, ExperienceLevel experience) throws SQLException{
+
+        String query =
+                "UPDATE user " +
+                        "SET firstname = ?, lastname = ?, username = ?, email = ?, experience = ?  WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setString(3, username);
+            preparedStatement.setString(4, email);
+            preparedStatement.setInt(5, experience.getValue());
+            preparedStatement.setInt(6, this.id);
+            preparedStatement.executeUpdate();
+        }
+
+    }
+
+    public void updateAvatar(String avatar) throws SQLException {
+
+        String query = "UPDATE user SET avatar = ?  WHERE id = ?";
+
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, avatar);
+            preparedStatement.setInt(2, this.id);
+            preparedStatement.executeUpdate();
+        }
+
+    }
+
 
 }

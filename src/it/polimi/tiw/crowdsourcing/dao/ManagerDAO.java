@@ -2,6 +2,7 @@ package it.polimi.tiw.crowdsourcing.dao;
 
 import it.polimi.tiw.crowdsourcing.beans.Campaign;
 import it.polimi.tiw.crowdsourcing.utils.CampaignStatus;
+import it.polimi.tiw.crowdsourcing.utils.ExperienceLevel;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -70,18 +71,33 @@ public class ManagerDAO {
 
     }
 
-    public int createCampaign(String name, String customer) throws SQLException {
+    public void createCampaign(String name, String customer) throws SQLException {
         String query = "INSERT into campaign (name, customer, status, managerid) VALUES(?, ?, ?, ?)";
-        int result = 0;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, customer);
             preparedStatement.setInt(3, CampaignStatus.CREATED.getValue());
             preparedStatement.setInt(4, this.id);
-            result = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
         }
-        return result;
+
+    }
+
+    public void updateManager(String firstName, String lastName, String username, String email) throws SQLException{
+
+        String query =
+                "UPDATE user " +
+                        "SET firstname = ?, lastname = ?, username = ?, email = ?  WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setString(3, username);
+            preparedStatement.setString(4, email);
+            preparedStatement.setInt(5, this.id);
+            preparedStatement.executeUpdate();
+        }
+
     }
 
 }

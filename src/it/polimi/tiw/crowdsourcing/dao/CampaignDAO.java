@@ -23,93 +23,32 @@ public class CampaignDAO {
         this.id = id;
     }
 
-    public int findNumberOfImageByCampaign() throws SQLException {
+    public Campaign findCampaignById() throws SQLException {
 
         String query =
-                "SELECT COUNT(*) " +
-                "FROM image " +
-                "WHERE campaignid = ?";
+                "SELECT * " +
+                        "FROM campaign " +
+                        "WHERE id = ?";
+        Campaign campaign = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, this.id);
+            preparedStatement.setInt(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()){
-                    return resultSet.getInt(1);
+                if (!resultSet.isBeforeFirst()) {
+                    return null;
+                } else {
+                    resultSet.next();
+                    campaign = new Campaign();
+                    campaign.setId(resultSet.getInt("id"));
+                    campaign.setName(resultSet.getString("name"));
+                    campaign.setCustomer(resultSet.getString("customer"));
+                    campaign.setStatus(resultSet.getInt("status"));
+                    campaign.setManagerId(resultSet.getInt("managerid"));
+                    return campaign;
                 }
-
             }
         }
-        throw new SQLException();
-    }
 
-    public int editCampaign(String name, String costumer) throws SQLException {
-
-        String query =
-                "UPDATE campaign " +
-                "SET name = ?, customer = ? " +
-                "WHERE id = ?";
-
-        int result = 0;
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, costumer);
-            preparedStatement.setInt(3, this.id);
-            result = preparedStatement.executeUpdate();
-        }
-        return result;
-
-    }
-
-    public int changeStatus(CampaignStatus status) throws SQLException {
-
-        String query =
-                "UPDATE campaign " +
-                "SET status = ? " +
-                "WHERE id = ?";
-        int result = 0;
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, status.getValue());
-            preparedStatement.setInt(2, this.id);
-            result = preparedStatement.executeUpdate();
-        }
-        return result;
-    }
-
-    public int SubscribeWorkerToCampaign(int workerId) throws SQLException {
-
-        String query =
-                "INSERT into assignment (workerid, campaignid) " +
-                "VALUES(?, ?)";
-        int result = 0;
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, workerId);
-            preparedStatement.setInt(2, this.id);
-            result = preparedStatement.executeUpdate();
-        }
-        return result;
-    }
-
-    public int addImage(String source, double latitude, double longitude, String city, String region,
-                           String provenance, Date date, Resolution resolution) throws SQLException {
-
-        String query = "INSERT into image (source, latitude, longitude, city, region, provenance, date, resolution, campaignid) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        int result = 0;
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, source);
-            preparedStatement.setDouble(2, latitude);
-            preparedStatement.setDouble(3, longitude);
-            preparedStatement.setString(4, city);
-            preparedStatement.setString(5, region);
-            preparedStatement.setString(6, provenance);
-            preparedStatement.setDate(7, new java.sql.Date(date.getTime()));
-            preparedStatement.setInt(8, resolution.getValue());
-            preparedStatement.setInt(9, this.id);
-            result = preparedStatement.executeUpdate();
-        }
-        return result;
     }
 
     public List<Image> findImagesByCampaign() throws SQLException {
@@ -139,32 +78,84 @@ public class CampaignDAO {
         return images;
     }
 
-    public Campaign findCampaignById() throws SQLException {
+    public int findNumberOfImageByCampaign() throws SQLException {
 
         String query =
-                "SELECT * " +
-                        "FROM campaign " +
-                        "WHERE id = ?";
-        Campaign campaign = null;
+                "SELECT COUNT(*) " +
+                "FROM image " +
+                "WHERE campaignid = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, this.id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (!resultSet.isBeforeFirst()) {
-                    return null;
-                } else {
-                    resultSet.next();
-                    campaign = new Campaign();
-                    campaign.setId(resultSet.getInt("id"));
-                    campaign.setName(resultSet.getString("name"));
-                    campaign.setCustomer(resultSet.getString("customer"));
-                    campaign.setStatus(resultSet.getInt("status"));
-                    campaign.setManagerId(resultSet.getInt("managerid"));
-                    return campaign;
+                if (resultSet.next()){
+                    return resultSet.getInt(1);
                 }
+
             }
         }
+        throw new SQLException();
+    }
 
+    public void editCampaign(String name, String customer) throws SQLException {
+
+        String query =
+                "UPDATE campaign " +
+                "SET name = ?, customer = ? " +
+                "WHERE id = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, customer);
+            preparedStatement.setInt(3, this.id);
+            preparedStatement.executeUpdate();
+        }
+
+    }
+
+    public void changeStatus(CampaignStatus status) throws SQLException {
+
+        String query =
+                "UPDATE campaign " +
+                "SET status = ? " +
+                "WHERE id = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, status.getValue());
+            preparedStatement.setInt(2, this.id);
+            preparedStatement.executeUpdate();
+        }
+    }
+
+    public void SubscribeWorkerToCampaign(int workerId) throws SQLException {
+
+        String query =
+                "INSERT into assignment (workerid, campaignid) " +
+                "VALUES(?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, workerId);
+            preparedStatement.setInt(2, this.id);
+            preparedStatement.executeUpdate();
+        }
+    }
+
+    public void addImage(String source, double latitude, double longitude, String city, String region,
+                         String provenance, Date date, Resolution resolution) throws SQLException {
+
+        String query = "INSERT into image (source, latitude, longitude, city, region, provenance, date, resolution, campaignid) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, source);
+            preparedStatement.setDouble(2, latitude);
+            preparedStatement.setDouble(3, longitude);
+            preparedStatement.setString(4, city);
+            preparedStatement.setString(5, region);
+            preparedStatement.setString(6, provenance);
+            preparedStatement.setDate(7, new java.sql.Date(date.getTime()));
+            preparedStatement.setInt(8, resolution.getValue());
+            preparedStatement.setInt(9, this.id);
+            preparedStatement.executeUpdate();
+        }
     }
 
 }

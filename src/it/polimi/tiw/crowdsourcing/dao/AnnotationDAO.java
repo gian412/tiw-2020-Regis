@@ -18,12 +18,11 @@ public class AnnotationDAO {
         this.connection = connection;
     }
 
-    public int createAnnotation(int imageId, int workerId, boolean validity, Confidence confidence, String note) throws SQLException {
+    public void createAnnotation(int imageId, int workerId, boolean validity, Confidence confidence, String note) throws SQLException {
 
         String query =
                 "INSERT into image (imageid, workerid, validity, confidence, note) " +
                 "VALUES(?, ?, ?, ?, ?)";
-        int result = 0;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, imageId);
@@ -31,9 +30,8 @@ public class AnnotationDAO {
             preparedStatement.setBoolean(3, validity);
             preparedStatement.setInt(4, confidence.getValue());
             preparedStatement.setString(5, note);
-            result = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
         }
-        return result;
     }
 
     public List<Annotation> findAnnotationsByImage(int imageId) throws SQLException {
