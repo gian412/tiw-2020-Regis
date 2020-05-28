@@ -45,13 +45,12 @@ public class CheckLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        String username, usernameToHash;
+        String username;
         String password, passwordToHash;
 
         try {
-            usernameToHash = req.getParameter("username"); // Get username from request's parameter
+            username = req.getParameter("username"); // Get username from request's parameter
             passwordToHash = req.getParameter("password"); // Get the password from request's parameter
-            username = Encryption.hashString(usernameToHash);
             password = Encryption.hashString(passwordToHash);
         } catch (NullPointerException e) { // If one of the parameters is null...
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameter values"); // ...send error
@@ -60,7 +59,7 @@ public class CheckLogin extends HttpServlet {
         UserDAO userDAO = new UserDAO(connection);
         User user;
         try {
-            user = userDAO.checkCredential(username, usernameToHash, password);
+            user = userDAO.checkCredential(username, password);
         } catch (SQLException e) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not able to check credential");
             return;

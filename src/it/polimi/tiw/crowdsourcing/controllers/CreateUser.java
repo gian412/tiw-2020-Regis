@@ -40,17 +40,17 @@ public class CreateUser extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String role, firstName, lastName, username, usernameToHash, password, passwordToHash, email, exp, path;
+        String role, firstName, lastName, username, password, passwordToHash, email, exp, path;
         try {
             role = req.getParameter("role"); // Get role from request's parameter
             role = role.toLowerCase();
             firstName = req.getParameter("firstname"); // Get first name from request's parameter
             lastName = req.getParameter("lastname"); // Get last name from request's parameter
-            usernameToHash = req.getParameter("username"); // Get username from request's parameter
+            username = req.getParameter("username"); // Get username from request's parameter
             email = req.getParameter("email"); // Get email from request's parameter
             passwordToHash = req.getParameter("password"); // Get password from request's parameter
-            username = Encryption.hashString(usernameToHash);
-            password = Encryption.hashString(passwordToHash);
+
+            password = Encryption.hashString(passwordToHash); // Encrypt password
         } catch (NullPointerException e) { // If one of the parameters is null...
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameter values"); // ...send error
             return;
@@ -67,10 +67,11 @@ public class CreateUser extends HttpServlet {
         if (user!=null) { // If the email already exist
             ServletContext servletContext = getServletContext();
             final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
+            ctx.setVariable("username", user.getUsername());
             ctx.setVariable("errorMessage", "email already associated to an account");
             path = "/Login.html"; // Write path ...
             templateEngine.process(path, ctx, resp.getWriter()); // ...and process it
-            // TODO: forward to login with email field initialized
+            return;
         }
 
         try {
@@ -83,9 +84,11 @@ public class CreateUser extends HttpServlet {
         if (user!=null) { // If the username already exists
             ServletContext servletContext = getServletContext();
             final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
+            ctx.setVariable("username", user.getUsername());
             ctx.setVariable("errorMessage", "Username already in use");
             path = "/Login.html"; // Write path ...
             templateEngine.process(path, ctx, resp.getWriter()); // ...and process it
+            return;
         }
 
         if (role.equals("manager")) { // If the user is a manager...

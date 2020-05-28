@@ -16,13 +16,13 @@ public class UserDAO {
         this.connection = connection;
     }
 
-    public User checkCredential(String username, String email, String password) throws SQLException {
+    public User checkCredential(String usernameOrEmail, String password) throws SQLException {
 
         String query = "SELECT * FROM user WHERE (username = ? OR email = ?) AND password = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, email);
+            preparedStatement.setString(1, usernameOrEmail);
+            preparedStatement.setString(2, usernameOrEmail);
             preparedStatement.setString(3, password);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (!resultSet.isBeforeFirst()) { // No result, credential check failed
