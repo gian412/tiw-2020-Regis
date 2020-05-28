@@ -112,7 +112,7 @@ public class AddImageToCampaign extends HttpServlet {
             return;
         }
 
-        try {
+        try { // TODO: check resolution not null
             campaignDAO.addImage(path, latitude, longitude, city, region, provenance, date, Resolution.getResolutionFromInt(resValue));
         } catch (SQLException e) {
             e.printStackTrace(); // TODO: remove after test

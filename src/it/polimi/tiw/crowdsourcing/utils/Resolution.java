@@ -16,7 +16,7 @@ public enum  Resolution {
                 return Resolution.HIGH;
             case 1:
                 return Resolution.MEDIUM;
-            case 3:
+            case 2:
                 return Resolution.LOW;
             default:
                 return null;

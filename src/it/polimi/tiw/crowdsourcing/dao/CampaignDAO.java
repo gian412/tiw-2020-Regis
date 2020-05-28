@@ -25,10 +25,9 @@ public class CampaignDAO {
 
     public Campaign findCampaignById() throws SQLException {
 
-        String query =
-                "SELECT * " +
-                        "FROM campaign " +
-                        "WHERE id = ?";
+        String query = "SELECT * " +
+                       "FROM campaign " +
+                       "WHERE id = ?";
         Campaign campaign = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -53,7 +52,7 @@ public class CampaignDAO {
 
     public List<Image> findImagesByCampaign() throws SQLException {
 
-        String query = "SELECT * FROM image WHERE campaignid = ?";
+        String query = "SELECT *, x(coordinates), y(coordinates) FROM image WHERE campaignid = ?";
         List<Image> images = new ArrayList<Image>();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -63,8 +62,8 @@ public class CampaignDAO {
                     Image image = new Image();
                     image.setId(resultSet.getInt("id"));
                     image.setSource("/images/" + resultSet.getString("source"));// http://localhost:8080/tiw_2020_Regis/images/
-                    image.setLatitude(resultSet.getDouble("latitude"));
-                    image.setLongitude(resultSet.getDouble("longitude"));
+                    image.setLatitude(resultSet.getDouble("x(coordinates)"));
+                    image.setLongitude(resultSet.getDouble("y(coordinates)"));
                     image.setCity(resultSet.getString("city"));
                     image.setRegion(resultSet.getString("region"));
                     image.setProvenance(resultSet.getString("provenance"));
@@ -142,18 +141,17 @@ public class CampaignDAO {
     public void addImage(String source, double latitude, double longitude, String city, String region,
                          String provenance, Date date, Resolution resolution) throws SQLException {
 
-        String query = "INSERT into image (source, latitude, longitude, city, region, provenance, date, resolution, campaignid) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO image (source, coordinates, city, region, provenance, date, resolution, campaignid) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, source);
-            preparedStatement.setDouble(2, latitude);
-            preparedStatement.setDouble(3, longitude);
-            preparedStatement.setString(4, city);
-            preparedStatement.setString(5, region);
-            preparedStatement.setString(6, provenance);
-            preparedStatement.setDate(7, new java.sql.Date(date.getTime()));
-            preparedStatement.setInt(8, resolution.getValue());
-            preparedStatement.setInt(9, this.id);
+            preparedStatement.setString(2, "ST_GEOMFROMTEXT( 'POINT("+ latitude +" "+ longitude + ")' )"); // TODO: SRID
+            preparedStatement.setString(3, city);
+            preparedStatement.setString(4, region);
+            preparedStatement.setString(5, provenance);
+            preparedStatement.setDate(6, new java.sql.Date(date.getTime()));
+            preparedStatement.setInt(7, resolution.getValue());
+            preparedStatement.setInt(8, this.id);
             preparedStatement.executeUpdate();
         }
     }
