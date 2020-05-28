@@ -3,6 +3,7 @@ package it.polimi.tiw.crowdsourcing.controllers;
 import it.polimi.tiw.crowdsourcing.beans.User;
 import it.polimi.tiw.crowdsourcing.dao.UserDAO;
 import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
+import it.polimi.tiw.crowdsourcing.utils.Email;
 import it.polimi.tiw.crowdsourcing.utils.Encryption;
 import it.polimi.tiw.crowdsourcing.utils.ExperienceLevel;
 import org.thymeleaf.TemplateEngine;
@@ -55,6 +56,12 @@ public class CreateUser extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameter values"); // ...send error
             return;
         }
+
+        if (!Email.isValid(email)) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid email");
+            return;
+        }
+
         User user = null;
         UserDAO userDAO = new UserDAO(connection);
         try {

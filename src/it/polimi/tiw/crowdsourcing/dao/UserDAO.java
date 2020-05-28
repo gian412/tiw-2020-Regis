@@ -115,7 +115,7 @@ public class UserDAO {
 
     public void createWorker(String firstName, String lastName, String username, String password, String  email, int experience) throws SQLException {
 
-        String query = "INSERT into user (firstname, lastname, username, password, email, experience) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT into user (role, firstname, lastname, username, password, email, experience) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
             preparedStatement.setString(1, "worker");
