@@ -39,7 +39,7 @@ public class GetImage extends HttpServlet {
             return;
         }
 
-        String imagePath = "/var/webapps/uploads/images/" + imageName; // Create image path
+        String imagePath = getServletContext().getInitParameter("upload.location") + imageName; // Create image path
         BufferedImage bufferedImage = null;
         try {
             bufferedImage = ImageIO.read(new File(imagePath)); // Try to get the image

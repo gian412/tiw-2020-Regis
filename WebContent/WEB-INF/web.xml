@@ -25,7 +25,7 @@
     <!-- Parameter for images -->
     <context-param>
         <param-name>upload.location</param-name>
-        <param-value>/var/webapps/uploads/images</param-value>
+        <param-value>/var/webapps/uploads/tiw-2020-Regis/images/</param-value>
     </context-param>
 
     <!-- Welcome file -->
