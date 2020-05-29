@@ -147,7 +147,7 @@ public class CampaignDAO {
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, source);
-            preparedStatement.setString(2, point); // TODO: SRID
+            preparedStatement.setString(2, point);
             preparedStatement.setString(3, city);
             preparedStatement.setString(4, region);
             preparedStatement.setString(5, provenance);
