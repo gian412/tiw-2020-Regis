@@ -15,8 +15,8 @@ import java.util.List;
 
 public class CampaignDAO {
 
-    private Connection connection;
-    private int id;
+    private final Connection connection;
+    private final int id;
 
     public CampaignDAO(Connection connection, int id) {
         this.connection = connection;
@@ -28,7 +28,7 @@ public class CampaignDAO {
         String query = "SELECT * " +
                        "FROM campaign " +
                        "WHERE id = ?";
-        Campaign campaign = null;
+        Campaign campaign;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, id);
@@ -53,7 +53,7 @@ public class CampaignDAO {
     public List<Image> findImagesByCampaign() throws SQLException {
 
         String query = "SELECT *, x(coordinates), y(coordinates) FROM image WHERE campaignid = ?";
-        List<Image> images = new ArrayList<Image>();
+        List<Image> images = new ArrayList<>();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, this.id);
@@ -61,7 +61,7 @@ public class CampaignDAO {
                 while (resultSet.next()){
                     Image image = new Image();
                     image.setId(resultSet.getInt("id"));
-                    image.setSource("/images/" + resultSet.getString("source"));// http://localhost:8080/tiw_2020_Regis/images/
+                    image.setSource("/images/" + resultSet.getString("source"));
                     image.setLatitude(resultSet.getDouble("x(coordinates)"));
                     image.setLongitude(resultSet.getDouble("y(coordinates)"));
                     image.setCity(resultSet.getString("city"));
@@ -141,11 +141,13 @@ public class CampaignDAO {
     public void addImage(String source, double latitude, double longitude, String city, String region,
                          String provenance, Date date, Resolution resolution) throws SQLException {
 
+        String point = "POINT(" + latitude + " " + longitude + ")";
         String query = "INSERT INTO image (source, coordinates, city, region, provenance, date, resolution, campaignid) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+                "VALUES(?, ST_GEOMFROMTEXT( ? ), ?, ?, ?, ?, ?, ?)";
+
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, source);
-            preparedStatement.setString(2, "ST_GEOMFROMTEXT( 'POINT("+ latitude +" "+ longitude + ")' )"); // TODO: SRID
+            preparedStatement.setString(2, point); // TODO: SRID
             preparedStatement.setString(3, city);
             preparedStatement.setString(4, region);
             preparedStatement.setString(5, provenance);
