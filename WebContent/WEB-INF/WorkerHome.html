@@ -7,38 +7,45 @@
 <body>
     <h1>Worker Homepage</h1>
 
-    <!-- If the worker isn't involved in any campaign -->
-    <p th:if="${#lists.isEmpty(campaignsAssigned)}">You aren't involved in any campaign</p>
+    <fieldset>
+        <legend>Campaign in witch you are involved</legend>
 
-    <!-- If the worker is involved in any campaign -->
-    <table th:if="${not #lists.isEmpty(campaignsAssigned)}">
-        <thead>
-            <td><b>Name</b></td>
-            <td><b>Customer</b></td>
-            <td><b>Status</b></td>
-        </thead>
-        <tbody>
-            <tr th:each="campaign : ${campaignsAssigned}">
-                <td><a th:href="@{CampaignOverview(campaign=${campaign.id})}" th:text="${campaign.name}">Name</a></td>
-                <td th:text="${campaign.customer}">Customer</td>
-                <td th:text="${campaign.status.toString()}">Status</td>
-            </tr>
-        </tbody>
-    </table>
+        <!-- If the worker isn't involved in any campaign -->
+        <p th:if="${#lists.isEmpty(campaignsAssigned)}">You aren't involved in any campaign</p>
 
-
-    <!-- If there isn't any available campaign for the worker -->
-    <p th:if="${#lists.isEmpty(campaignsNotAssigned)}">There aren't campaigns in which you are not involved</p>
-
-    <!-- If there is any available campaign for the worker -->
-    <form method="get" action="WorkerSubscription"  th:if="${not #lists.isEmpty(campaignsNotAssigned)}">
-        <table>
+        <!-- If the worker is involved in any campaign -->
+        <table th:if="${not #lists.isEmpty(campaignsAssigned)}">
             <thead>
             <td><b>Name</b></td>
             <td><b>Customer</b></td>
             <td><b>Status</b></td>
             </thead>
             <tbody>
+            <tr th:each="campaign : ${campaignsAssigned}">
+                <td><a th:href="@{CampaignOverview(campaign=${campaign.id})}" th:text="${campaign.name}">Name</a></td>
+                <td th:text="${campaign.customer}">Customer</td>
+                <td th:text="${campaign.status.toString()}">Status</td>
+            </tr>
+            </tbody>
+        </table>
+    </fieldset>
+
+
+    <fieldset>
+        <legend>Campaigns you can subscribe to<legend>
+
+        <!-- If there isn't any available campaign for the worker -->
+        <p th:if="${#lists.isEmpty(campaignsNotAssigned)}">There aren't campaigns in which you are not involved</p>
+
+        <!-- If there is any available campaign for the worker -->
+        <form method="get" action="WorkerSubscription"  th:if="${not #lists.isEmpty(campaignsNotAssigned)}">
+            <table>
+                <thead>
+                <td><b>Name</b></td>
+                <td><b>Customer</b></td>
+                <td><b>Status</b></td>
+                </thead>
+                <tbody>
                 <tr th:each="campaign : ${campaignsNotAssigned}">
                     <td th:text="${campaign.name}">Name</td>
                     <td th:text="${campaign.customer}">Customer</td>
@@ -46,9 +53,10 @@
                     <input type="hidden" name="campaign" th:value="${campaign.id}">
                     <td><input type="submit" value="Subscribe to this campaign"></td>
                 </tr>
-            </tbody>
-        </table>
-    </form>
+                </tbody>
+            </table>
+        </form>
+    </fieldset>
 
 </body>
 </html>
