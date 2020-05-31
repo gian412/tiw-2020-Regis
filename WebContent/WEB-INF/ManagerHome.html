@@ -5,7 +5,10 @@
     <title>Manager Home</title>
 </head>
 <body>
+
     <h1>Manager Homepage</h1>
+
+    <!-- If there is any campaign show it -->
     <table th:if="${not #lists.isEmpty(campaigns)}"> <!-- TODO: If ( campaigns.isEmpty() ) then showEmptyMessage -->
         <thead>
             <td><b>Name</b></td>
@@ -20,10 +23,16 @@
             </tr>
         </tbody>
     </table>
+
+    <!-- If there isn't any campaign, show a message -->
+    <p th:if="${#lists.isEmpty(images)}">No image yet</p>
+
+    <!-- Form for the new campaign -->
     <form method="post" action="CreateCampaign">
         Campaign name: <input type="text" placeholder="Enter Campaign name" name="name" required><br>
         Campaign customer: <input type="text" placeholder="Enter Campaign customer" name="customer" required><br>
         <input type="submit" value="Create Campaign">
     </form>
+
 </body>
 </html>

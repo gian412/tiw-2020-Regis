@@ -3,17 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Welcome to crowdsourcing</title>
+    <link rel="stylesheet" type="text/css" media="all" href="CSS/welcome.css" />
+    <script src="welcome.js" charset="utf-8" defer></script>
 </head>
 <body>
     <h1>Welcome to our crowdsourcing </h1>
     <p>Bla bla bla ...
     </p>
     <h3>Want to join us?</h3>
+    <!-- Pure HTML approach
     <table>
         <tr>
             <td><a href="Login.html">Login</a></td>
             <td><a href="SignUp.html">Sign Up</a></td>
         </tr>
-    </table>
+    </table> -->
+
+    <button type="button" id="login">Login</button>
+    <button type="button" id="signUp">Sign up</button>
+
+    <!-- Form to show when login clicked -->
+    <form method="post" id="loginForm" action="CheckLogin">
+        <p>Please login to your account</p>
+        <label for="username">Username: </label>
+        <input type="text" placeholder="Enter username" id="username" name="username" required><br>
+        <label for="password">Password: </label>
+        <input type="password" placeholder="Enter password" id="password" name="password" required><br>
+        <input type="submit" value="Login">
+        <p id="errorMessage"></p>
+    </form>
 </body>
 </html>
