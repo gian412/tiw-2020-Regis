@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Manager Home</title>
@@ -11,9 +11,11 @@
     <!-- If there is any campaign show it -->
     <table th:if="${not #lists.isEmpty(campaigns)}"> <!-- TODO: If ( campaigns.isEmpty() ) then showEmptyMessage -->
         <thead>
-            <td><b>Name</b></td>
-            <td><b>Customer</b></td>
-            <td><b>Status</b></td>
+            <tr>
+                <th>Name</th>
+                <th>Customer</th>
+                <th>Status</th>
+            </tr>
         </thead>
         <tbody>
             <tr th:each="campaign : ${campaigns}">
@@ -29,9 +31,9 @@
 
     <!-- Form for the new campaign -->
     <form method="post" action="CreateCampaign">
-        Campaign name: <input type="text" placeholder="Enter Campaign name" name="name" required><br> <!-- th:value="${campaignName}" -->
+        <label for="campaignName">Campaign name: </label> <input type="text" placeholder="Enter Campaign name" id="campaignName" name="name" required><br> <!-- th:value="${campaignName}" -->
         <p th:text="${errorMessage}"></p>
-        Campaign customer: <input type="text" placeholder="Enter Campaign customer" name="customer" required><br> <!-- th:value="${campaignCustomer}" -->
+        <label for="campaignCustomer">Campaign customer: </label> <input type="text" placeholder="Enter Campaign customer" id="campaignCustomer" name="customer" required><br> <!-- th:value="${campaignCustomer}" -->
         <input type="submit" value="Create Campaign">
     </form>
 
