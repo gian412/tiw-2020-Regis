@@ -27,7 +27,7 @@
     </table>
 
     <!-- If there isn't any campaign, show a message -->
-    <p th:if="${#lists.isEmpty(images)}">No image yet</p>
+    <p th:if="${#lists.isEmpty(campaigns)}">No campaign yet</p>
 
     <!-- Form for the new campaign -->
     <form method="post" action="CreateCampaign">

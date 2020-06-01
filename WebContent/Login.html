@@ -7,11 +7,19 @@
     <body>
         <h1>Welcome to the Crowdsourcing site</h1>
         <form method="post" action="CheckLogin">
+
             <p>Please login to your account</p>
-            Username: <input type="text" placeholder="Enter username" name="username" th:value="${username}" required><br>
-            Password: <input type="password" placeholder="Enter password" name="password" required><br>
+
+            <label for="username">Username: </label>
+            <input type="text" placeholder="Enter username" id="username" name="username" th:value="${username}" th:class="${errorMessage == null} ? 'error-text' " required><br>
+
+            <label for="password">Password: </label>
+            <input type="password" placeholder="Enter password" id="password" name="password" th:class="${errorMessage == null} ? 'error-text' " required><br>
+
             <input type="submit" value="Login">
+
             <p th:text="${errorMessage}"></p>
+
         </form>
     </body>
 </html>

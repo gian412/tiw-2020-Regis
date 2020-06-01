@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Welcome to crowdsourcing</title>
+    <link rel="stylesheet" type="text/css" media="all" href="CSS/generic.css" />
     <link rel="stylesheet" type="text/css" media="all" href="CSS/welcome.css" />
-    <script src="welcome.js" charset="utf-8" defer></script>
+    <script src="JS/welcome.js" charset="utf-8" defer></script>
 </head>
 <body>
     <h1>Welcome to our crowdsourcing </h1>
@@ -20,17 +21,78 @@
     </table> -->
 
     <button type="button" id="login">Login</button>
-    <button type="button" id="signUp">Sign up</button>
+    <button type="button" id="sign-up">Sign up</button>
 
-    <!-- Form to show when login clicked -->
-    <form method="post" id="loginForm" action="CheckLogin">
-        <p>Please login to your account</p>
-        <label for="username">Username: </label>
-        <input type="text" placeholder="Enter username" id="username" name="username" required><br>
-        <label for="password">Password: </label>
-        <input type="password" placeholder="Enter password" id="password" name="password" required><br>
-        <input type="submit" value="Login">
-        <p id="errorMessage"></p>
-    </form>
+    <div id="login-modal-box" class="modal">
+        <!-- Form to show when login clicked -->
+        <form method="post" class="modal-form animate" action="CheckLogin">
+            <div class="container">
+                <p>Login to your account</p>
+                <span id="login-close" class="close" title="Close Login">&times;</span>
+            </div>
+            <div class="container">
+                <label for="username">Username: </label>
+                <input type="text" placeholder="Enter username" id="username" name="username" required><br>
+                <label for="password">Password: </label>
+                <input type="password" placeholder="Enter password" id="password" name="password" required><br>
+                <input type="submit" value="Login" class="modal-button">
+                <p id="errorMessage"></p>
+            </div>
+        </form>
+    </div>
+
+    <div id="sign-up-modal-box" class="modal">
+        <form method="post" class="modal-form animate" action="CreateUser">
+
+
+                <!-- Role selector request -->
+                <div class="container">
+                    <p>Create your account:</p>
+                    <span id="sign-up-close" class="close" title="Close Login">&times;</span>
+                </div>
+                <!-- Role -->
+                <!--<div class="role-select" style="width:200px;">
+                    <select name="role">
+                        <option value="0">Select role:</option>
+                        <option value="manager">Manager</option>
+                        <option value="worker">Worker</option>
+                    </select>
+                </div>-->
+            <div class="container">
+                <p>Are you a:</p>
+                Role:<input type="text" name="role" placeholder="Manager/Worker"><br>
+                <!-- Information input request -->
+                <p>Please, give us some information about you:</p>
+                <!-- Name -->
+                <label>Name:</label>
+                <input type="text" name="firstname" placeholder="Enter your first name"><br>
+                <!-- Surname -->
+                <label>Surname:</label>
+                <input type="text" name="lastname" placeholder="Enter your last name"><br>
+                <!-- Username -->
+                <label>Username:</label>
+                <input type="text" name="username" placeholder="Enter your username"><br>
+                <!-- Email -->
+                <label>Email:</label>
+                <input type="email" name="email" placeholder="Enter your email"><br>
+                <label>Password:</label>
+                <input type="password" name="password" placeholder="Enter your password"><br>
+                <!-- Experience selector request -->
+                <p>What about your experience level?</p>
+                <!--<div class="experience-select" style="width:200px;">
+                    <select name="experience">
+                        <option value="-1">Select experience level:</option>
+                        <option value="0">High</option>
+                        <option value="1">Medium</option>
+                        <option value="2">Low</option>
+                    </select>
+                </div>-->
+                <label>Experience level:</label>
+                <input type="text" name="experience" placeholder="High/medium/low"><br>
+                <input type="submit" value="Sign up">
+            </div>
+
+        </form>
+    </div>
 </body>
 </html>
