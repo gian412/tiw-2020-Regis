@@ -29,8 +29,9 @@
 
     <!-- Form for the new campaign -->
     <form method="post" action="CreateCampaign">
-        Campaign name: <input type="text" placeholder="Enter Campaign name" name="name" required><br>
-        Campaign customer: <input type="text" placeholder="Enter Campaign customer" name="customer" required><br>
+        Campaign name: <input type="text" placeholder="Enter Campaign name" name="name" required><br> <!-- th:value="${campaignName}" -->
+        <p th:text="${errorMessage}"></p>
+        Campaign customer: <input type="text" placeholder="Enter Campaign customer" name="customer" required><br> <!-- th:value="${campaignCustomer}" -->
         <input type="submit" value="Create Campaign">
     </form>
 

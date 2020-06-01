@@ -9,6 +9,7 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -58,14 +59,9 @@ public class CreateCampaign extends HttpServlet {
             return;
         }
         ManagerDAO managerDAO = new ManagerDAO(connection, manager.getId());
-        try {
-            managerDAO.createCampaign(campaignName, campaignCustomer);
-        } catch (SQLException e) {
-            e.printStackTrace(); // TODO: remove after test
-            resp.sendError(HttpServletResponse.SC_BAD_GATEWAY, "Campaign creation in the database failed");
-            return;
-        }
-        Campaign campaign;
+
+        // Try to find a campaign with the same name
+        Campaign campaign = null;
         try {
             campaign = managerDAO.findCampaignByName(campaignName);
         } catch (SQLException e) {
@@ -73,11 +69,43 @@ public class CreateCampaign extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_BAD_GATEWAY, "Unable to find the created campaign");
             return;
         }
-        String path = "/WEB-INF/CampaignDetails.html";
+        if (campaign!=null){
+            // TODO: async req
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "A campaign with the same name already exists");
+            return;
+            /*String error = "A campaign with the same name already exists";
+            String path = "/WEB-INF/ManagerHome.html";
+            ServletContext servletContext = getServletContext();
+            final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
+            ctx.setVariable("errorMessage", error);
+            ctx.setVariable("campaignName", campaignName);
+            ctx.setVariable("campaignCustomer", campaignCustomer);
+            templateEngine.process(path, ctx, resp.getWriter());
+            return;*/
+        }
+
+        try {
+            managerDAO.createCampaign(campaignName, campaignCustomer);
+        } catch (SQLException e) {
+            e.printStackTrace(); // TODO: remove after test
+            resp.sendError(HttpServletResponse.SC_BAD_GATEWAY, "Campaign creation in the database failed");
+            return;
+        }
+
+        try {
+            campaign = managerDAO.findCampaignByName(campaignName);
+        } catch (SQLException e) {
+            e.printStackTrace(); // TODO: remove after test
+            resp.sendError(HttpServletResponse.SC_BAD_GATEWAY, "Unable to find the created campaign");
+            return;
+        }
+        /*String path = "/WEB-INF/CampaignDetails.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
         ctx.setVariable("campaign", campaign);
-        templateEngine.process(path, ctx, resp.getWriter());
+        templateEngine.process(path, ctx, resp.getWriter());*/
+        RequestDispatcher rd = req.getRequestDispatcher("/GoToManagerHome");
+        rd.forward(req,resp);
 
     }
 
