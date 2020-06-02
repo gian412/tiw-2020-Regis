@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Campaign Details</title>
-    <link rel="stylesheet" type="text/css" media="all" href="../CSS/generic.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="CSS/general.css" />
 </head>
 <body>
     <h1>Campaign details</h1>
@@ -77,27 +77,46 @@
     <div class="insert-image" th:if="${campaign.status.getValue()==0}">
         <p>Insert a new image</p>
         <form method="post" action="AddImageToCampaign" enctype="multipart/form-data">
-            <label for="latitude">Latitude: </label>
-            <input type="number" id="latitude" name="latitude" step="0.00000001" required>
-            <label for="longitude">Longitude: </label>
-            <input type="number" id="longitude" name="longitude" step="0.00000001" required><br>
-            <label for="city">City: </label>
-            <input type="text" placeholder="Enter city" id="city" name="city" required><br>
-            <label for="region">Region: </label>
-            <input type="text" placeholder="Enter region" id="region" name="region" required><br>
-            <label for="provenance">Provenance: </label>
-            <input type="text" placeholder="Enter image's provenance" id="provenance" name="provenance" required><br>
-            <label for="date">Date: </label>
-            <input type="date" id="date" name="date"><br>
-            Resolution:<br>
-            <input type="radio" id="high" name="resolution" value="0">
-            <label for="high">High</label><br>
-            <input type="radio" id="medium" name="resolution" value="1">
-            <label for="medium">Medium</label><br>
-            <input type="radio" id="low" name="resolution" value="2">
-            <label for="low">Low</label><br>
-            <input type="file" name="image" required><br><br>
-            <input type="hidden" name="campaign" th:value="${campaign.id}">
+
+            <div>
+                <label for="latitude">Latitude: </label>
+                <input type="number" id="latitude" name="latitude" step="0.00000001" required>
+
+                <label for="longitude">Longitude: </label>
+                <input type="number" id="longitude" name="longitude" step="0.00000001" required><br>
+            </div>
+
+            <div>
+                <label for="city">City: </label>
+                <input type="text" placeholder="Enter city" id="city" name="city" required><br>
+
+                <label for="region">Region: </label>
+                <input type="text" placeholder="Enter region" id="region" name="region" required><br>
+
+                <label for="provenance">Provenance: </label>
+                <input type="text" placeholder="Enter image's provenance" id="provenance" name="provenance" required><br>
+
+                <label for="date">Date: </label>
+                <input type="date" id="date" name="date"><br>
+            </div>
+
+            <div>
+                Resolution:<br>
+                <input type="radio" id="high" name="resolution" value="0">
+                <label for="high">High</label><br>
+                <input type="radio" id="medium" name="resolution" value="1">
+                <label for="medium">Medium</label><br>
+                <input type="radio" id="low" name="resolution" value="2">
+                <label for="low">Low</label><br>
+            </div>
+
+            <div>
+                <label class="file-upload">
+                    <input type="file" name="image" required>
+                    <i>Select your image</i>
+                </label> <br><br>
+                <input type="hidden" name="campaign" th:value="${campaign.id}">
+            </div>
             <input type="submit" value="Upload image">
         </form>
     </div>

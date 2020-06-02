@@ -1,5 +1,5 @@
 /* Buttons and submit field basic style */
-button, input[type=submit] {
+button, input[type=submit], .file-upload {
     background-color: #ed6a5a;
     color: #f4f1bb;
     padding: 14px 20px;
@@ -10,13 +10,19 @@ button, input[type=submit] {
 }
 
 /* Buttons and submit field hover style */
-button:hover, input[type=submit]:hover {
+button:hover, input[type=submit]:hover, .file-upload:hover,
+button:focus, input[type=submit]:focus, .file-upload:focus {
     background-color: #9bc1bc;
     color: white;
 }
 
+/*Hide the input file element */
+input[type=file] {
+    display: none;
+}
+
 /* Text fields style */
-input[type=text], input[type=password], input[type=email] {
+input[type=text], input[type=password], input[type=email], input[type=date] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -24,4 +30,9 @@ input[type=text], input[type=password], input[type=email] {
     border: 1px solid #cccccc;
     box-sizing: border-box;
     border-radius: 10px;
+}
+
+/* Create a padding for all div elements */
+div {
+    padding: 16px;
 }
