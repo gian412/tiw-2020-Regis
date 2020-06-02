@@ -41,10 +41,11 @@ public class CreateUser extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String role, firstName, lastName, username, password, passwordToHash, email, exp, path;
+
+        int role;
+        String roleValue, firstName, lastName, username, password, passwordToHash, email, exp, path;
         try {
-            role = req.getParameter("role"); // Get role from request's parameter
-            role = role.toLowerCase();
+            roleValue = req.getParameter("role"); // Get role from request's parameter
             firstName = req.getParameter("firstname"); // Get first name from request's parameter
             lastName = req.getParameter("lastname"); // Get last name from request's parameter
             username = req.getParameter("username"); // Get username from request's parameter
@@ -54,6 +55,14 @@ public class CreateUser extends HttpServlet {
             password = Encryption.hashString(passwordToHash); // Encrypt password
         } catch (NullPointerException e) { // If one of the parameters is null...
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameter values"); // ...send error
+            return;
+        }
+
+        try {
+            role = Integer.parseInt(roleValue);
+        } catch (NumberFormatException e) {
+            e.printStackTrace(); // TODO: remove after test
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid role");
             return;
         }
 
@@ -98,7 +107,7 @@ public class CreateUser extends HttpServlet {
             return;
         }
 
-        if (role.equals("manager")) { // If the user is a manager...
+        if (role==0) { // If the user is a manager...
             try {
                 userDAO.createManager(firstName, lastName, username, password, email);
             } catch (SQLException e) {
@@ -115,7 +124,8 @@ public class CreateUser extends HttpServlet {
             }
             req.getSession().setAttribute("user", user);
             path = getServletContext().getContextPath() + "/ManagerHome";
-        } else if (role.equals("worker")){
+        } else if (role==1) {
+
             ExperienceLevel experience;
             try {
                 exp = req.getParameter("experience");
@@ -124,9 +134,17 @@ public class CreateUser extends HttpServlet {
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameter values"); // ...send error
                 return;
             }
-            experience = ExperienceLevel.getExperienceLevelFromString(exp);
+
+            try {
+                experience = ExperienceLevel.getExperienceLevelFromInt(Integer.parseInt(exp));
+            }catch (NumberFormatException e) {
+                e.printStackTrace(); // TODO: remove after test
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid experience value");
+                return;
+            }
+
             if (experience==null) {
-                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid parameter values");
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid experience value");
                 return;
             }
             try {

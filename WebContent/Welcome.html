@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Welcome to crowdsourcing</title>
@@ -12,13 +12,6 @@
     <p>Bla bla bla ...
     </p>
     <h3>Want to join us?</h3>
-    <!-- Pure HTML approach
-    <table>
-        <tr>
-            <td><a href="Login.html">Login</a></td>
-            <td><a href="SignUp.html">Sign Up</a></td>
-        </tr>
-    </table> -->
 
     <button type="button" id="login">Login</button>
     <button type="button" id="sign-up">Sign up</button>
@@ -33,8 +26,9 @@
             <div class="container">
                 <label for="username">Username: </label>
                 <input type="text" placeholder="Enter username" id="username" name="username" required><br>
-                <label for="password">Password: </label>
-                <input type="password" placeholder="Enter password" id="password" name="password" required><br>
+                <label for="login-password">Password: </label>
+                <input type="password" placeholder="Enter password" id="login-password" name="password" required><br>
+                <input type="checkbox" id="show-login-password"><label for="show-login-password">Show password</label><br>
                 <input type="submit" value="Login" class="modal-button">
                 <p id="errorMessage"></p>
             </div>
@@ -50,46 +44,61 @@
                     <p>Create your account:</p>
                     <span id="sign-up-close" class="close" title="Close Login">&times;</span>
                 </div>
-                <!-- Role -->
-                <!--<div class="role-select" style="width:200px;">
-                    <select name="role">
-                        <option value="0">Select role:</option>
-                        <option value="manager">Manager</option>
-                        <option value="worker">Worker</option>
-                    </select>
-                </div>-->
             <div class="container">
-                <p>Are you a:</p>
-                Role:<input type="text" name="role" placeholder="Manager/Worker"><br>
+
+                <!-- Role -->
+                <div id="role-radio">
+                    <label>Which is your role?</label><br>
+                    <input type="radio" id="manager" name="role" value="0" required>
+                    <label for="manager">Manager</label><br>
+                    <input type="radio" id="worker" name="role" value="1">
+                    <label for="worker">Worker</label><br>
+                </div>
+
                 <!-- Information input request -->
                 <p>Please, give us some information about you:</p>
+
                 <!-- Name -->
                 <label>Name:</label>
                 <input type="text" name="firstname" placeholder="Enter your first name"><br>
+
                 <!-- Surname -->
                 <label>Surname:</label>
                 <input type="text" name="lastname" placeholder="Enter your last name"><br>
+
                 <!-- Username -->
                 <label>Username:</label>
                 <input type="text" name="username" placeholder="Enter your username"><br>
+
                 <!-- Email -->
                 <label>Email:</label>
                 <input type="email" name="email" placeholder="Enter your email"><br>
+
+                <!-- Password -->
                 <label>Password:</label>
-                <input type="password" name="password" placeholder="Enter your password"><br>
-                <!-- Experience selector request -->
-                <p>What about your experience level?</p>
-                <!--<div class="experience-select" style="width:200px;">
-                    <select name="experience">
-                        <option value="-1">Select experience level:</option>
-                        <option value="0">High</option>
-                        <option value="1">Medium</option>
-                        <option value="2">Low</option>
-                    </select>
-                </div>-->
-                <label>Experience level:</label>
-                <input type="text" name="experience" placeholder="High/medium/low"><br>
-                <input type="submit" value="Sign up">
+                <input type="password" name="password" id="sign-up-password1" placeholder="Enter your password"><br>
+                <input type="checkbox" id="show-sign-up-password1">
+                <label for="show-sign-up-password1">Show password</label><br>
+
+                <!-- Password again -->
+                <label>Rewrite password:</label>
+                <input type="password" name="password" id="sign-up-password2" placeholder="Enter your password"><br>
+                <input type="checkbox" id="show-sign-up-password2">
+                <label for="show-sign-up-password2">Show password</label><br>
+
+                <!-- Experience -->
+                <div id="experience-radio">
+                    <label>Experience level:</label><br>
+                    <input type="radio" id="high" name="experience" value="0">
+                    <label for="high">High</label><br>
+                    <input type="radio" id="medium" name="experience" value="1">
+                    <label for="medium">Medium</label><br>
+                    <input type="radio" id="low" name="experience" value="2">
+                    <label for="low">Low</label><br>
+                </div>
+
+                <button type="button" id="false-sign-up-button">Sign up</button>
+                <input type="submit" id="sign-up-button" value="Sign up">
             </div>
 
         </form>

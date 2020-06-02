@@ -34,12 +34,14 @@
 }
 
 .close:hover, .close:focus {
-    color: red;
+    color: #ff0000;
     cursor: pointer;
+    overflow: auto;
 }
 
 .container {
     padding: 16px;
+    overflow: hidden;
 }
 
 /* Add Zoom Animation */
@@ -57,3 +59,12 @@
     from {transform: scale(0)}
     to {transform: scale(1)}
 }
+
+#false-sign-up-button {
+    display: none;
+}
+
+#experience-radio {
+    display: none;
+}
+

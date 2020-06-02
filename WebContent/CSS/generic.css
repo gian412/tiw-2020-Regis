@@ -16,12 +16,12 @@ button:hover, input[type=submit]:hover {
 }
 
 /* Text fields style */
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=email] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid #cccccc;
     box-sizing: border-box;
     border-radius: 10px;
 }

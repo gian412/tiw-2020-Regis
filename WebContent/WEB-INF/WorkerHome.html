@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Worker Home</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../CSS/generic.css" />
 </head>
 <body>
     <h1>Worker Homepage</h1>
@@ -16,9 +17,11 @@
         <!-- If the worker is involved in any campaign -->
         <table th:if="${not #lists.isEmpty(campaignsAssigned)}">
             <thead>
-            <td><b>Name</b></td>
-            <td><b>Customer</b></td>
-            <td><b>Status</b></td>
+                <tr>
+                    <th><b>Name</b></th>
+                    <th><b>Customer</b></th>
+                    <th><b>Status</b></th>
+                </tr>
             </thead>
             <tbody>
             <tr th:each="campaign : ${campaignsAssigned}">
@@ -32,7 +35,7 @@
 
 
     <fieldset>
-        <legend>Campaigns you can subscribe to<legend>
+        <legend>Campaigns you can subscribe to</legend>
 
         <!-- If there isn't any available campaign for the worker -->
         <p th:if="${#lists.isEmpty(campaignsNotAssigned)}">There aren't campaigns in which you are not involved</p>
@@ -41,9 +44,11 @@
         <form method="get" action="WorkerSubscription"  th:if="${not #lists.isEmpty(campaignsNotAssigned)}">
             <table>
                 <thead>
-                <td><b>Name</b></td>
-                <td><b>Customer</b></td>
-                <td><b>Status</b></td>
+                    <tr>
+                        <th><b>Name</b></th>
+                        <th><b>Customer</b></th>
+                        <th><b>Status</b></th>
+                    </tr>
                 </thead>
                 <tbody>
                 <tr th:each="campaign : ${campaignsNotAssigned}">
