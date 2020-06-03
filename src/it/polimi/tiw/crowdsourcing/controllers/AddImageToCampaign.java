@@ -135,11 +135,6 @@ public class AddImageToCampaign extends HttpServlet {
     }
 
     private void saveImage(Part part, String path) throws IOException{
-        /*InputStream imageStream = part.getInputStream();
-        Image image = ImageIO.read(imageStream);
-        File upload = new File(getServletContext().getInitParameter("upload.location"));
-        BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-        ImageIO.write(bufferedImage, "jpg", new File(upload, path));*/
 
         File upload = new File(getServletContext().getInitParameter("upload.location"));
         String string = upload.getAbsolutePath(); // TODO: remove after test
