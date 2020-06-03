@@ -1,6 +1,7 @@
 package it.polimi.tiw.crowdsourcing.dao;
 
 import it.polimi.tiw.crowdsourcing.beans.Annotation;
+import it.polimi.tiw.crowdsourcing.beans.Campaign;
 import it.polimi.tiw.crowdsourcing.utils.Confidence;
 
 import java.sql.Connection;
@@ -21,7 +22,7 @@ public class AnnotationDAO {
     public void createAnnotation(int imageId, int workerId, boolean validity, Confidence confidence, String note) throws SQLException {
 
         String query =
-                "INSERT into image (imageid, workerid, validity, confidence, note) " +
+                "INSERT into annotation (imageid, workerid, validity, confidence, note) " +
                 "VALUES(?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -57,6 +58,32 @@ public class AnnotationDAO {
             }
         }
         return annotations;
+    }
+
+    public Annotation findAnnotationByImageAndWorker(int imageId, int workerId) throws SQLException {
+
+        String query =
+                "SELECT id " +
+                "FROM annotation " +
+                "WHERE imageid = ? " +
+                "AND workerid = ?";
+
+        Annotation annotation;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, imageId);
+            preparedStatement.setInt(2, workerId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (!resultSet.isBeforeFirst()) {
+                    return null;
+                } else {
+                    resultSet.next();
+                    annotation = new Annotation();
+                    annotation.setId(resultSet.getInt("id"));
+                    return annotation;
+                }
+            }
+        }
+
     }
 
 }
