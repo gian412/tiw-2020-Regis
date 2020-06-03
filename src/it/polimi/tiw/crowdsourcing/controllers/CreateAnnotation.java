@@ -1,17 +1,26 @@
 package it.polimi.tiw.crowdsourcing.controllers;
 
+import it.polimi.tiw.crowdsourcing.beans.Annotation;
+import it.polimi.tiw.crowdsourcing.beans.Campaign;
+import it.polimi.tiw.crowdsourcing.beans.Image;
+import it.polimi.tiw.crowdsourcing.beans.User;
+import it.polimi.tiw.crowdsourcing.dao.AnnotationDAO;
+import it.polimi.tiw.crowdsourcing.dao.CampaignDAO;
+import it.polimi.tiw.crowdsourcing.dao.ImageDAO;
 import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
 import it.polimi.tiw.crowdsourcing.utils.Confidence;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -45,6 +54,10 @@ public class CreateAnnotation extends HttpServlet {
         int imageId, validityValue, confidenceValue;
         boolean validity;
         Confidence confidence;
+
+        User worker = null;
+        HttpSession httpSession = req.getSession();
+        worker = (User) httpSession.getAttribute("user");
 
         // Get the annotation's parameters from the request
         try {
@@ -80,7 +93,51 @@ public class CreateAnnotation extends HttpServlet {
             return;
         }
 
-        // TODO: create annotationà
+        // Check if the annotation already exists
+        AnnotationDAO annotationDAO = new AnnotationDAO(connection);
+        Annotation annotation;
+        try {
+            annotation = annotationDAO.findAnnotationByImageAndWorker(imageId, worker.getId());
+        } catch (SQLException e) {
+            e.printStackTrace(); // TODO: remove after test
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to access DB");
+            return;
+        }
+
+        // If the annotation already exists, send error
+        if (annotation!=null) {
+            resp.sendError(HttpServletResponse.SC_CONFLICT, "An annotation for this image already exists");
+            return;
+        }
+
+        // If the annotation don't exists, create it
+        try {
+            annotationDAO.createAnnotation(imageId, worker.getId(), validity, confidence, note);
+        } catch (SQLException e) {
+            e.printStackTrace(); // TODO: remove after test
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to create the annotation, try again later");
+            return;
+        }
+
+        // Get the image in order to find campaign ID
+        ImageDAO imageDAO = new ImageDAO(connection);
+        Image image;
+        try {
+            image = imageDAO.findImageById(imageId);
+        } catch (SQLException e) {
+            e.printStackTrace(); // TODO: remove after test
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "UNable to access DB");
+            return;
+        }
+
+        // Send redirect
+        String path;
+        if (image!=null) {
+            path = getServletContext().getContextPath() + "/CampaignOverview?campaign=" + image.getCampaignId();
+        } else {
+            path = getServletContext().getContextPath() + "/WorkerHome";
+        }
+        resp.sendRedirect(path);
 
     }
 
