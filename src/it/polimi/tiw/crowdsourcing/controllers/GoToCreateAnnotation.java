@@ -1,8 +1,10 @@
 package it.polimi.tiw.crowdsourcing.controllers;
 
+import it.polimi.tiw.crowdsourcing.beans.Image;
+import it.polimi.tiw.crowdsourcing.dao.ImageDAO;
 import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
-import it.polimi.tiw.crowdsourcing.utils.Confidence;
 import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
@@ -16,14 +18,14 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-@WebServlet("/InsertAnnotation")
-public class CreateAnnotation extends HttpServlet {
+@WebServlet("/CreateAnnotation")
+public class GoToCreateAnnotation extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private Connection connection;
     private TemplateEngine templateEngine;
 
-    public CreateAnnotation() {
+    public GoToCreateAnnotation() {
         super();
     }
 
@@ -41,46 +43,44 @@ public class CreateAnnotation extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String imgId, val, conf, note;
-        int imageId, validityValue, confidenceValue;
-        boolean validity;
-        Confidence confidence;
+        String imgId;
+        int imageId;
 
-        // Get the annotation's parameters from the request
+        // Get image id from the request
         try {
-            imgId = req.getParameter("imageid");
-            val = req.getParameter("validity");
-            conf = req.getParameter("confidence");
-            note = req.getParameter("note");
+            imgId = req.getParameter("image");
         } catch (NullPointerException e) {
             e.printStackTrace(); // TODO: remove after test
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Form parameters can't be null");
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Image ID can't be null");
             return;
         }
 
-        // Parse received parameters
+        // Parse the string received from the request to extract the image id
         try {
             imageId = Integer.parseInt(imgId);
-            validityValue = Integer.parseInt(val);
-            confidenceValue = Integer.parseInt(conf);
-            if (validityValue==1) {
-                validity = true;
-            } else if (validityValue==0) {
-                validity = false;
-            } else {
-                throw new NumberFormatException("Invalid Validity value");
-            }
-            confidence = Confidence.getConfidenceFromInt(confidenceValue);
-            if (confidence==null) {
-                throw new NumberFormatException("Invalid Confidence value");
-            }
         } catch (NumberFormatException e) {
             e.printStackTrace(); // TODO: remove after test
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid parameters value");
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid image ID");
             return;
         }
 
-        // TODO: create annotation
+        // Get the image from the database
+        ImageDAO imageDAO = new ImageDAO(connection);
+        Image image = null;
+        try {
+            image = imageDAO.findImageById(imageId);
+        } catch (SQLException e) {
+            e.printStackTrace(); // TODO: remove after test
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to access database");
+            return;
+        }
+
+        String path = "/WEB-INF/CreateAnnotation.html"; // Go to Campaign Details
+
+        ServletContext servletContext = getServletContext();
+        final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
+        ctx.setVariable("image", image);
+        templateEngine.process(path, ctx, resp.getWriter());
 
     }
 

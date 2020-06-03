@@ -31,63 +31,15 @@
     </table>
 
     <p>Click on an image to create an annotation.</p>
-    <!-- Button to click in order to create an annotation -->
-    <button type="button" id="create-annotation">Create an annotation for this image</button>    <!-- If there is any image, show thumbnail --><!--TODO: Slideshow gallery--><!-- TODO: Modal form for Annotation -->
+    <!--TODO: Slideshow gallery--><!-- TODO: Modal form for Annotation -->
     <table th:if="${not #lists.isEmpty(images)}">
         <tr th:each="image : ${images}">
-            <!-- <td><a th:href="@{CreateAnnotation(image=${image.id})}"><img width="150" class="" alt="Waste Dump" th:src="${#servletContext.contextPath} + ${image.source}" /></a></td> -->
-            <td><img width="150" class="image" alt="Waste Dump" th:src="${#servletContext.contextPath} + ${image.source}" /></td>
+            <td><a th:href="@{CreateAnnotation(image=${image.id})}"><img width="150" class="image" alt="Waste Dump" th:src="${#servletContext.contextPath} + ${image.source}" /></a></td>
         </tr>
     </table>
 
     <!-- If there isn't any image, show a message -->
     <p th:if="${#lists.isEmpty(images)}">No image yet</p>
-
-    <!-- Modal form for images' annotation -->
-    <div id="annotation-modal-box" class="modal">
-
-        <!-- Form to show when £crate annotation is clicked -->
-        <form method="post" class="modal-form animate" action="CreateAnnotation">
-
-            <div class="container">
-                <p>Create your annotation</p>
-                <span id="annotation-close" class="close" title="Close Annotation">&times;</span>
-            </div>
-
-            <div class="container">
-
-                <!-- (Hidden) Image id -->
-                <input type="hidden" id="image-id" name="imageid" value="" required>
-                <!-- Validity -->
-                <div class="validity-radio">
-                    <label>Is this annotation valid?</label>
-                    <input type="radio" id="true" name="validity" value="1" required>
-                    <label for="true">Yes</label>
-                    <input type="radio" id="false" name="validity" value="0">
-                    <label for="false">No</label>
-                </div>
-
-                <!-- Confidence -->
-                <div class="confidence-radio">
-                    <label>Are you confident on your annotation?</label>
-                    <input type="radio" id="high" name="confidence" value="0" required>
-                    <label for="high">High</label>
-                    <input type="radio" id="medium" name="confidence" value="1">
-                    <label for="medium">Medium</label>
-                    <input type="radio" id="low" name="confidence" value="2">
-                    <label for="low">Low</label>
-                </div>
-
-                <!-- Note -->
-                <div class="note">
-                    <label for="note">Insert your note here: </label>
-                    <input type="text" id="note" name="note" placeholder="Write your note here"><br>
-                </div>
-
-                <input type="submit" value="Create annotation" class="modal-button">
-            </div>
-        </form>
-    </div>
 
 </body>
 </html>
