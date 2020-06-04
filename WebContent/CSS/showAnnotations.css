@@ -1,6 +1,26 @@
-img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+.image-container {
+    float: left;
+    margin-right: 2%;
     width: 30%;
+}
+.image {
+    width: 100%;
+}
+
+.infos-container {
+    float: left;
+    width: 50%;
+}
+
+.ui-helper-clearfix {
+    clear: both;
+}
+
+.latitude, .longitude, .city, .provenance, .date {
+    float: left;
+    margin-right: 2%;
+}
+
+.region, .resolution {
+    float: left;
 }

@@ -9,55 +9,64 @@
 <body>
 
     <!-- Show image and image's info -->
-    <div class="container">
+    <div class="container cont-image">
 
         <!-- Show image -->
-        <img class="image" alt="Waste Dump" th:src="${#servletContext.contextPath} + ${image.source}" />
+        <div class="container image-container">
+            <img class="image" alt="Waste Dump" th:src="${#servletContext.contextPath} + ${image.source}" />
+        </div>
 
         <!-- Show image's info -->
-        <div class="container infos">
+        <div class="container infos-container">
 
             <!-- Coordinates -->
             <div class="coordinates">
+                <h3><b>Location:</b></h3>
                 <div class="latitude">
-                    <p><b>Latitude</b></p><br>
+                    <p><b>Latitude</b></p>
                     <p th:text="${image.latitude}">11.111111</p>
                 </div>
                 <div class="longitude">
-                    <p><b>Longitude</b></p><br>
+                    <p><b>Longitude</b></p>
                     <p th:text="${image.longitude}">22.222222</p>
                 </div>
-            </div>
-
-            <!-- Location -->
-            <div class="location">
                 <div class="city">
-                    <p><b>City</b></p><br>
+                    <p><b>City</b></p>
                     <p th:text="${image.city}">City sample</p>
                 </div>
                 <div class="region">
                     <p><b>Region</b></p>
                     <p th:text="${image.region}">Region sample</p>
                 </div>
+                <div class="ui-helper-clearfix"></div>
+            </div>
+
+            <!-- Location -->
+            <div class="location">
+
             </div>
 
             <!-- Other infos -->
             <div class="other-infos">
+                <h3><b>Other information</b></h3>
                 <div class="provenance">
-                    <p><b>Provenance</b></p><br>
+                    <p><b>Provenance</b></p>
                     <p th:text="${image.provenance}">Provenance sample</p>
                 </div>
                 <div class="date">
-                    <p><b>Date of rescue</b></p><br>
+                    <p><b>Date of rescue</b></p>
                     <p th:datetime="${image.date}">01/01/2001</p>
                 </div>
                 <div class="resolution">
-                    <p><b>Resolution</b></p><br>
+                    <p><b>Resolution</b></p>
                     <p th:text="${image.resolution.toString()}">High</p>
                 </div>
             </div>
 
         </div>
+
+        <!-- clearfix -->
+        <div class="ui-helper-clearfix"></div>
     </div>
 
     <div class="container">
@@ -79,14 +88,20 @@
 
                 <!-- Validity -->
                 <div class="validity">
-                    <p><b>Is this image valid?</b></p>
+                    <p><b>Is this image valid?</b></p><br>
                     <p th:text="${annotation.getValidity()}">Yes</p>
                 </div>
 
                 <!-- Confidence -->
                 <div class="confidence">
-                    <p><b>Confidence</b></p>
+                    <p><b>Confidence</b></p><br>
                     <p th:text="${annotation.confidence.toString()}">High</p>
+                </div>
+
+                <!-- Note -->
+                <div class="note">
+                    <p><b>Note</b></p><br>
+                    <p th:text="${annotation.note}">Note sample</p>
                 </div>
 
             </div>

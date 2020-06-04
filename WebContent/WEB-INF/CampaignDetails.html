@@ -68,7 +68,7 @@
     <table th:if="${not #lists.isEmpty(images)}">
         <tr th:each="image : ${images}">
             <!-- <td><img class="image" alt="Waste Dump" th:src="${#servletContext.contextPath} + ${image.source}" /></td> -->
-            <td><a th:href="@{ShowAnnotation(image=${image.id})}"><img class="image" alt="Waste Dump" th:src="${#servletContext.contextPath} + ${image.source}" /></a></td>
+            <td><a th:href="@{ShowAnnotations(image=${image.id})}"><img class="image" alt="Waste Dump" th:src="${#servletContext.contextPath} + ${image.source}" /></a></td>
         </tr>
     </table>
 
