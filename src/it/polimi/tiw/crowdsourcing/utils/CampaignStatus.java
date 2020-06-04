@@ -30,15 +30,10 @@ public enum CampaignStatus {
 
     @Override
     public String toString() {
-        switch (this.value) {
-            case 0:
-                return "CREATED";
-            case 1:
-                return "STARTED";
-            case 2:
-                return "CLOSED";
-            default:
-                return null;
-        }
+        return switch (this) {
+            case CREATED -> "CREATED";
+            case STARTED -> "STARTED";
+            case CLOSED -> "CLOSED";
+        };
     }
 }

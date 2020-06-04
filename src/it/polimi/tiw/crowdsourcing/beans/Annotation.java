@@ -2,6 +2,8 @@ package it.polimi.tiw.crowdsourcing.beans;
 
 import it.polimi.tiw.crowdsourcing.utils.Confidence;
 
+import java.util.Date;
+
 public class Annotation {
 
     private int id;
@@ -12,6 +14,7 @@ public class Annotation {
     private boolean validity;
     private Confidence confidence;
     private String note;
+    private Date date;
 
     public int getId() {
         return id;
@@ -76,4 +79,20 @@ public class Annotation {
     public void setNote(String note) {
         this.note = note;
     }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getValidity() {
+        if (this.isValidity()) {
+            return "Yes";
+        }
+        return "No";
+    }
+
 }

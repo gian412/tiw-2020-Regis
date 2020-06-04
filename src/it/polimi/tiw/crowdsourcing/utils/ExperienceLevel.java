@@ -35,8 +35,18 @@ public enum ExperienceLevel {
                 return null;
         }
     }
+
     public int getValue() {
         return this.value;
     }
 
+
+    @Override
+    public String toString() {
+        return switch (this) {
+            case HIGH -> "High";
+            case MEDIUM -> "Medium";
+            case LOW -> "Low";
+        };
+    }
 }

@@ -7,21 +7,91 @@
     <link rel="stylesheet" type="text/css" media="all" href="CSS/showAnnotations.css" />
 </head>
 <body>
+
+    <!-- Show image and image's info -->
     <div class="container">
+
+        <!-- Show image -->
         <img class="image" alt="Waste Dump" th:src="${#servletContext.contextPath} + ${image.source}" />
-        <!-- TODO: Show image's info -->
-    </div>
-    <div class="annotation" th:if="${not #lists.isEmpty(annotations)}" th:each="annotation : ${annotations}">
 
-        <!-- Show avatar and username of the worker -->
-        <div class="container">
-            <img class="avatar" alt="User image" th:src="${#servletContext.contextPath} + ${annotation.workerAvatar}" /> <!-- TODO: Make avatar round and small -->
-            <p th:text="${annotation.workerUsername}" class="username">Username</p>
+        <!-- Show image's info -->
+        <div class="container infos">
+
+            <!-- Coordinates -->
+            <div class="coordinates">
+                <div class="latitude">
+                    <p><b>Latitude</b></p><br>
+                    <p th:text="${image.latitude}">11.111111</p>
+                </div>
+                <div class="longitude">
+                    <p><b>Longitude</b></p><br>
+                    <p th:text="${image.longitude}">22.222222</p>
+                </div>
+            </div>
+
+            <!-- Location -->
+            <div class="location">
+                <div class="city">
+                    <p><b>City</b></p><br>
+                    <p th:text="${image.city}">City sample</p>
+                </div>
+                <div class="region">
+                    <p><b>Region</b></p>
+                    <p th:text="${image.region}">Region sample</p>
+                </div>
+            </div>
+
+            <!-- Other infos -->
+            <div class="other-infos">
+                <div class="provenance">
+                    <p><b>Provenance</b></p><br>
+                    <p th:text="${image.provenance}">Provenance sample</p>
+                </div>
+                <div class="date">
+                    <p><b>Date of rescue</b></p><br>
+                    <p th:datetime="${image.date}">01/01/2001</p>
+                </div>
+                <div class="resolution">
+                    <p><b>Resolution</b></p><br>
+                    <p th:text="${image.resolution.toString()}">High</p>
+                </div>
+            </div>
+
         </div>
+    </div>
 
-        <!-- Show annotation's info -->
-        <div class="container">
-            <!-- TODO: Show annotation's info -->
+    <div class="container">
+        <div class="annotation" th:if="${not #lists.isEmpty(annotations)}" th:each="annotation : ${annotations}">
+
+            <!-- Show avatar and username of the worker -->
+            <div class="header">
+                <div class="user">
+                    <img class="avatar" alt="User image" th:src="${#servletContext.contextPath} + ${annotation.workerAvatar}" /> <!-- TODO: Make avatar round and small -->
+                    <p th:text="${annotation.workerUsername}" class="username">Username</p>
+                </div>
+                <div class="date">
+                    <p th:datetime="${annotation.date}">02/02/2002</p>
+                </div>
+            </div>
+
+            <!-- Show annotation's info -->
+            <div class="content">
+
+                <!-- Validity -->
+                <div class="validity">
+                    <p><b>Is this image valid?</b></p>
+                    <p th:text="${annotation.getValidity()}">Yes</p>
+                </div>
+
+                <!-- Confidence -->
+                <div class="confidence">
+                    <p><b>Confidence</b></p>
+                    <p th:text="${annotation.confidence.toString()}">High</p>
+                </div>
+
+            </div>
+
+
         </div>
     </div>
 

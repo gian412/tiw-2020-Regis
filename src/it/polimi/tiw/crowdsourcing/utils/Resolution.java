@@ -27,4 +27,13 @@ public enum  Resolution {
         return this.value;
     }
 
+
+    @Override
+    public String toString() {
+        return switch (this) {
+            case HIGH -> "High";
+            case MEDIUM -> "Medium";
+            case LOW -> "Low";
+        };
+    }
 }

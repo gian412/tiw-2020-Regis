@@ -11,20 +11,25 @@ public enum Confidence {
     }
 
     public static Confidence getConfidenceFromInt(int value) {
-        switch (value) {
-            case 0:
-                return Confidence.HIGH;
-            case 1:
-                return Confidence.MEDIUM;
-            case 2:
-                return Confidence.LOW;
-            default:
-                return null;
-        }
+        return switch (value) {
+            case 0 -> Confidence.HIGH;
+            case 1 -> Confidence.MEDIUM;
+            case 2 -> Confidence.LOW;
+            default -> null;
+        };
     }
 
     public int getValue() {
         return this.value;
     }
 
+
+    @Override
+    public String toString() {
+        return switch (this) {
+            case HIGH -> "High";
+            case MEDIUM -> "Medium";
+            case LOW -> "Low";
+        };
+    }
 }
