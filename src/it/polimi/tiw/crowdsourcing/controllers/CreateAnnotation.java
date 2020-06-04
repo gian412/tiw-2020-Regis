@@ -10,6 +10,7 @@ import it.polimi.tiw.crowdsourcing.dao.ImageDAO;
 import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
 import it.polimi.tiw.crowdsourcing.utils.Confidence;
 import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
@@ -106,7 +107,24 @@ public class CreateAnnotation extends HttpServlet {
 
         // If the annotation already exists, send error
         if (annotation!=null) {
-            resp.sendError(HttpServletResponse.SC_CONFLICT, "An annotation for this image already exists");
+
+            // Get the image from the database
+            ImageDAO imageDAO = new ImageDAO(connection);
+            Image image = null;
+            try {
+                image = imageDAO.findImageById(imageId);
+            } catch (SQLException e) {
+                e.printStackTrace(); // TODO: remove after test
+                resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to access database");
+                return;
+            }
+            String path = "/WEB-INF/CreateAnnotation.html"; // Go to Campaign Details
+
+            ServletContext servletContext = getServletContext();
+            final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
+            ctx.setVariable("errorMessage", "An annotation for this image already exists");
+            ctx.setVariable("image", image);
+            templateEngine.process(path, ctx, resp.getWriter());
             return;
         }
 
@@ -137,6 +155,7 @@ public class CreateAnnotation extends HttpServlet {
         } else {
             path = getServletContext().getContextPath() + "/WorkerHome";
         }
+
         resp.sendRedirect(path);
 
     }

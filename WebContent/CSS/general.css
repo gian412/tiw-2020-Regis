@@ -36,3 +36,8 @@ input[type=text], input[type=password], input[type=email], input[type=date] {
 div {
     padding: 16px;
 }
+
+/* Error messages style */
+.error {
+    color: red;
+}

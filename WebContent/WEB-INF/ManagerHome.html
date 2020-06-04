@@ -32,10 +32,15 @@
 
     <!-- Form for the new campaign -->
     <form method="post" action="CreateCampaign">
-        <label for="campaignName">Campaign name: </label> <input type="text" placeholder="Enter Campaign name" id="campaignName" name="name" required><br> <!-- th:value="${campaignName}" -->
-        <p th:text="${errorMessage}"></p>
-        <label for="campaignCustomer">Campaign customer: </label> <input type="text" placeholder="Enter Campaign customer" id="campaignCustomer" name="customer" required><br> <!-- th:value="${campaignCustomer}" -->
-        <input type="submit" value="Create Campaign">
+        <div class="container">
+            <p>Create a new campaign</p>
+        </div>
+        <div class="container">
+            <label for="campaignName">Campaign name: </label> <input type="text" placeholder="Enter Campaign name" th:value="${campaignName}" id="campaignName" name="name" required><br> <!-- th:value="${campaignName}" -->
+            <p th:text="${errorMessage}" class="error"></p>
+            <label for="campaignCustomer">Campaign customer: </label> <input type="text" placeholder="Enter Campaign customer" th:value="${campaignCustomer}" id="campaignCustomer" name="customer" required><br> <!-- th:value="${campaignCustomer}" -->
+            <input type="submit" value="Create Campaign">
+        </div>
     </form>
 
 </body>

@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet("/CreateCampaign")
 public class CreateCampaign extends HttpServlet {
@@ -70,18 +71,23 @@ public class CreateCampaign extends HttpServlet {
             return;
         }
         if (campaign!=null){
-            // TODO: async req
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "A campaign with the same name already exists");
-            return;
-            /*String error = "A campaign with the same name already exists";
+            List<Campaign> campaigns = null;
+            try {
+                campaigns = managerDAO.findCampaignsByManager();
+            } catch (SQLException e) {
+                e.printStackTrace(); // TODO: remove after test
+                resp.sendError(HttpServletResponse.SC_BAD_GATEWAY, "Failure in manager's campaign database extraction");
+                return;
+            }
             String path = "/WEB-INF/ManagerHome.html";
             ServletContext servletContext = getServletContext();
             final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
-            ctx.setVariable("errorMessage", error);
+            ctx.setVariable("errorMessage", "A campaign with the same name already exists");
             ctx.setVariable("campaignName", campaignName);
             ctx.setVariable("campaignCustomer", campaignCustomer);
+            ctx.setVariable("campaigns", campaigns);
             templateEngine.process(path, ctx, resp.getWriter());
-            return;*/
+            return;
         }
 
         try {
@@ -99,13 +105,9 @@ public class CreateCampaign extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_BAD_GATEWAY, "Unable to find the created campaign");
             return;
         }
-        /*String path = "/WEB-INF/CampaignDetails.html";
-        ServletContext servletContext = getServletContext();
-        final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
-        ctx.setVariable("campaign", campaign);
-        templateEngine.process(path, ctx, resp.getWriter());*/
-        RequestDispatcher rd = req.getRequestDispatcher("/GoToManagerHome");
-        rd.forward(req,resp);
+
+        String path = getServletContext().getContextPath() + "/ManagerHome";
+        resp.sendRedirect(path);
 
     }
 

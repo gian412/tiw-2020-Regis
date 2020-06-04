@@ -19,12 +19,14 @@
 
             <div class="container">
                 <p>Create your annotation</p>
+                <p class="error" th:value="${errorMessage}"></p>
             </div>
 
             <div class="container">
 
                 <!-- (Hidden) Image id -->
                 <input type="hidden" id="image-id" name="imageid" th:value="${image.id}" required>
+
                 <!-- Validity -->
                 <div class="validity-radio">
                     <label>Is this annotation valid?</label>
