@@ -1,26 +1,88 @@
+/* Container of the image referred by the annotations */
 .image-container {
     float: left;
     margin-right: 2%;
     width: 30%;
 }
+
+/* The image referred by the annotations */
 .image {
     width: 100%;
 }
 
+/* The container of the information about the image */
 .infos-container {
     float: left;
     width: 50%;
 }
 
+/* Element used only for UI help */
 .ui-helper-clearfix {
     clear: both;
 }
 
-.latitude, .longitude, .city, .provenance, .date {
+/* Elements of the information container */
+.latitude, .longitude, .city, .provenance, .date-of-rescue {
     float: left;
     margin-right: 2%;
 }
 
+/* Last elements of the liens in the information container */
 .region, .resolution {
     float: left;
+}
+
+/* Images of user */
+.avatar {
+    border-radius: 50%;
+    width: 50px;
+    float: left;
+    margin-right: 2%;
+    vertical-align: middle;
+}
+
+/* Username of the user */
+.username {
+    float: left;
+    vertical-align: middle;
+}
+
+/* Separator between username and date, separator between header and content */
+.date-separator, .content-separator {
+    clear: both;
+    padding: 0px;
+}
+
+/* Date of the annotation */
+.date {
+    color: #888888;
+    padding: 1px;
+}
+
+/* Elements of the content container */
+.validity, .confidence {
+    float: left;
+    margin-right: 2%;
+}
+
+/* Last elements of the liens in the content container */
+.note {
+    float: left;
+}
+
+/* Content padding */
+.content {
+    padding-top: 4px;
+}
+
+/* Header padding */
+.header {
+    padding-bottom: 4px;
+}
+
+/* Annotation padding */
+.annotation {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }

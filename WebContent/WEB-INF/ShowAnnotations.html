@@ -19,7 +19,7 @@
         <!-- Show image's info -->
         <div class="container infos-container">
 
-            <!-- Coordinates -->
+            <!-- Location -->
             <div class="coordinates">
                 <h3><b>Location:</b></h3>
                 <div class="latitude">
@@ -41,11 +41,6 @@
                 <div class="ui-helper-clearfix"></div>
             </div>
 
-            <!-- Location -->
-            <div class="location">
-
-            </div>
-
             <!-- Other infos -->
             <div class="other-infos">
                 <h3><b>Other information</b></h3>
@@ -53,7 +48,7 @@
                     <p><b>Provenance</b></p>
                     <p th:text="${image.provenance}">Provenance sample</p>
                 </div>
-                <div class="date">
+                <div class="date-of-rescue">
                     <p><b>Date of rescue</b></p>
                     <p th:datetime="${image.date}">01/01/2001</p>
                 </div>
@@ -76,33 +71,38 @@
             <div class="header">
                 <div class="user">
                     <img class="avatar" alt="User image" th:src="${#servletContext.contextPath} + ${annotation.workerAvatar}" /> <!-- TODO: Make avatar round and small -->
-                    <p th:text="${annotation.workerUsername}" class="username">Username</p>
+                    <h3 th:text="${annotation.workerUsername}" class="username">Username</h3>
                 </div>
+                <div class="date-separator"></div>
                 <div class="date">
-                    <p th:datetime="${annotation.date}">02/02/2002</p>
+                    <h5 th:datetime="${annotation.date}">02/02/2002</h5>
                 </div>
             </div>
+
+            <div class="content-separator"></div>
 
             <!-- Show annotation's info -->
             <div class="content">
 
                 <!-- Validity -->
                 <div class="validity">
-                    <p><b>Is this image valid?</b></p><br>
+                    <p><b>Is this image valid?</b></p>
                     <p th:text="${annotation.getValidity()}">Yes</p>
                 </div>
 
                 <!-- Confidence -->
                 <div class="confidence">
-                    <p><b>Confidence</b></p><br>
+                    <p><b>Confidence</b></p>
                     <p th:text="${annotation.confidence.toString()}">High</p>
                 </div>
 
                 <!-- Note -->
                 <div class="note">
-                    <p><b>Note</b></p><br>
+                    <p><b>Note</b></p>
                     <p th:text="${annotation.note}">Note sample</p>
                 </div>
+
+                <div class="ui-helper-clearfix"></div>
 
             </div>
 
