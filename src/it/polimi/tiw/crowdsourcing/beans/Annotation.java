@@ -7,6 +7,8 @@ public class Annotation {
     private int id;
     private int imageId;
     private int workerId;
+    private String workerUsername;
+    private String workerAvatar;
     private boolean validity;
     private Confidence confidence;
     private String note;
@@ -33,6 +35,22 @@ public class Annotation {
 
     public void setWorkerId(int workerId) {
         this.workerId = workerId;
+    }
+
+    public String getWorkerUsername() {
+        return workerUsername;
+    }
+
+    public void setWorkerUsername(String workerUsername) {
+        this.workerUsername = workerUsername;
+    }
+
+    public String getWorkerAvatar() {
+        return workerAvatar;
+    }
+
+    public void setWorkerAvatar(String workerAvatar) {
+        this.workerAvatar = workerAvatar;
     }
 
     public boolean isValidity() {

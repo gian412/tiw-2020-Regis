@@ -24,8 +24,14 @@
 
     <!-- Parameter for images -->
     <context-param>
-        <param-name>upload.location</param-name>
+        <param-name>image.location</param-name>
         <param-value>/var/webapps/uploads/tiw-2020-Regis/images/</param-value>
+    </context-param>
+
+    <!-- Parameter for avatars -->
+    <context-param>
+        <param-name>avatar.location</param-name>
+        <param-value>/var/webapps/uploads/tiw-2020-Regis/avatars/</param-value>
     </context-param>
 
     <!-- Welcome file -->

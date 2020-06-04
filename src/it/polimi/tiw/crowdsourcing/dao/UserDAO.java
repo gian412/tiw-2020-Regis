@@ -45,6 +45,32 @@ public class UserDAO {
 
     }
 
+    public User findUserById(int userId) throws SQLException {
+
+        String query = "SELECT * FROM user WHERE id = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, userId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (!resultSet.isBeforeFirst()) { // No result, credential check failed
+                    return null;
+                } else {
+                    resultSet.next();
+                    User user = new User();
+                    user.setId(resultSet.getInt("id"));
+                    user.setFirstName(resultSet.getString("firstname"));
+                    user.setLastName(resultSet.getString("lastname"));
+                    user.setRole(resultSet.getString("role"));
+                    user.setUsername(resultSet.getString("username"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setExperienceLevel(resultSet.getInt("experience"));
+                    user.setAvatar("/avatars/" + resultSet.getString("avatar"));
+                    return user;
+                }
+            }
+        }
+    }
+
     public User findUserByEmail(String email) throws SQLException {
 
         String query = "SELECT * FROM user WHERE email = ?";
@@ -64,7 +90,7 @@ public class UserDAO {
                     user.setUsername(resultSet.getString("username"));
                     user.setEmail(resultSet.getString("email"));
                     user.setExperienceLevel(resultSet.getInt("experience"));
-                    user.setAvatar(resultSet.getString("avatar"));
+                    user.setAvatar("/avatars/" + resultSet.getString("avatar"));
                     return user;
                 }
             }
@@ -90,7 +116,7 @@ public class UserDAO {
                     user.setUsername(resultSet.getString("username"));
                     user.setEmail(resultSet.getString("email"));
                     user.setExperienceLevel(resultSet.getInt("experience"));
-                    user.setAvatar(resultSet.getString("avatar"));
+                    user.setAvatar("/avatars/" + resultSet.getString("avatar"));
                     return user;
                 }
             }
@@ -108,6 +134,7 @@ public class UserDAO {
             preparedStatement.setString(4, username);
             preparedStatement.setString(5, password);
             preparedStatement.setString(6, email);
+
             preparedStatement.executeUpdate();
         }
 
@@ -115,7 +142,7 @@ public class UserDAO {
 
     public void createWorker(String firstName, String lastName, String username, String password, String  email, int experience) throws SQLException {
 
-        String query = "INSERT into user (role, firstname, lastname, username, password, email, experience) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT into user (role, firstname, lastname, username, password, email, experience, avatar) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
             preparedStatement.setString(1, "worker");
@@ -125,6 +152,7 @@ public class UserDAO {
             preparedStatement.setString(5, password);
             preparedStatement.setString(6, email);
             preparedStatement.setInt(7, experience);
+            preparedStatement.setString(8, "avatar.png");
             preparedStatement.executeUpdate();
         }
 

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Show Annotations</title>
+    <link rel="stylesheet" type="text/css" media="all" href="CSS/general.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="CSS/showAnnotations.css" />
+</head>
+<body>
+    <div class="container">
+        <img class="image" alt="Waste Dump" th:src="${#servletContext.contextPath} + ${image.source}" />
+        <!-- TODO: Show image's info -->
+    </div>
+    <div class="annotation" th:if="${not #lists.isEmpty(annotations)}" th:each="annotation : ${annotations}">
+
+        <!-- Show avatar and username of the worker -->
+        <div class="container">
+            <img class="avatar" alt="User image" th:src="${#servletContext.contextPath} + ${annotation.workerAvatar}" /> <!-- TODO: Make avatar round and small -->
+            <p th:text="${annotation.workerUsername}" class="username">Username</p>
+        </div>
+
+        <!-- Show annotation's info -->
+        <div class="container">
+            <!-- TODO: Show annotation's info -->
+        </div>
+    </div>
+
+</body>
+</html>

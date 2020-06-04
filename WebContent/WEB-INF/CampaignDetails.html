@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Campaign Details</title>
     <link rel="stylesheet" type="text/css" media="all" href="CSS/general.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="CSS/details.css" />
 </head>
 <body>
     <h1>Campaign details</h1>
@@ -66,7 +67,8 @@
     <!-- If there is any image, show thumbnail --><!--TODO: Slideshow gallery-->
     <table th:if="${not #lists.isEmpty(images)}">
         <tr th:each="image : ${images}">
-            <img width="150" alt="Waste Dump" th:src="${#servletContext.contextPath} + ${image.source}" /></td>
+            <!-- <td><img class="image" alt="Waste Dump" th:src="${#servletContext.contextPath} + ${image.source}" /></td> -->
+            <td><a th:href="@{ShowAnnotation(image=${image.id})}"><img class="image" alt="Waste Dump" th:src="${#servletContext.contextPath} + ${image.source}" /></a></td>
         </tr>
     </table>
 

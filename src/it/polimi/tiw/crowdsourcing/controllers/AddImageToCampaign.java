@@ -136,7 +136,7 @@ public class AddImageToCampaign extends HttpServlet {
 
     private void saveImage(Part part, String path) throws IOException{
 
-        File upload = new File(getServletContext().getInitParameter("upload.location"));
+        File upload = new File(getServletContext().getInitParameter("image.location"));
         String string = upload.getAbsolutePath(); // TODO: remove after test
 
         File image = new File(upload, path);

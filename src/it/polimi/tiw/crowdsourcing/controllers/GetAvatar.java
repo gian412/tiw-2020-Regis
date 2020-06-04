@@ -16,8 +16,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Base64;
 
-@WebServlet("/images/*")
-public class GetImage extends HttpServlet {
+@WebServlet("/avatars/*")
+public class GetAvatar extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private Connection connection;
@@ -39,7 +39,7 @@ public class GetImage extends HttpServlet {
             return;
         }
 
-        String imagePath = getServletContext().getInitParameter("image.location") + imageName; // Create image path
+        String imagePath = getServletContext().getInitParameter("avatar.location") + imageName; // Create image path
         BufferedImage bufferedImage = null;
         try {
             bufferedImage = ImageIO.read(new File(imagePath)); // Try to get the image

@@ -34,7 +34,7 @@
     <!--TODO: Slideshow gallery--><!-- TODO: Modal form for Annotation -->
     <table th:if="${not #lists.isEmpty(images)}">
         <tr th:each="image : ${images}">
-            <td><a th:href="@{CreateAnnotation(image=${image.id})}"><img width="150" class="image" alt="Waste Dump" th:src="${#servletContext.contextPath} + ${image.source}" /></a></td>
+            <td><a th:href="@{CreateAnnotation(image=${image.id})}"><img class="image" alt="Waste Dump" th:src="${#servletContext.contextPath} + ${image.source}" /></a></td>
         </tr>
     </table>
 
