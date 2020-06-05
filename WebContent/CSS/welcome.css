@@ -1,3 +1,42 @@
+.header {
+    position: relative;
+    text-align: center;
+}
+
+.header::after
+{
+    box-shadow: inset 0 -30em 3em rgba(237,106,90,.5);
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+/*.layer {
+    background-color: #ed6a5a;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    opacity: 50%;
+}*/
+
+.cover {
+    width: 100%;
+    height: auto;
+    /* box-shadow: inset 0 -30em 3em rgba(237,106,90,.5); /* Useless */
+}
+
+.heading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
 
 #false-sign-up-button {
     display: none;

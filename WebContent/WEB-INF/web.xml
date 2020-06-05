@@ -22,6 +22,12 @@
         <param-value>com.mysql.cj.jdbc.Driver</param-value>
     </context-param>
 
+    <!-- Parameter for resources -->
+    <context-param>
+        <param-name>resources.location</param-name>
+        <param-value>/var/webapps/uploads/tiw-2020-Regis/resources/</param-value>
+    </context-param>
+
     <!-- Parameter for images -->
     <context-param>
         <param-name>image.location</param-name>

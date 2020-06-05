@@ -1,6 +1,7 @@
 package it.polimi.tiw.crowdsourcing.controllers;
 
 import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
+import it.polimi.tiw.crowdsourcing.utils.ImageHandler;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -9,12 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Base64;
 
 @WebServlet("/avatars/*")
 public class GetAvatar extends HttpServlet {
@@ -49,7 +48,7 @@ public class GetAvatar extends HttpServlet {
             return;
         }
 
-        byte[] image = getImageAsByte(bufferedImage);
+        byte[] image = ImageHandler.getImageAsByte(bufferedImage);
         resp.setContentType(getServletContext().getMimeType(imageName));
         resp.setContentLength(image.length);
         resp.getOutputStream().write(image);
@@ -65,14 +64,4 @@ public class GetAvatar extends HttpServlet {
         }
     }
 
-    private byte[] getImageAsByte(BufferedImage bufferedImage) throws IOException {
-
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        ImageIO.write(bufferedImage, "jpg", output);
-        output.flush();
-        byte[] imageAsByte = output.toByteArray();
-        output.close();
-        return imageAsByte;
-
-    }
 }

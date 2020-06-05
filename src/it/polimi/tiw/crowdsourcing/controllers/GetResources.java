@@ -1,6 +1,5 @@
 package it.polimi.tiw.crowdsourcing.controllers;
 
-import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
 import it.polimi.tiw.crowdsourcing.utils.ImageHandler;
 
 import javax.imageio.ImageIO;
@@ -10,17 +9,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Base64;
 
-@WebServlet("/images/*")
-public class GetImage extends HttpServlet {
+@WebServlet("/resources/*")
+public class GetResources extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+
+    public GetResources() {
+        super();
+    }
 
     @Override
     public void init() throws ServletException {
@@ -39,7 +39,7 @@ public class GetImage extends HttpServlet {
             return;
         }
 
-        String imagePath = getServletContext().getInitParameter("image.location") + imageName; // Create image path
+        String imagePath = getServletContext().getInitParameter("resources.location") + imageName; // Create image path
         BufferedImage bufferedImage = null;
         try {
             bufferedImage = ImageIO.read(new File(imagePath)); // Try to get the image
@@ -57,8 +57,12 @@ public class GetImage extends HttpServlet {
     }
 
     @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        this.doGet(req, resp);
+    }
+
+    @Override
     public void destroy() {
         super.destroy();
     }
-
 }

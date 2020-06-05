@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Welcome to crowdsourcing</title>
-    <link rel="stylesheet" type="text/css" media="all" href="CSS/general.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="CSS/general.css" th:href="@{CSS/general.css}"/>
     <link rel="stylesheet" type="text/css" media="all" href="CSS/welcome.css">
     <link rel="stylesheet" type="text/css" media="all" href="CSS/modal.css" />
     <script src="JS/welcome.js" charset="utf-8" defer></script>
 </head>
 <body>
-    <h1>Welcome to our crowdsourcing </h1>
-    <p>Bla bla bla ...
-    </p>
+    <div class="header">
+        <img class="cover" alt="Cover" src="/tiw_2020_Regis/resources/cover-image2.jpg" />
+        <!--<div class="layer"></div>-->
+        <div class="heading">
+            <h1 class="title">Welcome Waste Dump Crowdsourcing</h1>
+            <h2 class="subTitle">Work together to make World better</h2>
+        </div>
+    </div>
+
     <h3>Want to join us?</h3>
 
     <button type="button" id="login">Login</button>

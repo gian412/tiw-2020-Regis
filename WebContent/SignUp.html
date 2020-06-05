@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Sign up</title>
-	<link rel="stylesheet" type="text/css" media="all" href="CSS/general.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="CSS/general.css" th:href="@{CSS/general.css}"/>
 </head>
 <body>
 	<h1>Welcome to the sign up page</h1>
@@ -19,23 +19,34 @@
 				<option value="worker">Worker</option>
 			</select>
 		</div>-->
-		Role:<input type="text" name="role" placeholder="Manager/Worker"><br>
+
+		<!-- Role -->
+		<label for="role">Role:</label>
+		<input type="text" id="role" name="role" placeholder="Manager/Worker"><br>
+
 		<!-- Information input request -->
 		<p>Please, give us some information about you:</p>
+
 		<!-- Name -->
 		<label>Name:</label>
 		<input type="text" name="firstname" placeholder="Enter your first name"><br>
+
 		<!-- Surname -->
 		<label>Surname:</label>
 		<input type="text" name="lastname" placeholder="Enter your last name"><br>
+
 		<!-- Username -->
 		<label>Username:</label>
 		<input type="text" name="username" placeholder="Enter your username"><br>
+
 		<!-- Email -->
 		<label>Email:</label>
 		<input type="email" name="email" placeholder="Enter your email"><br>
+
+		<!-- Password -->
 		<label>Password:</label>
 		<input type="password" name="password" placeholder="Enter your password"><br>
+
 		<!-- Experience selector request -->
 		<p>What about your experience level?</p>
 		<!--<div class="experience-select" style="width:200px;">
