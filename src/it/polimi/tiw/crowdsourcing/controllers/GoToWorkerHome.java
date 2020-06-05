@@ -60,7 +60,7 @@ public class GoToWorkerHome extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_BAD_GATEWAY, "Failure in worker's campaign database extraction");
             return;
         }
-        String path = "/WEB-INF/WorkerHome.html";
+        String path = "/WEB-INF/workerHome.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
         ctx.setVariable("campaignsNotAssigned", campaignsNotAssigned);

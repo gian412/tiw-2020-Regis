@@ -75,7 +75,7 @@ public class GoToCreateAnnotation extends HttpServlet {
             return;
         }
 
-        String path = "/WEB-INF/CreateAnnotation.html"; // Go to Campaign Details
+        String path = "/WEB-INF/createAnnotation.html"; // Go to Campaign Details
 
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());

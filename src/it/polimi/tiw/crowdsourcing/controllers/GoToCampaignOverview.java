@@ -81,7 +81,7 @@ public class GoToCampaignOverview extends HttpServlet {
             return;
         }
 
-        String path = "/WEB-INF/CampaignOverview.html"; // Go to Campaign Overview
+        String path = "/WEB-INF/campaignOverview.html"; // Go to Campaign Overview
 
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());

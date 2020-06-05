@@ -73,7 +73,7 @@ public class GoToCampaignStats extends HttpServlet {
             return;
         }
 
-        String path = "/WEB-INF/CampaignStats.html";
+        String path = "/WEB-INF/campaignStats.html";
         final WebContext ctx = new WebContext(req, resp, getServletContext(), req.getLocale());
         ctx.setVariable("campaign", campaign);
         ctx.setVariable("stats", campaignStats);

@@ -118,7 +118,7 @@ public class CreateAnnotation extends HttpServlet {
                 resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to access database");
                 return;
             }
-            String path = "/WEB-INF/CreateAnnotation.html"; // Go to Campaign Details
+            String path = "/WEB-INF/createAnnotation.html"; // Go to Campaign Details
 
             ServletContext servletContext = getServletContext();
             final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());

@@ -42,7 +42,7 @@
 
     <!-- Welcome file -->
     <welcome-file-list>
-        <welcome-file>Welcome.html</welcome-file>
+        <welcome-file>welcome.html</welcome-file>
     </welcome-file-list>
 
     <!-- Filters declaration -->

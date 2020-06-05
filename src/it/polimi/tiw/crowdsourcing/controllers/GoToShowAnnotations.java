@@ -111,7 +111,7 @@ public class GoToShowAnnotations extends HttpServlet {
         }
 
         // Go to the annotations' view page
-        String path = "/WEB-INF/ShowAnnotations.html";
+        String path = "/WEB-INF/showAnnotations.html";
 
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());

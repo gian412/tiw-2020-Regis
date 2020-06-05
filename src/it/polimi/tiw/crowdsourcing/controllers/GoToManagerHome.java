@@ -58,7 +58,7 @@ public class GoToManagerHome extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_BAD_GATEWAY, "Failure in manager's campaign database extraction");
             return;
         }
-        String path = "/WEB-INF/ManagerHome.html";
+        String path = "/WEB-INF/managerHome.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
         ctx.setVariable("campaigns", campaigns);

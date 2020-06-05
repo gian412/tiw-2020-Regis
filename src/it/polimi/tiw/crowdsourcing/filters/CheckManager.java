@@ -22,7 +22,7 @@ public class CheckManager implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest; // Cast request
         HttpServletResponse response = (HttpServletResponse) servletResponse; // Cast response
 
-        String loginPath = request.getServletContext().getContextPath() + "/Login.html"; // Prepare login path
+        String loginPath = request.getServletContext().getContextPath() + "/login.html"; // Prepare login path
 
         HttpSession session = request.getSession(); // Get session from the request
         User user = null;
