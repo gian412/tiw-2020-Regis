@@ -40,7 +40,7 @@ public class GoToLogin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String path = "/login.html"; // Go to welcome file
+        String path = "/login.html"; // Go to login file
 
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
