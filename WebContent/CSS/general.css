@@ -41,3 +41,34 @@ div {
 .error {
     color: red;
 }
+
+/* Top menù style */
+.top-menu {
+	overflow : hidden;
+	background-color : white;
+	position : fixed;
+	top : 0;
+	width : 100%;
+}
+
+/* Link inside the top menù */
+.navbar a {
+	float : left;
+	display : block;
+    background-color: #ed6a5a;
+    color: #f4f1bb;
+	text-align : center;
+	padding : 14px 16px;
+	text-decoration : none;
+}
+
+/* Top menù hover style */
+.navbar a:hover {
+	background-color: #9bc1bc;
+	color: white;
+}
+
+/* Main style to avoid overlay with top menù */
+.main {
+	margin-top : 30px;
+}
