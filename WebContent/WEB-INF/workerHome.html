@@ -6,6 +6,13 @@
     <link rel="stylesheet" type="text/css" media="all" href="/CSS/general.css" th:href="@{CSS/general.css}"/>
 </head>
 <body>
+
+  <div class="top-menu">
+      <a href="#" th:href="@{WorkerHome}" th:text="Home">_Home</a>
+      <a href="#" th:href="@{Logout}" th:text="Logout">_Logout</a>
+  </div>
+
+  <div class="main">
     <h1>Worker Homepage</h1>
 
     <fieldset>
@@ -62,6 +69,8 @@
             </table>
         </form>
     </fieldset>
+  </div>
+
 
 </body>
 </html>

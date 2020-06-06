@@ -1,132 +1,140 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Campaign Details</title>
-    <link rel="stylesheet" type="text/css" media="all" href="/CSS/general.css" th:href="@{CSS/general.css}"/>
-    <link rel="stylesheet" type="text/css" media="all" href="/CSS/details.css" th:href="@{CSS/details.css}"/>
-</head>
-<body>
-    <h1>Campaign details</h1>
+    <head>
+        <meta charset="UTF-8">
+        <title>Campaign Details</title>
+        <link rel="stylesheet" type="text/css" media="all" href="/CSS/general.css" th:href="@{CSS/general.css}"/>
+        <link rel="stylesheet" type="text/css" media="all" href="/CSS/details.css" th:href="@{CSS/details.css}"/>
+    </head>
+    <body>
 
-    <!-- Show form if campaign is CREATED -->
-    <form method="post" action="EditCampaign" th:if="${campaign.status.getValue()==0}">
-        <table>
-            <thead>
-                <tr>
-                    <th><label for="name"><b>Name</b></label></th>
-                    <th><label for="customer"><b>Customer</b></label></th>
-                    <th><b>Status</b></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="text" name="name" value="Campaign name" id="name" th:value="${campaign.name}" required></td>
-                    <td><input type="text" name="customer" value="Campaign customer" id="customer" th:value="${campaign.customer}" required></td>
-                    <td th:text="${campaign.status.toString()}">Status</td>
-                    <td><input type="submit" value="Edit Campaign"></td>
-                </tr>
-            </tbody>
-        </table>
-    </form>
+        <div class="top-menu">
+            <a href="#" th:href="@{ManagerHome}" th:text="Home">_Home</a>
+            <a href="#" th:href="@{Logout}" th:text="Logout">_Logout</a>
+        </div>
 
-    <!-- Show campaign's infos if it's STARTED || CLOSED -->
-    <table th:if="${campaign.status.getValue()!=0}">
-        <thead>
-            <tr>
-                <th><b>Name</b></th>
-                <th><b>Customer</b></th>
-                <th><b>Status</b></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td th:text="${campaign.name}">Name</td>
-                <td th:text="${campaign.customer}">Customer</td>
-                <td th:text="${campaign.status.toString()}">Status</td>
-            </tr>
-        </tbody>
-    </table>
+        <div class="main">
+          <h1>Campaign details</h1>
 
-    <!-- If campaign is CREATED, then START -->
-    <form method="get" action="ChangeCampaignStatus" th:if="${campaign.status.getValue()==0}">
-        <input type="hidden" name="id" th:value="${campaign.id}">
-        <input type="hidden" name="status" value="1">
-        <input type="submit" value="Start campaign">
-    </form>
+          <!-- Show form if campaign is CREATED -->
+          <form method="post" action="EditCampaign" th:if="${campaign.status.getValue()==0}">
+              <table>
+                  <thead>
+                      <tr>
+                          <th><label for="name"><b>Name</b></label></th>
+                          <th><label for="customer"><b>Customer</b></label></th>
+                          <th><b>Status</b></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td><input type="text" name="name" value="Campaign name" id="name" th:value="${campaign.name}" required></td>
+                          <td><input type="text" name="customer" value="Campaign customer" id="customer" th:value="${campaign.customer}" required></td>
+                          <td th:text="${campaign.status.toString()}">Status</td>
+                          <td><input type="submit" value="Edit Campaign"></td>
+                      </tr>
+                  </tbody>
+              </table>
+          </form>
 
-    <!-- If campaign is STARTED, then CLOSE -->
-    <form method="get" action="ChangeCampaignStatus" th:if="${campaign.status.getValue()==1}">
-        <input type="hidden" name="id" th:value="${campaign.id}">
-        <input type="hidden" name="status" value="2">
-        <input type="submit" value="Close campaign">
-    </form>
+          <!-- Show campaign's infos if it's STARTED || CLOSED -->
+          <table th:if="${campaign.status.getValue()!=0}">
+              <thead>
+                  <tr>
+                      <th><b>Name</b></th>
+                      <th><b>Customer</b></th>
+                      <th><b>Status</b></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td th:text="${campaign.name}">Name</td>
+                      <td th:text="${campaign.customer}">Customer</td>
+                      <td th:text="${campaign.status.toString()}">Status</td>
+                  </tr>
+              </tbody>
+          </table>
 
-    <!-- If campaign is STARTED || CLOSED, show campaign stats -->
-    <form method="get" action="CampaignStats" th:if="${campaign.status.getValue()!=0}">
-        <input type="hidden" name="campaign" th:value="${campaign.id}">
-        <input type="submit" value="Campaign stats">
-    </form>
+          <!-- If campaign is CREATED, then START -->
+          <form method="get" action="ChangeCampaignStatus" th:if="${campaign.status.getValue()==0}">
+              <input type="hidden" name="id" th:value="${campaign.id}">
+              <input type="hidden" name="status" value="1">
+              <input type="submit" value="Start campaign">
+          </form>
 
-    <br>
-    <!-- If there is any image, show thumbnail --><!--TODO: Slideshow gallery-->
-    <table th:if="${not #lists.isEmpty(images)}">
-        <tr th:each="image : ${images}">
-            <!-- <td><img class="image" alt="Waste Dump" th:src="${#servletContext.contextPath} + ${image.source}" /></td> -->
-            <td><a th:href="@{ShowAnnotations(image=${image.id})}"><img class="image" alt="Waste Dump" src="sample/wasteDump.jpg" th:src="${#servletContext.contextPath} + ${image.source}" /></a></td>
-        </tr>
-    </table>
+          <!-- If campaign is STARTED, then CLOSE -->
+          <form method="get" action="ChangeCampaignStatus" th:if="${campaign.status.getValue()==1}">
+              <input type="hidden" name="id" th:value="${campaign.id}">
+              <input type="hidden" name="status" value="2">
+              <input type="submit" value="Close campaign">
+          </form>
 
-    <!-- If there isn't any image, show a message -->
-    <p th:if="${#lists.isEmpty(images)}">No image yet</p>
+          <!-- If campaign is STARTED || CLOSED, show campaign stats -->
+          <form method="get" action="CampaignStats" th:if="${campaign.status.getValue()!=0}">
+              <input type="hidden" name="campaign" th:value="${campaign.id}">
+              <input type="submit" value="Campaign stats">
+          </form>
 
-    <!-- Form for image insertion -->
-    <div class="insert-image" th:if="${campaign.status.getValue()==0}">
-        <p>Insert a new image</p>
-        <form method="post" action="AddImageToCampaign" enctype="multipart/form-data">
+          <br>
+          <!-- If there is any image, show thumbnail --><!--TODO: Slideshow gallery-->
+          <table th:if="${not #lists.isEmpty(images)}">
+              <tr th:each="image : ${images}">
+                  <!-- <td><img class="image" alt="Waste Dump" th:src="${#servletContext.contextPath} + ${image.source}" /></td> -->
+                  <td><a th:href="@{ShowAnnotations(image=${image.id})}"><img class="image" alt="Waste Dump" src="sample/wasteDump.jpg" th:src="${#servletContext.contextPath} + ${image.source}" /></a></td>
+              </tr>
+          </table>
 
-            <div>
-                <label for="latitude">Latitude: </label>
-                <input type="number" id="latitude" name="latitude" step="0.00000001" required>
+          <!-- If there isn't any image, show a message -->
+          <p th:if="${#lists.isEmpty(images)}">No image yet</p>
 
-                <label for="longitude">Longitude: </label>
-                <input type="number" id="longitude" name="longitude" step="0.00000001" required><br>
-            </div>
+          <!-- Form for image insertion -->
+          <div class="insert-image" th:if="${campaign.status.getValue()==0}">
+              <p>Insert a new image</p>
+              <form method="post" action="AddImageToCampaign" enctype="multipart/form-data">
 
-            <div>
-                <label for="city">City: </label>
-                <input type="text" placeholder="Enter city" id="city" name="city" required><br>
+                  <div>
+                      <label for="latitude">Latitude: </label>
+                      <input type="number" id="latitude" name="latitude" step="0.00000001" required>
 
-                <label for="region">Region: </label>
-                <input type="text" placeholder="Enter region" id="region" name="region" required><br>
+                      <label for="longitude">Longitude: </label>
+                      <input type="number" id="longitude" name="longitude" step="0.00000001" required><br>
+                  </div>
 
-                <label for="provenance">Provenance: </label>
-                <input type="text" placeholder="Enter image's provenance" id="provenance" name="provenance" required><br>
+                  <div>
+                      <label for="city">City: </label>
+                      <input type="text" placeholder="Enter city" id="city" name="city" required><br>
 
-                <label for="date">Date: </label>
-                <input type="date" id="date" name="date"><br>
-            </div>
+                      <label for="region">Region: </label>
+                      <input type="text" placeholder="Enter region" id="region" name="region" required><br>
 
-            <div>
-                Resolution:<br>
-                <input type="radio" id="high" name="resolution" value="0">
-                <label for="high">High</label><br>
-                <input type="radio" id="medium" name="resolution" value="1">
-                <label for="medium">Medium</label><br>
-                <input type="radio" id="low" name="resolution" value="2">
-                <label for="low">Low</label><br>
-            </div>
+                      <label for="provenance">Provenance: </label>
+                      <input type="text" placeholder="Enter image's provenance" id="provenance" name="provenance" required><br>
 
-            <div>
-                <label class="file-upload">
-                    <input type="file" name="image" required>
-                    <i>Select your image</i>
-                </label> <br><br>
-                <input type="hidden" name="campaign" th:value="${campaign.id}">
-            </div>
-            <input type="submit" value="Upload image">
-        </form>
-    </div>
+                      <label for="date">Date: </label>
+                      <input type="date" id="date" name="date"><br>
+                  </div>
 
-</body>
+                  <div>
+                      Resolution:<br>
+                      <input type="radio" id="high" name="resolution" value="0">
+                      <label for="high">High</label><br>
+                      <input type="radio" id="medium" name="resolution" value="1">
+                      <label for="medium">Medium</label><br>
+                      <input type="radio" id="low" name="resolution" value="2">
+                      <label for="low">Low</label><br>
+                  </div>
+
+                  <div>
+                      <label class="file-upload">
+                          <input type="file" name="image" required>
+                          <i>Select your image</i>
+                      </label> <br><br>
+                      <input type="hidden" name="campaign" th:value="${campaign.id}">
+                  </div>
+                  <input type="submit" value="Upload image">
+              </form>
+          </div>
+        </div>
+
+    </body>
 </html>

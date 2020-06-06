@@ -6,6 +6,12 @@
     <link rel="stylesheet" type="text/css" media="all" href="/CSS/general.css" th:href="@{CSS/general.css}"/>
 </head>
 <body>
+
+  <div class="top-menu">
+      <a href="#" th:href="@{ManagerHome}" th:text="Home">_Home</a>
+      <a href="#" th:href="@{Logout}" th:text="Logout">_Logout</a>
+  </div>
+  <div class="main">
     <h1>Campaign's statistics page</h1>
 
     <!-- Show campaign's infos -->
@@ -53,6 +59,8 @@
     <form method="get" action="ManagerHome">
         <input type="submit" value="Return to home page">
     </form>
+  </div>
+
 
 </body>
 </html>

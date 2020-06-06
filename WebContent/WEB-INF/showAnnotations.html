@@ -8,107 +8,115 @@
 </head>
 <body>
 
-    <!-- Show image and image's info -->
-    <div class="container cont-image">
+    <div class="top-menu">
+        <a href="#" th:href="@{ManagerHome}" th:text="Home">_Home</a>
+        <a href="#" th:href="@{Logout}" th:text="Logout">_Logout</a>
+    </div>
+    <div class="main">
+      <!-- Show image and image's info -->
+      <div class="container cont-image">
 
-        <!-- Show image -->
-        <div class="container image-container">
-            <img class="image" alt="Waste Dump" src="sample/wasteDump.jpg" th:src="${#servletContext.contextPath} + ${image.source}" />
-        </div>
+          <!-- Show image -->
+          <div class="container image-container">
+              <img class="image" alt="Waste Dump" src="sample/wasteDump.jpg" th:src="${#servletContext.contextPath} + ${image.source}" />
+          </div>
 
-        <!-- Show image's info -->
-        <div class="container infos-container">
+          <!-- Show image's info -->
+          <div class="container infos-container">
 
-            <!-- Location -->
-            <div class="coordinates">
-                <h3><b>Location:</b></h3>
-                <div class="latitude">
-                    <p><b>Latitude</b></p>
-                    <p th:text="${image.latitude}">11.111111</p>
-                </div>
-                <div class="longitude">
-                    <p><b>Longitude</b></p>
-                    <p th:text="${image.longitude}">22.222222</p>
-                </div>
-                <div class="city">
-                    <p><b>City</b></p>
-                    <p th:text="${image.city}">City sample</p>
-                </div>
-                <div class="region">
-                    <p><b>Region</b></p>
-                    <p th:text="${image.region}">Region sample</p>
-                </div>
-                <div class="ui-helper-clearfix"></div>
-            </div>
+              <!-- Location -->
+              <div class="coordinates">
+                  <h3><b>Location:</b></h3>
+                  <div class="latitude">
+                      <p><b>Latitude</b></p>
+                      <p th:text="${image.latitude}">11.111111</p>
+                  </div>
+                  <div class="longitude">
+                      <p><b>Longitude</b></p>
+                      <p th:text="${image.longitude}">22.222222</p>
+                  </div>
+                  <div class="city">
+                      <p><b>City</b></p>
+                      <p th:text="${image.city}">City sample</p>
+                  </div>
+                  <div class="region">
+                      <p><b>Region</b></p>
+                      <p th:text="${image.region}">Region sample</p>
+                  </div>
+                  <div class="ui-helper-clearfix"></div>
+              </div>
 
-            <!-- Other infos -->
-            <div class="other-infos">
-                <h3><b>Other information</b></h3>
-                <div class="provenance">
-                    <p><b>Provenance</b></p>
-                    <p th:text="${image.provenance}">Provenance sample</p>
-                </div>
-                <div class="date-of-rescue">
-                    <p><b>Date of rescue</b></p>
-                    <p th:datetime="${image.date}">01/01/2001</p>
-                </div>
-                <div class="resolution">
-                    <p><b>Resolution</b></p>
-                    <p th:text="${image.resolution.toString()}">High</p>
-                </div>
-            </div>
+              <!-- Other infos -->
+              <div class="other-infos">
+                  <h3><b>Other information</b></h3>
+                  <div class="provenance">
+                      <p><b>Provenance</b></p>
+                      <p th:text="${image.provenance}">Provenance sample</p>
+                  </div>
+                  <div class="date-of-rescue">
+                      <p><b>Date of rescue</b></p>
+                      <p th:datetime="${image.date}">01/01/2001</p>
+                  </div>
+                  <div class="resolution">
+                      <p><b>Resolution</b></p>
+                      <p th:text="${image.resolution.toString()}">High</p>
+                  </div>
+              </div>
 
-        </div>
+          </div>
 
-        <!-- clearfix -->
-        <div class="ui-helper-clearfix"></div>
+          <!-- clearfix -->
+          <div class="ui-helper-clearfix"></div>
+      </div>
+
+      <div class="container">
+          <div class="annotation" th:if="${not #lists.isEmpty(annotations)}" th:each="annotation : ${annotations}">
+
+              <!-- Show avatar and username of the worker -->
+              <div class="header">
+                  <div class="user">
+                      <img class="avatar" alt="User image" th:src="${#servletContext.contextPath} + ${annotation.workerAvatar}" /> <!-- TODO: Make avatar round and small -->
+                      <h3 th:text="${annotation.workerUsername}" class="username">Username</h3>
+                  </div>
+                  <div class="date-separator"></div>
+                  <div class="date">
+                      <h5 th:datetime="${annotation.date}">02/02/2002</h5>
+                  </div>
+              </div>
+
+              <div class="content-separator"></div>
+
+              <!-- Show annotation's info -->
+              <div class="content">
+
+                  <!-- Validity -->
+                  <div class="validity">
+                      <p><b>Is this image valid?</b></p>
+                      <p th:text="${annotation.getValidity()}">Yes</p>
+                  </div>
+
+                  <!-- Confidence -->
+                  <div class="confidence">
+                      <p><b>Confidence</b></p>
+                      <p th:text="${annotation.confidence.toString()}">High</p>
+                  </div>
+
+                  <!-- Note -->
+                  <div class="note">
+                      <p><b>Note</b></p>
+                      <p th:text="${annotation.note}">Note sample</p>
+                  </div>
+
+                  <div class="ui-helper-clearfix"></div>
+
+              </div>
+
+
+          </div>
+      </div>
     </div>
 
-    <div class="container">
-        <div class="annotation" th:if="${not #lists.isEmpty(annotations)}" th:each="annotation : ${annotations}">
 
-            <!-- Show avatar and username of the worker -->
-            <div class="header">
-                <div class="user">
-                    <img class="avatar" alt="User image" th:src="${#servletContext.contextPath} + ${annotation.workerAvatar}" /> <!-- TODO: Make avatar round and small -->
-                    <h3 th:text="${annotation.workerUsername}" class="username">Username</h3>
-                </div>
-                <div class="date-separator"></div>
-                <div class="date">
-                    <h5 th:datetime="${annotation.date}">02/02/2002</h5>
-                </div>
-            </div>
-
-            <div class="content-separator"></div>
-
-            <!-- Show annotation's info -->
-            <div class="content">
-
-                <!-- Validity -->
-                <div class="validity">
-                    <p><b>Is this image valid?</b></p>
-                    <p th:text="${annotation.getValidity()}">Yes</p>
-                </div>
-
-                <!-- Confidence -->
-                <div class="confidence">
-                    <p><b>Confidence</b></p>
-                    <p th:text="${annotation.confidence.toString()}">High</p>
-                </div>
-
-                <!-- Note -->
-                <div class="note">
-                    <p><b>Note</b></p>
-                    <p th:text="${annotation.note}">Note sample</p>
-                </div>
-
-                <div class="ui-helper-clearfix"></div>
-
-            </div>
-
-
-        </div>
-    </div>
 
 </body>
 </html>

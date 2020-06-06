@@ -9,6 +9,12 @@
 </head>
 <body>
 
+  <div class="top-menu">
+      <a href="#" th:href="@{WorkerHome}" th:text="Home">_Home</a>
+      <a href="#" th:href="@{Logout}" th:text="Logout">_Logout</a>
+  </div>
+
+  <div class="main">
     <h1>Campaign Overview</h1>
 
     <!-- Show Campaign Overview -->
@@ -39,6 +45,7 @@
 
     <!-- If there isn't any image, show a message -->
     <p th:if="${#lists.isEmpty(images)}">No image yet</p>
+  </div>
 
 </body>
 </html>

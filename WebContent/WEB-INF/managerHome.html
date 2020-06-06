@@ -7,41 +7,47 @@
 </head>
 <body>
 
-    <h1>Manager Homepage</h1>
+    <div class="top-menu">
+        <a href="#" th:href="@{ManagerHome}" th:text="Home">_Home</a>
+        <a href="#" th:href="@{Logout}" th:text="Logout">_Logout</a>
+    </div>
+    <div class="main">
+        <h1>Manager Homepage</h1>
 
-    <!-- If there is any campaign show it -->
-    <table th:if="${not #lists.isEmpty(campaigns)}"> <!-- TODO: If ( campaigns.isEmpty() ) then showEmptyMessage -->
-        <thead>
+        <!-- If there is any campaign show it -->
+        <table th:if="${not #lists.isEmpty(campaigns)}"> <!-- TODO: If ( campaigns.isEmpty() ) then showEmptyMessage -->
+            <thead>
             <tr>
                 <th>Name</th>
                 <th>Customer</th>
                 <th>Status</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             <tr th:each="campaign : ${campaigns}">
                 <td><a th:href="@{CampaignDetails(campaign=${campaign.id})}" th:text="${campaign.name}">Name</a></td>
                 <td th:text="${campaign.customer}">Customer</td>
                 <td th:text="${campaign.status.toString()}">Status</td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <!-- If there isn't any campaign, show a message -->
-    <p th:if="${#lists.isEmpty(campaigns)}">No campaign yet</p>
+        <!-- If there isn't any campaign, show a message -->
+        <p th:if="${#lists.isEmpty(campaigns)}">No campaign yet</p>
 
-    <!-- Form for the new campaign -->
-    <form method="post" action="CreateCampaign">
-        <div class="container">
-            <p>Create a new campaign</p>
-        </div>
-        <div class="container">
-            <label for="campaignName">Campaign name: </label> <input type="text" placeholder="Enter Campaign name" th:value="${campaignName}" id="campaignName" name="name" required><br> <!-- th:value="${campaignName}" -->
-            <p th:text="${errorMessage}" class="error"></p>
-            <label for="campaignCustomer">Campaign customer: </label> <input type="text" placeholder="Enter Campaign customer" th:value="${campaignCustomer}" id="campaignCustomer" name="customer" required><br> <!-- th:value="${campaignCustomer}" -->
-            <input type="submit" value="Create Campaign">
-        </div>
-    </form>
+        <!-- Form for the new campaign -->
+        <form method="post" action="CreateCampaign">
+            <div class="container">
+                <p>Create a new campaign</p>
+            </div>
+            <div class="container">
+                <label for="campaignName">Campaign name: </label> <input type="text" placeholder="Enter Campaign name" th:value="${campaignName}" id="campaignName" name="name" required><br> <!-- th:value="${campaignName}" -->
+                <p th:text="${errorMessage}" class="error"></p>
+                <label for="campaignCustomer">Campaign customer: </label> <input type="text" placeholder="Enter Campaign customer" th:value="${campaignCustomer}" id="campaignCustomer" name="customer" required><br> <!-- th:value="${campaignCustomer}" -->
+                <input type="submit" value="Create Campaign">
+            </div>
+        </form>
+    </div>
 
 </body>
 </html>

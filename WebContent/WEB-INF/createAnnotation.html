@@ -7,6 +7,12 @@
     <link rel="stylesheet" type="text/css" media="all" href="/CSS/createAnnotation.css" th:href="@{CSS/createAnnotation.css}"/>
 </head>
 <body>
+
+  <div class="top-menu">
+      <a href="#" th:href="@{WorkerHome}" th:text="Home">_Home</a>
+      <a href="#" th:href="@{Logout}" th:text="Logout">_Logout</a>
+  </div>
+  <div class="main">
     <div class="show-image">
         <img class="image" alt="Waste Dump" src="sample/wasteDump.jpg" th:src="${#servletContext.contextPath} + ${image.source}" />
     </div>
@@ -57,6 +63,8 @@
             </div>
         </form>
     </div>
+  </div>
+
 
 </body>
 </html>
