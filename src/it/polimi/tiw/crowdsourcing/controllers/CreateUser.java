@@ -85,7 +85,7 @@ public class CreateUser extends HttpServlet {
             final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
             ctx.setVariable("username", user.getUsername());
             ctx.setVariable("errorMessage", "email already associated to an account");
-            path = "/login.html"; // Write path ...
+            path = "/Login"; // Write path ...
             templateEngine.process(path, ctx, resp.getWriter()); // ...and process it
             return;
         }
@@ -102,7 +102,7 @@ public class CreateUser extends HttpServlet {
             final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
             ctx.setVariable("username", user.getUsername());
             ctx.setVariable("errorMessage", "Username already in use");
-            path = "/login.html"; // Write path ...
+            path = "/Login"; // Write path ...
             templateEngine.process(path, ctx, resp.getWriter()); // ...and process it
             return;
         }

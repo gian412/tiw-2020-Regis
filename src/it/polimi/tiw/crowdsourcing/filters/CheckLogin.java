@@ -19,7 +19,7 @@ public class CheckLogin implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest; // Cast request
         HttpServletResponse response = (HttpServletResponse) servletResponse; // Cast response
 
-        String loginPath = request.getServletContext().getContextPath() + "/login.html"; // Prepare login path
+        String loginPath = request.getServletContext().getContextPath() + "/Login"; // Prepare login path
 
         HttpSession session = request.getSession(); // Get session from the request
         if ( session.isNew() || session.getAttribute("user")==null ) { // If the request is new OR the saved user is null...

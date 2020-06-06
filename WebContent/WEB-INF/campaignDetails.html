@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Campaign Details</title>
@@ -13,16 +13,17 @@
     <form method="post" action="EditCampaign" th:if="${campaign.status.getValue()==0}">
         <table>
             <thead>
-                <td><label for="name"><b>Name</b></label></td>
-                <td><label for="customer"><b>Customer</b></label></td>
-                <td><b>Status</b></td>
+                <tr>
+                    <th><label for="name"><b>Name</b></label></th>
+                    <th><label for="customer"><b>Customer</b></label></th>
+                    <th><b>Status</b></th>
+                </tr>
             </thead>
             <tbody>
                 <tr>
                     <td><input type="text" name="name" value="Campaign name" id="name" th:value="${campaign.name}" required></td>
                     <td><input type="text" name="customer" value="Campaign customer" id="customer" th:value="${campaign.customer}" required></td>
                     <td th:text="${campaign.status.toString()}">Status</td>
-                    <input type="hidden" name="id" th:value="${campaign.id}">
                     <td><input type="submit" value="Edit Campaign"></td>
                 </tr>
             </tbody>
@@ -32,14 +33,18 @@
     <!-- Show campaign's infos if it's STARTED || CLOSED -->
     <table th:if="${campaign.status.getValue()!=0}">
         <thead>
-            <td><b>Name</b></td>
-            <td><b>Customer</b></td>
-            <td><b>Status</b></td>
+            <tr>
+                <th><b>Name</b></th>
+                <th><b>Customer</b></th>
+                <th><b>Status</b></th>
+            </tr>
         </thead>
         <tbody>
-            <td th:text="${campaign.name}">Name</td>
-            <td th:text="${campaign.customer}">Customer</td>
-            <td th:text="${campaign.status.toString()}">Status</td>
+            <tr>
+                <th th:text="${campaign.name}">Name</th>
+                <th th:text="${campaign.customer}">Customer</th>
+                <th th:text="${campaign.status.toString()}">Status</th>
+            </tr>
         </tbody>
     </table>
 
@@ -68,7 +73,7 @@
     <table th:if="${not #lists.isEmpty(images)}">
         <tr th:each="image : ${images}">
             <!-- <td><img class="image" alt="Waste Dump" th:src="${#servletContext.contextPath} + ${image.source}" /></td> -->
-            <td><a th:href="@{ShowAnnotations(image=${image.id})}"><img class="image" alt="Waste Dump" th:src="${#servletContext.contextPath} + ${image.source}" /></a></td>
+            <td><a th:href="@{ShowAnnotations(image=${image.id})}"><img class="image" alt="Waste Dump" src="sample/wasteDump.jpg" th:src="${#servletContext.contextPath} + ${image.source}" /></a></td>
         </tr>
     </table>
 

@@ -1,5 +1,6 @@
 package it.polimi.tiw.crowdsourcing.dao;
 
+import it.polimi.tiw.crowdsourcing.beans.Image;
 import it.polimi.tiw.crowdsourcing.beans.User;
 import it.polimi.tiw.crowdsourcing.utils.ExperienceLevel;
 
@@ -7,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
 
@@ -14,6 +17,24 @@ public class UserDAO {
 
     public UserDAO(Connection connection) {
         this.connection = connection;
+    }
+
+    public List<User> findAllUsername() throws SQLException {
+
+        String query = "SELECT username FROM user";
+        List<User> users = new ArrayList<>();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()){
+                    User user = new User();
+                    user.setUsername(resultSet.getString("username"));
+                    users.add(user);
+                }
+            }
+        }
+        return users;
+
     }
 
     public User checkCredential(String usernameOrEmail, String password) throws SQLException {

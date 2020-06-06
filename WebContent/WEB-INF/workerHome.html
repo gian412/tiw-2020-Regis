@@ -52,10 +52,10 @@
                 </thead>
                 <tbody>
                 <tr th:each="campaign : ${campaignsNotAssigned}">
+                    <input type="hidden" name="campaign" th:value="${campaign.id}">
                     <td th:text="${campaign.name}">Name</td>
                     <td th:text="${campaign.customer}">Customer</td>
                     <td th:text="${campaign.status.toString()}">Status</td>
-                    <input type="hidden" name="campaign" th:value="${campaign.id}">
                     <td><input type="submit" value="Subscribe to this campaign"></td>
                 </tr>
                 </tbody>

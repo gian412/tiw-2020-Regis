@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Campaign stats</title>
@@ -12,15 +12,18 @@
     <h3>Campaign's Informations</h3>
     <table>
         <thead>
-            <td><b>Name</b></td>
-            <td><b>Customer</b></td>
-            <td><b>Status</b></td>
+            <tr>
+                <th><b>Name</b></th>
+                <th><b>Customer</b></th>
+                <th><b>Status</b></th>
+            </tr>
         </thead>
-        </tbody>
         <tbody>
-            <td th:text="${campaign.name}">Name</td>
-            <td th:text="${campaign.customer}">Customer</td>
-            <td th:text="${campaign.status.toString()}">Status</td>
+            <tr>
+                <td th:text="${campaign.name}">Name</td>
+                <td th:text="${campaign.customer}">Customer</td>
+                <td th:text="${campaign.status.toString()}">Status</td>
+            </tr>
         </tbody>
     </table>
 

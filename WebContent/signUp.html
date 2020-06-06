@@ -10,16 +10,7 @@
 	<p>Please, enter the required information to sign up to our awesome crowdsourcing website!</p>
 	<form method="post" action="CreateUser">
 		<!-- Role selector request -->
-	  <p>Are you a:</p>
-		<!-- Role -->
-		<!--<div class="role-select" style="width:200px;">
-			<select name="role">
-				<option value="0">Select role:</option>
-				<option value="manager">Manager</option>
-				<option value="worker">Worker</option>
-			</select>
-		</div>-->
-
+		<p>Are you a:</p>
 		<!-- Role -->
 		<label for="role">Role:</label>
 		<input type="text" id="role" name="role" placeholder="Manager/Worker"><br>
@@ -28,37 +19,29 @@
 		<p>Please, give us some information about you:</p>
 
 		<!-- Name -->
-		<label>Name:</label>
-		<input type="text" name="firstname" placeholder="Enter your first name"><br>
+		<label for="firstname">Name:</label>
+		<input type="text" id="firstname" name="firstname" placeholder="Enter your first name"><br>
 
 		<!-- Surname -->
-		<label>Surname:</label>
-		<input type="text" name="lastname" placeholder="Enter your last name"><br>
+		<label for="lastname">Surname:</label>
+		<input type="text" id="lastname" name="lastname" placeholder="Enter your last name"><br>
 
 		<!-- Username -->
-		<label>Username:</label>
-		<input type="text" name="username" placeholder="Enter your username"><br>
+		<label for="username">Username:</label>
+		<input type="text" id="username" name="username" placeholder="Enter your username"><br>
 
 		<!-- Email -->
-		<label>Email:</label>
-		<input type="email" name="email" placeholder="Enter your email"><br>
+		<label for="email">Email:</label>
+		<input type="email" id="email" name="email" placeholder="Enter your email"><br>
 
 		<!-- Password -->
-		<label>Password:</label>
-		<input type="password" name="password" placeholder="Enter your password"><br>
+		<label for="password">Password:</label>
+		<input type="password" id="password" name="password" placeholder="Enter your password"><br>
 
 		<!-- Experience selector request -->
 		<p>What about your experience level?</p>
-		<!--<div class="experience-select" style="width:200px;">
-			<select name="experience">
-				<option value="-1">Select experience level:</option>
-				<option value="0">High</option>
-				<option value="1">Medium</option>
-				<option value="2">Low</option>
-			</select>
-		</div>-->
-		<label>Experience level:</label>
-		<input type="text" name="experience" placeholder="High/medium/low"><br>
+		<label for="experience">Experience level:</label>
+		<input type="text" id="experience" name="experience" placeholder="High/medium/low"><br>
 		<input type="submit" value="Sign up">
 	</form>
 </body>
