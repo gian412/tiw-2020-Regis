@@ -1,11 +1,81 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit profile</title>
-    <link rel="stylesheet" type="text/css" media="all" href="/CSS/general.css" th:href="@{CSS/general.css}"/>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Edit profile</title>
+        <link rel="stylesheet" type="text/css" media="all" href="/CSS/general.css" th:href="@{CSS/general.css}"/>
+    </head>
+    <body>
 
-</body>
+    <div class="top-menu">
+        <form method="get"  class="go-home" th:action="${user.role.equals('manager')} ? 'ManagerHome' : 'WorkerHome'">
+            <input type="submit" value="Home">
+        </form>
+        <form method="get" class="logout" action="Logout">
+            <input type="submit" value="Logout">
+        </form>
+    </div>
+
+    <div class="main">
+
+        <h1>Edit your profile</h1>
+
+        <form method="post" action="EditInfos">
+
+            <!-- Edit first name -->
+            <label for="firstName">First name: </label>
+            <input type="text" id="firstName" name="firstname" th:placeholder="${user.firstName}"><br>
+
+            <!-- Edit last name -->
+            <label for="lastName">Last name: </label>
+            <input type="text" id="lastName" name="lastname" th:placeholder="${user.lastName}"><br>
+
+            <!-- Edit username -->
+            <label for="username">Username: </label>
+            <input type="text" id="username" name="username" th:placeholder="${user.username}"><br>
+
+            <!-- Edit email -->
+            <label for="email">Email: </label>
+            <input type="email" id="email" name="email" th:placeholder="${user.email}"><br>
+
+            <!-- Edit role experience -->
+            <p>Experience level: </p><br>
+            <input type="radio" id="high" name="experience" value="0" th:checked="${user.role.toString().equals('High')} ? 'checked'">
+            <label for="high">High</label><br>
+            <input type="radio" id="medium" name="experience" value="1" th:checked="${user.role.toString().equals('Medium')} ? 'checked'">
+            <label for="medium">Medium</label><br>
+            <input type="radio" id="low" name="experience" value="2" th:checked="${user.role.toString().equals('Low')} ? 'checked'">
+            <label for="low">Low</label><br>
+
+            <!-- Edit avatar -->
+            <div>
+                <label class="file-upload">
+                    <input type="file" name="avatar">
+                    <i>Insert your avatar</i>
+                </label> <br><br>
+            </div>
+
+            <!-- Edit password - Old password -->
+            <label for="old-password">Insert your actual password: </label>
+            <input type="password" id="old-password" name="old-password" placeholder="Enter your password"><br>
+            <input type="checkbox" id="show-old-password">
+            <label for="show-old-password">Show password</label><br>
+
+            <!-- Edit password - New password 1 -->
+            <label for="new-password-1">Insert your new password: </label>
+            <input type="password" id="new-password-1" name="password" placeholder="Enter your new password"><br>
+            <input type="checkbox" id="show-new-password-1">
+            <label for="show-new-password-1">Show password</label><br>
+
+            <!-- Edit password - New password 2 -->
+            <label for="new-password-2">Insert your new password one more time: </label>
+            <input type="password" id="new-password-2" name="password-2" placeholder="Enter your new password again"><br>
+            <input type="checkbox" id="show-new-password-2">
+            <label for="show-new-password-2">Show password</label><br>
+
+        </form>
+
+    </div>
+
+    </body>
 </html>
