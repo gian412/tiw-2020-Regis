@@ -32,7 +32,6 @@ public class GoToLogin extends HttpServlet {
         templateResolver.setTemplateMode(TemplateMode.HTML);
         this.templateEngine = new TemplateEngine();
         this.templateEngine.setTemplateResolver(templateResolver);
-        this.templateEngine.setMessageResolver(new MultiPathMessageResolver(servletContext, "i18n"));
         templateResolver.setSuffix(".html");
 
     }

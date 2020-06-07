@@ -12,30 +12,30 @@
     <div class="header">
         <img class="cover" alt="Cover" src="WEB-INF/sample/wasteDump.jpg" th:src="/tiw_2020_Regis/resources/cover-image2.jpg" />
         <div class="heading">
-            <h1 class="title" th:text="#{title}">_Welcome to Waste Dump Crowdsourcing</h1>
-            <h2 class="subTitle" th:text="#{subTitle}">_Work together to make World better</h2>
+            <h1 class="title" >Welcome to Waste Dump Crowdsourcing</h1>
+            <h2 class="subTitle" >Work together to make World better</h2>
         </div>
     </div>
 
-    <h3 th:text="#{call}">_Want to join us?</h3>
+    <h3>Want to join us?</h3>
 
-    <button type="button" id="login" th:text="#{login}">_Login</button>
-    <button type="button" id="sign-up" th:text="#{signUp}">_Sign up</button>
+    <button type="button" id="login" >Login</button>
+    <button type="button" id="sign-up" >Sign up</button>
 
     <div id="login-modal-box" class="modal">
         <!-- Form to show when login clicked -->
         <form method="post" class="modal-form animate" action="CheckLogin">
             <div class="container">
-                <p th:text="#{loginCall}">_Login to your account</p>
+                <p>Login to your account</p>
                 <span id="login-close" class="close" title="Close Login">&times;</span>
             </div>
             <div class="container">
-                <label for="username" th:text="#{username}">_Username: </label>
-                <input type="text" th:placeholder="#{askUsername}" placeholder="_Enter username" id="username" name="username" required><br>
-                <label for="login-password" th:text="#{password}">_Password: </label>
-                <input type="password" th:placeholder="#{askPassword}" placeholder="_Enter password" id="login-password" name="password" required><br>
-                <input type="checkbox" id="show-login-password"><label for="show-login-password" th:text="#{showPassword}">_Show password</label><br>
-                <input type="submit" value="_Login" th:value="#{login}" class="modal-button">
+                <label for="username" >Username: </label>
+                <input type="text" placeholder="Enter username" id="username" name="username" required><br>
+                <label for="login-password" >Password: </label>
+                <input type="password" placeholder="Enter password" id="login-password" name="password" required><br>
+                <input type="checkbox" id="show-login-password"><label for="show-login-password" >Show password</label><br>
+                <input type="submit" value="_Login" class="modal-button">
                 <p id="errorMessage" class="error"></p>
             </div>
         </form>
@@ -47,64 +47,64 @@
 
                 <!-- Role selector request -->
                 <div class="container">
-                    <p th:text="#{signUpCall}">_Create your account:</p>
+                    <p>Create your account:</p>
                     <span id="sign-up-close" class="close" title="Close Login">&times;</span>
                 </div>
             <div class="container">
 
                 <!-- Role -->
                 <div id="role-radio">
-                    <label th:text="#{askRole}">_Which is your role?</label><br>
+                    <label>Which is your role?</label><br>
                     <input type="radio" id="manager" name="role" value="0" required>
-                    <label for="manager" th:text="#{managerLabel}">_Manager</label><br>
+                    <label for="manager">Manager</label><br>
                     <input type="radio" id="worker" name="role" value="1">
-                    <label for="worker" th:text="#{workerLabel}">_Worker</label><br>
+                    <label for="worker">Worker</label><br>
                 </div>
 
                 <!-- Information input request -->
-                <p th:text="#{askOtherInformation}">_Please, give us some information about you:</p>
+                <p>Please, give us some information about you:</p>
 
                 <!-- Name -->
-                <label for="first-name" th:text="#{firstName}">_First name: </label>
-                <input type="text" id="first-name"  name="firstname" placeholder="_Enter your first name" th:placeholder="#{askFirstName}"><br>
+                <label for="first-name">First name: </label>
+                <input type="text" id="first-name"  name="firstname" placeholder="Enter your first name" ><br>
 
                 <!-- Surname -->
-                <label for="last-name" th:text="#{lastName}">_Last name: </label>
-                <input type="text" id="last-name" name="lastname" placeholder="_Enter your last name" th:placeholder="#{askLastName}"><br>
+                <label for="last-name">Last name: </label>
+                <input type="text" id="last-name" name="lastname" placeholder="Enter your last name"><br>
 
                 <!-- Username -->
-                <label for="user-name" th:text="#{username}">_Username:</label>
-                <input type="text" id="user-name" name="username" placeholder="_Enter your username" th:placeholder="#{askUsername}"><br>
+                <label for="user-name">Username:</label>
+                <input type="text" id="user-name" name="username" placeholder="Enter your username"><br>
 
                 <!-- Email -->
-                <label for="email" th:text="#{email}">_Email:</label>
-                <input type="email" id="email" name="email" placeholder="_Enter your email" th:placeholder="#{askEmail}"><br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email"><br>
 
                 <!-- Password -->
-                <label for="sign-up-password1" th:text="#{password}">Password:</label>
-                <input type="password" name="password" id="sign-up-password1" placeholder="_Enter your password"  th:placeholder="#{askPassword}"><br>
+                <label for="sign-up-password1">Password:</label>
+                <input type="password" name="password" id="sign-up-password1" placeholder="Enter your password" ><br>
                 <input type="checkbox" id="show-sign-up-password1">
-                <label for="show-sign-up-password1" th:text="#{showPassword}">_Show password</label><br>
+                <label for="show-sign-up-password1" >Show password</label><br>
 
                 <!-- Password again -->
-                <label for="sign-up-password2" th:text="#{secondPassword}">_Rewrite password:</label>
-                <input type="password" name="password" id="sign-up-password2" placeholder="_Enter your password" th:placeholder="#{askPassword}"><br>
+                <label for="sign-up-password2">Rewrite password:</label>
+                <input type="password" name="password" id="sign-up-password2" placeholder="Enter your password" ><br>
                 <input type="checkbox" id="show-sign-up-password2">
-                <label for="show-sign-up-password2" th:text="#{showPassword}">_Show password</label><br>
+                <label for="show-sign-up-password2" >Show password</label><br>
 
                 <!-- Experience -->
                 <div id="experience-radio">
                     <label>Experience level:</label><br>
                     <input type="radio" id="high" name="experience" value="0">
-                    <label for="high" th:text="#{high}">_High</label><br>
+                    <label for="high">High</label><br>
                     <input type="radio" id="medium" name="experience" value="1">
-                    <label for="medium" th:text="#{medium}">_Medium</label><br>
+                    <label for="medium" >Medium</label><br>
                     <input type="radio" id="low" name="experience" value="2">
-                    <label for="low" th:text="#{low}">_Low</label><br>
+                    <label for="low">Low</label><br>
                 </div>
 
-                <button type="button" id="false-sign-up-button" th:text="#{signUp}">_Sign up</button>
-                <input type="submit" id="sign-up-button" value="_Sign up" th:value="#{signUp}">
+                <button type="button" id="false-sign-up-button" >Sign up</button>
+                <input type="submit" id="sign-up-button" value="Sign up">
             </div>
 
         </form>
