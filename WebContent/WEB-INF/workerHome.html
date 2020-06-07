@@ -7,9 +7,31 @@
 </head>
 <body>
 
+  <!-- <div class="top-menu">
+      <a href="#" th:href="@{WorkerHome}" class="menu-home" >Home</a>
+      <a href="#" th:href="@{Logout}" class="menu-logout">Logout</a>
+  </div> -->
   <div class="top-menu">
-      <a href="#" th:href="@{WorkerHome}" th:text="Home">Home</a>
-      <a href="#" th:href="@{Logout}" th:text="Logout">Logout</a>
+      <form method="get" action="WorkerHome">
+          <input type="submit" value="Home">
+      </form>
+      <form method="get" action="EditProfile">
+          <input type="submit" value="Edit profile">
+      </form>
+      <form method="get" action="Logout">
+          <input type="submit" value="Logout">
+      </form>
+  </div>
+  <div class="top-menu">
+      <form method="get" action="WorkerHome">
+          <input type="submit" value="Home">
+      </form>
+      <form method="get" action="EditProfile">
+          <input type="submit" value="Edit profile">
+      </form>
+      <form method="get" action="Logout">
+          <input type="submit" value="Logout">
+      </form>
   </div>
 
   <div class="main">

@@ -1,5 +1,5 @@
 /* Buttons and submit field basic style */
-button, input[type=submit], .file-upload {
+button, input[type=submit], .file-upload, .top-menu a {
     background-color: #ed6a5a;
     color: #f4f1bb;
     padding: 14px 20px;
@@ -13,7 +13,7 @@ button, input[type=submit], .file-upload {
 button:hover, input[type=submit]:hover, .file-upload:hover,
 button:focus, input[type=submit]:focus, .file-upload:focus {
     background-color: #9bc1bc;
-    color: white;
+    color: #e6ebe0;
 }
 
 /*Hide the input file element */
@@ -49,23 +49,6 @@ div {
 	position : fixed;
 	top : 0;
 	width : 100%;
-}
-
-/* Link inside the top menù */
-.navbar a {
-	float : left;
-	display : block;
-    background-color: #ed6a5a;
-    color: #f4f1bb;
-	text-align : center;
-	padding : 14px 16px;
-	text-decoration : none;
-}
-
-/* Top menù hover style */
-.navbar a:hover {
-	background-color: #9bc1bc;
-	color: white;
 }
 
 /* Main style to avoid overlay with top menù */

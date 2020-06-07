@@ -3,7 +3,7 @@
     text-align: center;
 }
 
-.header::after
+/*.header::after
 {
     box-shadow: inset 0 -30em 3em rgba(237,106,90,.5);
     content: '';
@@ -14,7 +14,7 @@
     width: 100%;
 }
 
-/*.layer {
+.layer {
     background-color: #ed6a5a;
     position: absolute;
     top: 0;
@@ -32,10 +32,14 @@
 
 .heading {
     position: absolute;
-    top: 50%;
+    top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
+}
+
+.title, .subTitle {
+    color: #ed6a5a;
 }
 
 #false-sign-up-button {
