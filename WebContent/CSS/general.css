@@ -42,16 +42,22 @@ div {
     color: red;
 }
 
-/* Top menù style */
+/* Top menu style */
 .top-menu {
 	overflow : hidden;
 	background-color : white;
 	position : fixed;
 	top : 0;
 	width : 100%;
+    padding: 1px;
 }
 
-/* Main style to avoid overlay with top menù */
+/* Stile for the form in the top menu */
+.go-home, .edit-profile, .logout {
+    display: inline-block;
+}
+
+/* Main style to avoid overlay with top menu */
 .main {
 	margin-top : 30px;
 }
