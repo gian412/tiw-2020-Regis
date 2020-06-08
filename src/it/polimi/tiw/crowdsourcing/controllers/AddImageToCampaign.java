@@ -3,6 +3,7 @@ package it.polimi.tiw.crowdsourcing.controllers;
 import it.polimi.tiw.crowdsourcing.beans.User;
 import it.polimi.tiw.crowdsourcing.dao.CampaignDAO;
 import it.polimi.tiw.crowdsourcing.utils.ClientHandler;
+import it.polimi.tiw.crowdsourcing.utils.ImageHandler;
 import it.polimi.tiw.crowdsourcing.utils.Resolution;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -44,15 +45,13 @@ public class AddImageToCampaign extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        User manager = null;
-        HttpSession httpSession = req.getSession();
-        manager = (User) httpSession.getAttribute("user");
 
-        String lat = null, lon = null, camp = null, city = null, region = null, provenance = null, dt = null, res = null, path = null;
-        Part imagePart = null;
+        String lat, lon, camp, city, region, provenance, dt, res, path;
+        Part imagePart;
         double latitude, longitude;
-        Date date = null;
+        Date date;
         int resValue, campaignId, numberOfImages;
+        Resolution resolution;
 
         try {
             lat = req.getParameter("latitude");
@@ -105,15 +104,22 @@ public class AddImageToCampaign extends HttpServlet {
         }
         try {
             path = campaignId + "-" + numberOfImages + ".jpeg";
-            saveImage(imagePart, path);
+            File upload = new File(getServletContext().getInitParameter("image.location"));
+            ImageHandler.saveImage(upload, imagePart, path);
         }catch (IOException e) {
             e.printStackTrace(); // TODO: remove after test
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to save image");
             return;
         }
 
-        try { // TODO: check resolution not null
-            campaignDAO.addImage(path, latitude, longitude, city, region, provenance, date, Resolution.getResolutionFromInt(resValue));
+        resolution = Resolution.getResolutionFromInt(resValue);
+        if (resolution == null) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid resolution parameter");
+            return;
+        }
+
+        try {
+            campaignDAO.addImage(path, latitude, longitude, city, region, provenance, date, resolution);
         } catch (SQLException e) {
             e.printStackTrace(); // TODO: remove after test
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to save image in database");
@@ -132,18 +138,6 @@ public class AddImageToCampaign extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace(); // TODO: remove after test
         }
-    }
-
-    private void saveImage(Part part, String path) throws IOException{
-
-        File upload = new File(getServletContext().getInitParameter("image.location"));
-        String string = upload.getAbsolutePath(); // TODO: remove after test
-
-        File image = new File(upload, path);
-        try (InputStream input = part.getInputStream()) {
-            Files.copy(input, image.toPath());
-        }
-
     }
 
 }

@@ -4,6 +4,8 @@
         <meta charset="UTF-8">
         <title>Edit profile</title>
         <link rel="stylesheet" type="text/css" media="all" href="/CSS/general.css" th:href="@{CSS/general.css}"/>
+        <link rel="stylesheet" type="text/css" media="all" href="/CSS/editProfile.css" th:href="@{CSS/editProfile.css}"/>
+        <script src="/JS/editProfile.js" th:src="@{JS/editProfile.js}" charset="utf-8" defer></script>
     </head>
     <body>
 
@@ -37,18 +39,23 @@
             <!-- Edit email -->
             <label for="email">Email: </label>
             <input type="email" id="email" name="email" th:placeholder="${user.email}"><br>
+            <p class="error" th:text="${emailErrorMessage}"></p><br>
 
-            <!-- Edit role experience -->
-            <p>Experience level: </p><br>
-            <input type="radio" id="high" name="experience" value="0" th:checked="${user.role.toString().equals('High')} ? 'checked'">
-            <label for="high">High</label><br>
-            <input type="radio" id="medium" name="experience" value="1" th:checked="${user.role.toString().equals('Medium')} ? 'checked'">
-            <label for="medium">Medium</label><br>
-            <input type="radio" id="low" name="experience" value="2" th:checked="${user.role.toString().equals('Low')} ? 'checked'">
-            <label for="low">Low</label><br>
 
-            <!-- Edit avatar -->
-            <div>
+            <div class="worker-attributes" th:if="${user.role.equals('worker')}">
+
+                <!-- Edit experience level -->
+                <p>Experience level: </p>
+                <input type="radio" id="high" name="experience" value="0" th:checked="${user.role.toString().equals('High')} ? 'checked'">
+                <label for="high">High</label><br>
+                <input type="radio" id="medium" name="experience" value="1" th:checked="${user.role.toString().equals('Medium')} ? 'checked'">
+                <label for="medium">Medium</label><br>
+                <input type="radio" id="low" name="experience" value="2" th:checked="${user.role.toString().equals('Low')} ? 'checked'">
+                <label for="low">Low</label><br>
+                <p class="error" th:if="${!emailErrorMessage==null}" th:text="${emailErrorMessage}"></p><br th:if="${!emailErrorMessage==null}">
+                <br><br>
+
+                <!-- Edit avatar -->
                 <label class="file-upload">
                     <input type="file" name="avatar">
                     <i>Insert your avatar</i>
@@ -58,6 +65,7 @@
             <!-- Edit password - Old password -->
             <label for="old-password">Insert your actual password: </label>
             <input type="password" id="old-password" name="old-password" placeholder="Enter your password"><br>
+            <p class="error" th:if="${!oldPasswordErrorMessage==null}" th:text="${oldPasswordErrorMessage}"></p><br th:if="${!oldPasswordErrorMessage==null}">
             <input type="checkbox" id="show-old-password">
             <label for="show-old-password">Show password</label><br>
 
@@ -70,8 +78,11 @@
             <!-- Edit password - New password 2 -->
             <label for="new-password-2">Insert your new password one more time: </label>
             <input type="password" id="new-password-2" name="password-2" placeholder="Enter your new password again"><br>
+            <p class="error" th:if="${!newPasswordErrorMessage==null}" th:text="${newPasswordErrorMessage}"></p><br th:if="${!newPasswordErrorMessage==null}">
             <input type="checkbox" id="show-new-password-2">
             <label for="show-new-password-2">Show password</label><br>
+
+            <input type="submit" value="Save changes">
 
         </form>
 

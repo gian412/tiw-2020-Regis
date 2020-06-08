@@ -56,6 +56,7 @@ public class UserDAO {
                     user.setLastName(resultSet.getString("lastname"));
                     user.setRole(resultSet.getString("role"));
                     user.setUsername(resultSet.getString("username"));
+                    user.setPassword(resultSet.getString("password"));
                     user.setEmail(resultSet.getString("email"));
                     user.setExperienceLevel(resultSet.getInt("experience"));
                     user.setAvatar(resultSet.getString("avatar"));
@@ -83,6 +84,7 @@ public class UserDAO {
                     user.setLastName(resultSet.getString("lastname"));
                     user.setRole(resultSet.getString("role"));
                     user.setUsername(resultSet.getString("username"));
+                    user.setPassword(resultSet.getString("password"));
                     user.setEmail(resultSet.getString("email"));
                     user.setExperienceLevel(resultSet.getInt("experience"));
                     user.setAvatar("/avatars/" + resultSet.getString("avatar"));
@@ -192,15 +194,5 @@ public class UserDAO {
 
     }
 
-    public void deleteUser(int userId) throws SQLException {
-
-        String query = "DELETE FROM user WHERE id = ?";
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, userId);
-            preparedStatement.executeUpdate();
-        }
-
-    }
 
 }

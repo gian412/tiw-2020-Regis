@@ -83,16 +83,17 @@ public class ManagerDAO {
 
     }
 
-    public void updateManager(String firstName, String lastName, String username, String email) throws SQLException{
+    public void updateManager(String firstName, String lastName, String username, String email, String password) throws SQLException{
 
         String query =
                 "UPDATE user " +
-                        "SET firstname = ?, lastname = ?, username = ?, email = ?  WHERE id = ?";
+                        "SET firstname = ?, lastname = ?, username = ?, email = ?, password = ?  WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, firstName);
             preparedStatement.setString(2, lastName);
             preparedStatement.setString(3, username);
             preparedStatement.setString(4, email);
+            preparedStatement.setString(5, password);
             preparedStatement.setInt(5, this.id);
             preparedStatement.executeUpdate();
         }

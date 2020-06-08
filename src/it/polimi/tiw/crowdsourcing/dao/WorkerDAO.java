@@ -67,18 +67,20 @@ public class WorkerDAO {
         return campaigns;
     }
 
-    public void updateWorker(String firstName, String lastName, String username, String email, ExperienceLevel experience) throws SQLException{
+    public void updateWorker(String firstName, String lastName, String username, String password, String email, int experience, String avatar) throws SQLException{
 
         String query =
                 "UPDATE user " +
-                        "SET firstname = ?, lastname = ?, username = ?, email = ?, experience = ?  WHERE id = ?";
+                        "SET firstname = ?, lastname = ?, username = ?, password = ?, email = ?, experience = ?, avatar = ?  WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, firstName);
             preparedStatement.setString(2, lastName);
             preparedStatement.setString(3, username);
-            preparedStatement.setString(4, email);
-            preparedStatement.setInt(5, experience.getValue());
-            preparedStatement.setInt(6, this.id);
+            preparedStatement.setString(4, password);
+            preparedStatement.setString(5, email);
+            preparedStatement.setInt(6, experience);
+            preparedStatement.setString(7, avatar);
+            preparedStatement.setInt(8, this.id);
             preparedStatement.executeUpdate();
         }
 
