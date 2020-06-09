@@ -2,6 +2,7 @@ package it.polimi.tiw.crowdsourcing.controllers;
 
 import it.polimi.tiw.crowdsourcing.beans.User;
 import it.polimi.tiw.crowdsourcing.dao.ManagerDAO;
+import it.polimi.tiw.crowdsourcing.dao.UserDAO;
 import it.polimi.tiw.crowdsourcing.dao.WorkerDAO;
 import it.polimi.tiw.crowdsourcing.utils.*;
 import org.thymeleaf.TemplateEngine;
@@ -93,6 +94,7 @@ public class EditProfile extends HttpServlet {
                 String path = "/WEB-INF/editProfile.html";
                 ServletContext servletContext = getServletContext();
                 final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
+                ctx.setVariable("user", user);
                 ctx.setVariable("emailErrorMessage", "The email entered is not valid");
                 templateEngine.process(path, ctx, resp.getWriter());
                 return;
@@ -114,6 +116,7 @@ public class EditProfile extends HttpServlet {
                         String path = "/WEB-INF/editProfile.html";
                         ServletContext servletContext = getServletContext();
                         final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
+                        ctx.setVariable("user", user);
                         ctx.setVariable("experienceErrorMessage", "The experience level entered is not valid");
                         templateEngine.process(path, ctx, resp.getWriter());
                         return;
@@ -125,6 +128,7 @@ public class EditProfile extends HttpServlet {
                 String path = "/WEB-INF/editProfile.html";
                 ServletContext servletContext = getServletContext();
                 final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
+                ctx.setVariable("user", user);
                 ctx.setVariable("experienceErrorMessage", "The experience level entered is not valid");
                 templateEngine.process(path, ctx, resp.getWriter());
                 return;
@@ -133,7 +137,10 @@ public class EditProfile extends HttpServlet {
             // Get avatar from the form or from the session
             try {
                 imagePart = req.getPart("avatar");
-                ImageHandler.deleteImage(getServletContext().getInitParameter("avatar.location") + user.getId() + ".jpeg");
+                String oldImageName = user.getAvatar();
+                if (oldImageName.equals(user.getId() + ".jpeg")){
+                    ImageHandler.deleteImage(getServletContext().getInitParameter("avatar.location") + user.getId() + ".jpeg");
+                }
                 avatar = user.getId() + ".jpeg";
                 File upload = new File(getServletContext().getInitParameter("avatar.location"));
                 ImageHandler.saveImage(upload,imagePart, avatar);
@@ -150,9 +157,10 @@ public class EditProfile extends HttpServlet {
             if (oldPassword!=null && !oldPassword.equals("") && passwordToHash!=null && !passwordToHash.equals("") && secondPassword!=null && !secondPassword.equals("")) {
                 boolean result = checkOldPassword(oldPassword, user);
                 if (!result) {
-                    String path = "/WEB-INF/editProfile.html";
+                    String path = "/editProfile.html";
                     ServletContext servletContext = getServletContext();
                     final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
+                    ctx.setVariable("user", user);
                     ctx.setVariable("oldPasswordErrorMessage", "The old password is incorrect");
                     templateEngine.process(path, ctx, resp.getWriter());
                     return;
@@ -164,7 +172,8 @@ public class EditProfile extends HttpServlet {
                     String path = "/WEB-INF/editProfile.html";
                     ServletContext servletContext = getServletContext();
                     final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
-                    ctx.setVariable("newPasswordErrorMessage", "Password must be equals");
+                    ctx.setVariable("user", user);
+                    ctx.setVariable("newPasswordErrorMessage", "Passwords must be equals");
                     templateEngine.process(path, ctx, resp.getWriter());
                     return;
                 }
@@ -174,6 +183,7 @@ public class EditProfile extends HttpServlet {
                 String path = "/WEB-INF/editProfile.html";
                 ServletContext servletContext = getServletContext();
                 final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
+                ctx.setVariable("user", user);
                 ctx.setVariable("oldPasswordErrorMessage", "All the passwords fields must be filled to change the password");
                 templateEngine.process(path, ctx, resp.getWriter());
                 return;
@@ -187,10 +197,16 @@ public class EditProfile extends HttpServlet {
             if (user.getRole().equals("manager")) {
                 ManagerDAO managerDAO = new ManagerDAO(connection, user.getId());
                 managerDAO.updateManager(firstName, lastName, username, email, newPassword);
+                UserDAO userDAO = new UserDAO(connection);
+                user = userDAO.findUserById(user.getId());
+                req.getSession().setAttribute("user", user); // Save the new user in the session
             } else {
                 WorkerDAO workerDAO = new WorkerDAO(connection, user.getId());
                 workerDAO.updateWorker(firstName, lastName, username, newPassword, email, experienceValue, avatar);
             }
+            UserDAO userDAO = new UserDAO(connection);
+            user = userDAO.findUserById(user.getId());
+            req.getSession().setAttribute("user", user); // Save the new user in the session
         } catch (SQLException e) {
             e.printStackTrace(); // TODO: remove after test
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to edit the profile");

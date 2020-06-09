@@ -1,6 +1,5 @@
 package it.polimi.tiw.crowdsourcing.controllers;
 
-import it.polimi.tiw.crowdsourcing.utils.MultiPathMessageResolver;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -14,13 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/Login")
-public class GoToLogin extends HttpServlet {
+@WebServlet("/SignUp")
+public class GoToSignUp extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
 
-    public GoToLogin() {
+    public GoToSignUp() {
         super();
     }
 
@@ -39,7 +38,7 @@ public class GoToLogin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String path = "/login.html"; // Go to login file
+        String path = "/signUp.html"; // Go to login file
 
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());

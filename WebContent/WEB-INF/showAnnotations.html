@@ -87,7 +87,7 @@
               <!-- Show avatar and username of the worker -->
               <div class="header">
                   <div class="user">
-                      <img class="avatar" alt="User image" th:src="${#servletContext.contextPath} + ${annotation.workerAvatar}" /> <!-- TODO: Make avatar round and small -->
+                      <img class="avatar" alt="User image" th:src="${#servletContext.contextPath} + ${annotation.workerAvatar}" />
                       <h3 th:text="${annotation.workerUsername}" class="username">Username</h3>
                   </div>
                   <div class="date-separator"></div>

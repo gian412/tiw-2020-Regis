@@ -135,6 +135,10 @@ public class CreateUser extends HttpServlet {
                 return;
             }
 
+            if (exp==null || exp.equals("")) {
+                exp = "2";
+            }
+
             try {
                 experience = ExperienceLevel.getExperienceLevelFromInt(Integer.parseInt(exp));
             }catch (NumberFormatException e) {

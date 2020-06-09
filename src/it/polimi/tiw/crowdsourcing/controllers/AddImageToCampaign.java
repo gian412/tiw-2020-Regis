@@ -63,7 +63,7 @@ public class AddImageToCampaign extends HttpServlet {
             res = req.getParameter("resolution");
             imagePart = req.getPart("image");
             camp = req.getParameter("campaign");
-        } catch (NullPointerException e) {
+        } catch (NullPointerException | ServletException e) {
             e.printStackTrace(); // TODO: remove after test
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameters");
             return;

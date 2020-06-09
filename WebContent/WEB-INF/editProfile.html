@@ -22,7 +22,7 @@
 
         <h1>Edit your profile</h1>
 
-        <form method="post" action="EditInfos">
+        <form method="post" action="EditInfos" enctype="multipart/form-data">
 
             <!-- Edit first name -->
             <label for="firstName">First name: </label>
@@ -46,13 +46,13 @@
 
                 <!-- Edit experience level -->
                 <p>Experience level: </p>
-                <input type="radio" id="high" name="experience" value="0" th:checked="${user.role.toString().equals('High')} ? 'checked'">
+                <input type="radio" id="high" name="experience" value="0" th:checked="${user.experienceLevel.toString().equals('High')} ? 'checked'">
                 <label for="high">High</label><br>
-                <input type="radio" id="medium" name="experience" value="1" th:checked="${user.role.toString().equals('Medium')} ? 'checked'">
+                <input type="radio" id="medium" name="experience" value="1" th:checked="${user.experienceLevel.toString().equals('Medium')} ? 'checked'">
                 <label for="medium">Medium</label><br>
-                <input type="radio" id="low" name="experience" value="2" th:checked="${user.role.toString().equals('Low')} ? 'checked'">
+                <input type="radio" id="low" name="experience" value="2" th:checked="${user.experienceLevel.toString().equals('Low')} ? 'checked'">
                 <label for="low">Low</label><br>
-                <p class="error" th:if="${!emailErrorMessage==null}" th:text="${emailErrorMessage}"></p><br th:if="${!emailErrorMessage==null}">
+                <p class="error" th:text="${emailErrorMessage}"></p><br th:if="${!emailErrorMessage==null}">
                 <br><br>
 
                 <!-- Edit avatar -->
@@ -60,12 +60,13 @@
                     <input type="file" name="avatar">
                     <i>Insert your avatar</i>
                 </label> <br><br>
+                <input type="file" name="avatar">
             </div>
 
             <!-- Edit password - Old password -->
             <label for="old-password">Insert your actual password: </label>
             <input type="password" id="old-password" name="old-password" placeholder="Enter your password"><br>
-            <p class="error" th:if="${!oldPasswordErrorMessage==null}" th:text="${oldPasswordErrorMessage}"></p><br th:if="${!oldPasswordErrorMessage==null}">
+            <p class="error" th:text="${oldPasswordErrorMessage}"></p><br th:if="${!oldPasswordErrorMessage==null}">
             <input type="checkbox" id="show-old-password">
             <label for="show-old-password">Show password</label><br>
 
@@ -78,7 +79,7 @@
             <!-- Edit password - New password 2 -->
             <label for="new-password-2">Insert your new password one more time: </label>
             <input type="password" id="new-password-2" name="password-2" placeholder="Enter your new password again"><br>
-            <p class="error" th:if="${!newPasswordErrorMessage==null}" th:text="${newPasswordErrorMessage}"></p><br th:if="${!newPasswordErrorMessage==null}">
+            <p class="error" th:text="${newPasswordErrorMessage}"></p><br th:if="${!newPasswordErrorMessage==null}">
             <input type="checkbox" id="show-new-password-2">
             <label for="show-new-password-2">Show password</label><br>
 
