@@ -15,7 +15,7 @@ public class CheckLogin implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
-        System.out.println("Login Filter executing"); // TODO: remove after test
+        // System.out.println("Login Filter executing");
         HttpServletRequest request = (HttpServletRequest) servletRequest; // Cast request
         HttpServletResponse response = (HttpServletResponse) servletResponse; // Cast response
 
